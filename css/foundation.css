@@ -1,0 +1,576 @@
+/* ============================================================
+   Neo Automations — Foundation
+   Single source of truth for tokens + base primitives.
+
+   Load order: foundation.css → shared.css → mockups.css
+                              → page <style>
+
+   Contrast: every text/background pair below is verified to
+   WCAG AA (4.5:1 normal text, 3:1 large text). Measured ratios
+   are noted inline so they can be re-checked after any edit.
+   ============================================================ */
+
+/* ── Typography: families ───────────────────────────────────── */
+/*  Satoshi   — display. Geometric grotesk with a real spine:
+                single-storey 'a' alternates, high x-height,
+                tight apertures. Loaded 400/500/700/900 so the
+                heading ladder can vary weight, not just size.
+    Inter     — body. Variable, optimised for screen UI text.
+    Geist Mono— technical labels, numerals, timestamps.        */
+
+:root {
+  --font-display: "Satoshi", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo, monospace;
+
+  /* ── Type scale ───────────────────────────────────────────────
+     Display steps (lg → 5xl) are a strict 1.25 modular scale
+     anchored at 1rem = 16px:
+       1.000 · 1.250 · 1.5625 · 1.9531 · 2.4414 · 3.0518 · 3.8147
+     The three sub-base UI steps (2xs/xs/sm) are deliberate
+     additions — a pure 1.25 ratio is too coarse below 16px to
+     express caption / label / secondary-body as distinct levels.
+     Anything not on this ladder is a bug.                       */
+
+  --text-2xs: 0.75rem;    /* 12px — legal, micro meta */
+  --text-xs: 0.8125rem;   /* 13px — mono labels, captions */
+  --text-sm: 0.875rem;    /* 14px — secondary body, list items */
+  --text-base: 1rem;      /* 16px — body */
+  --text-lg: clamp(1.125rem, 1.05rem + 0.35vw, 1.25rem);       /* 18 → 20 */
+  --text-xl: clamp(1.3125rem, 1.15rem + 0.7vw, 1.5625rem);     /* 21 → 25 */
+  --text-2xl: clamp(1.5rem, 1.16rem + 1.6vw, 1.9531rem);       /* 24 → 31 */
+  --text-3xl: clamp(1.5rem, 1.12rem + 2.1vw, 2.4414rem);       /* 24 → 39 */
+  --text-4xl: clamp(1.75rem, 1.2rem + 3vw, 3.0518rem);          /* 28 → 49 */
+  --text-5xl: clamp(1.875rem, 1.15rem + 4vw, 3.8147rem);        /* 30 → 61 */
+
+  /* ── Line-height, paired to role ───────────────────────────── */
+  --leading-display: 1.04;  /* 4xl–5xl */
+  --leading-heading: 1.12;  /* 2xl–3xl */
+  --leading-title: 1.25;    /* xl */
+  --leading-lead: 1.55;     /* lg intro copy */
+  --leading-body: 1.65;     /* base / sm paragraphs */
+  --leading-ui: 1.45;       /* buttons, labels, dense UI */
+
+  /* ── Tracking: tightens as size grows ──────────────────────── */
+  --tracking-display: -0.035em;
+  --tracking-heading: -0.025em;
+  --tracking-title: -0.015em;
+  --tracking-body: -0.005em;
+  --tracking-ui: 0;
+  --tracking-label: 0.08em;  /* uppercase mono — one value, everywhere */
+
+  /* ── Weights ───────────────────────────────────────────────── */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+  --weight-black: 900;
+
+  /* ── Spacing: 4px base, unbroken to 160px ──────────────────── */
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-28: 112px;
+  --space-32: 128px;
+  --space-40: 160px;
+
+  /* ── Layout ────────────────────────────────────────────────── */
+  --nav-h: 64px;
+  --max-w: 1140px;          /* one container width */
+  --measure-lead: 46rem;    /* intro / subtitle line length */
+  --measure-body: 38rem;    /* body paragraph line length */
+  --col-pad: clamp(24px, 6vw, 48px);
+
+  /* Section rhythm — one ladder, three intensities. */
+  --section-pad: clamp(72px, 9vw, 128px);
+  --section-pad-lg: clamp(96px, 12vw, 176px);
+  --section-pad-sm: clamp(48px, 6vw, 80px);
+
+  /* ── Radius ────────────────────────────────────────────────── */
+  --radius-xs: 4px;    /* bubble tails */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
+  --radius-device: 52px;  /* iPhone 17 Pro Max outer corner, at ~300px width */
+
+  /* ── Motion ────────────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);      /* default: decelerate */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);  /* two-way state */
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);/* press / pop */
+
+  --dur-1: 120ms;  /* colour only */
+  --dur-2: 200ms;  /* hover */
+  --dur-3: 320ms;  /* state change */
+  --dur-4: 500ms;  /* scroll reveal */
+  --dur-5: 720ms;  /* large panel crossfade */
+
+  /* Hover lift — one ladder, keyed to element weight. Without this the
+     same gesture drifted between -1/-2/-3/-4px across files, so cards
+     in adjacent sections rose by different amounts on hover. */
+  --lift-sm: -1px;  /* list rows, inline chips */
+  --lift-md: -2px;  /* buttons */
+  --lift-lg: -4px;  /* cards, panels */
+}
+
+/* ── Colour: dark (default) ─────────────────────────────────────
+   Neutral ramp is 8 steps so hover/pressed surfaces have real
+   values to move between instead of nudging border-colour.      */
+
+:root,
+[data-theme="dark"] {
+  --n-0: #08080b;   /* page */
+  --n-50: #0d0e12;  /* recessed band */
+  --n-100: #12131a; /* card */
+  --n-150: #171922; /* card hover */
+  --n-200: #1c1f29; /* surface / raised */
+  --n-300: #262a36; /* surface hover */
+  --n-400: #343947; /* strong border */
+  /* Muted must clear 4.5:1 on the *lightest* dark surface it sits on,
+     which is --surface, not --n-0. Tuned against that worst case:
+     5.88:1 on --n-0, 5.67:1 on --bg-2, 4.83:1 on --surface. */
+  --n-500: #868b9a;
+  --n-600: #a8adbd; /* secondary text — 8.93:1 (AAA) */
+  --n-700: #cfd3dd;
+  --n-800: #e8eaf0; /* primary text — 15.9:1 (AAA) */
+
+  --bg: var(--n-0);
+  --bg-2: var(--n-50);
+  --bg-card: var(--n-100);
+  --bg-card-hover: var(--n-150);
+  --surface: var(--n-200);
+  --surface-hover: var(--n-300);
+
+  --border: rgba(255, 255, 255, 0.07);
+  --border-light: rgba(255, 255, 255, 0.13);
+  --border-strong: var(--n-400);
+
+  --text-primary: var(--n-800);
+  --text-secondary: var(--n-600);
+  --text-muted: var(--n-500);
+
+  /* Primary accent — indigo. Replaces the previous #22d3ee,
+     which is the default cyan of every AI template.
+     6.07:1 as text on --n-0, so it is safe for body-size text. */
+  --accent: #8b7bff;
+  --accent-hover: #a396ff;
+  --accent-press: #7568e6;
+  --accent-surface: rgba(139, 123, 255, 0.10);
+  --accent-border: rgba(139, 123, 255, 0.28);
+  --accent-glow: rgba(139, 123, 255, 0.28);
+
+  /* Inverted surface — used for primary buttons in both themes.
+     Guarantees AA without tinting text on a saturated fill. */
+  --inverse-bg: #f2f3f7;
+  --inverse-bg-hover: #ffffff;
+  --inverse-text: #0b0c10;   /* 17.6:1 */
+
+  /* Semantic — exactly two, each with one meaning. */
+  --success: #3ddc97;        /* 9.6:1 — outcomes, confirmations */
+  --success-surface: rgba(61, 220, 151, 0.10);
+  --success-border: rgba(61, 220, 151, 0.26);
+  --warning: #f5b544;        /* 10.2:1 — friction, cost-of-inaction */
+  --warning-surface: rgba(245, 181, 68, 0.10);
+  --warning-border: rgba(245, 181, 68, 0.26);
+
+  /* Elevation — 3 levels. */
+  --elev-1: 0 1px 2px rgba(0, 0, 0, 0.35), 0 1px 3px rgba(0, 0, 0, 0.22);
+  --elev-2: 0 4px 12px rgba(0, 0, 0, 0.38), 0 12px 32px rgba(0, 0, 0, 0.26);
+  --elev-3: 0 12px 32px rgba(0, 0, 0, 0.46), 0 32px 64px rgba(0, 0, 0, 0.34);
+  --elev-glow: 0 0 60px var(--accent-glow);
+
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+  color-scheme: dark;
+}
+
+/* ── Colour: light ─────────────────────────────────────────────
+   Complete override. Every semantic token the dark theme sets is
+   re-set here — the previous system missed --amber, which left a
+   dark-tuned yellow on white.                                   */
+
+[data-theme="light"] {
+  --n-0: #fbfbfd;
+  --n-50: #f4f5f8;
+  --n-100: #ffffff;
+  --n-150: #fafbfc;
+  --n-200: #eef0f4;
+  --n-300: #e4e7ec;
+  --n-400: #d3d7e0;
+  /* Same worst-case rule as dark: verified against --surface (#eef0f4),
+     the darkest light surface muted text sits on.
+     5.26:1 on --n-0, 4.99:1 on --bg-2, 4.76:1 on --surface. */
+  --n-500: #636a78;
+  --n-600: #4a4f5c; /* secondary — 8.3:1 */
+  --n-700: #2a2e38;
+  --n-800: #0e0f14; /* primary — 18.4:1 */
+
+  --bg: var(--n-0);
+  --bg-2: var(--n-50);
+  --bg-card: var(--n-100);
+  --bg-card-hover: var(--n-150);
+  --surface: var(--n-200);
+  --surface-hover: var(--n-300);
+
+  --border: rgba(14, 15, 20, 0.09);
+  --border-light: rgba(14, 15, 20, 0.16);
+  --border-strong: var(--n-400);
+
+  --accent: #5b46e5;         /* 5.89:1 on --n-0 (AA) */
+  --accent-hover: #4a35d4;
+  --accent-press: #3f2cc0;
+  --accent-surface: rgba(91, 70, 229, 0.07);
+  --accent-border: rgba(91, 70, 229, 0.24);
+  --accent-glow: rgba(91, 70, 229, 0.16);
+
+  --inverse-bg: #14151c;
+  --inverse-bg-hover: #0b0c10;
+  --inverse-text: #fbfbfd;   /* 16.9:1 */
+
+  /* Darkened from #0d9668, which only cleared 3.45:1 behind 12px mono
+     on --bg-2. Verified against all three light surfaces at that size:
+     5.57:1 on --n-0, 5.28:1 on --bg-2, 5.05:1 on --surface. */
+  --success: #0a7351;
+  --success-surface: rgba(10, 115, 81, 0.08);
+  --success-border: rgba(10, 115, 81, 0.24);
+  --warning: #a86413;
+  --warning-surface: rgba(168, 100, 19, 0.08);
+  --warning-border: rgba(168, 100, 19, 0.22);
+
+  --elev-1: 0 1px 2px rgba(14, 15, 20, 0.05), 0 1px 3px rgba(14, 15, 20, 0.04);
+  --elev-2: 0 4px 12px rgba(14, 15, 20, 0.07), 0 12px 28px rgba(14, 15, 20, 0.06);
+  --elev-3: 0 12px 28px rgba(14, 15, 20, 0.10), 0 32px 60px rgba(14, 15, 20, 0.09);
+  --elev-glow: 0 0 60px var(--accent-glow);
+
+  color-scheme: light;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-h) + var(--space-6));
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-body);
+  font-weight: var(--weight-regular);
+  background: var(--bg);
+  color: var(--text-primary);
+  overflow-x: clip;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-synthesis-weight: none;
+  transition: background var(--dur-3) var(--ease-in-out),
+              color var(--dur-3) var(--ease-in-out);
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Headings inherit the display family and a real weight ladder,
+   so hierarchy reads without relying on size alone. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: var(--text-5xl);
+  font-weight: var(--weight-black);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+
+h2 {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+}
+
+h3 {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-title);
+  letter-spacing: var(--tracking-title);
+}
+
+h4 {
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-ui);
+  letter-spacing: var(--tracking-body);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+/* Tabular numerals everywhere a number changes or aligns —
+   stops count-up animations from reflowing their container. */
+.count-up,
+[data-count],
+.mono,
+time {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.count-up {
+  display: inline-block;
+  text-align: end;
+}
+
+/* ── Interactive defaults ──────────────────────────────────────── */
+button {
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  border: none;
+  background: none;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Form controls: reset the OS widget, then restyle. */
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: var(--text-base);
+  line-height: var(--leading-ui);
+  color: var(--text-primary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  width: 100%;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color var(--dur-2) var(--ease-out),
+              background var(--dur-2) var(--ease-out),
+              box-shadow var(--dur-2) var(--ease-out);
+}
+
+input:hover,
+textarea:hover,
+select:hover {
+  border-color: var(--border-light);
+}
+
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-surface);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+textarea {
+  min-height: 7.5rem;
+  resize: vertical;
+}
+
+/* Custom select chevron — no default OS arrow. */
+select {
+  padding-right: var(--space-10);
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 20px) center, calc(100% - 14px) center;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+/* Checkbox / radio */
+input[type="checkbox"],
+input[type="radio"] {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  padding: 0;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  border-radius: var(--radius-full);
+}
+
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+input[type="checkbox"]:checked::after {
+  content: "";
+  width: 0.55rem;
+  height: 0.3rem;
+  border-left: 2px solid var(--inverse-text);
+  border-bottom: 2px solid var(--inverse-text);
+  transform: rotate(-45deg) translateY(-1px);
+}
+
+input[type="radio"]:checked::after {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: var(--radius-full);
+  background: var(--inverse-text);
+}
+
+/* ── Focus: visible for keyboard, quiet for mouse ─────────────── */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+/* ── Selection ─────────────────────────────────────────────────── */
+::selection {
+  background: var(--accent);
+  color: var(--inverse-text);
+}
+
+::-moz-selection {
+  background: var(--accent);
+  color: var(--inverse-text);
+}
+
+/* ── Scrollbars ────────────────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--n-400) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--n-400);
+  border-radius: var(--radius-full);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--n-500);
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Inner scroll regions (chat panes, mockups) get a quieter,
+   narrower bar so device mockups don't show chrome-like UI. */
+.scroll-subtle::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.scroll-subtle::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border: none;
+}
+
+/* ── No-JS safety net ──────────────────────────────────────────────
+   Scroll reveals start at opacity 0 and are un-hidden by an observer,
+   so without JS the entire page renders blank. Each page adds .js to
+   <html> inline before first paint; if that never runs, reveals are
+   pinned to their finished state instead. Matches whichever visible
+   class the page's own script uses. */
+html:not(.js) .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+  /* Nothing will release the compositor layer without JS, and holding one
+     per reveal is both wasteful and unnecessary once motion is off. */
+  will-change: auto !important;
+}
+
+/* ── Reduced motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

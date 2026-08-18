@@ -1,0 +1,1254 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <script>document.documentElement.classList.add("js");</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ira — AI Sales Partner for Real Estate | Neo Automations</title>
+    <meta name="description" content="Ira by Neo Automations captures, qualifies, follows up, books site visits, updates CRM, and briefs real estate sales teams automatically." />
+    <meta name="theme-color" content="#08080b" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://neoautomations.com/ira.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="product" />
+    <meta property="og:site_name" content="Neo Automations" />
+    <meta property="og:title" content="Ira — AI Sales Partner for Real Estate" />
+    <meta property="og:description" content="Ira answers every property enquiry in under 60 seconds, qualifies buyer intent, follows up across WhatsApp and Instagram, books site visits, and briefs your sales team every morning." />
+    <meta property="og:url" content="https://neoautomations.com/ira.html" />
+    <meta property="og:image" content="https://neoautomations.com/assets/og-ira.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Ira by Neo Automations — AI sales partner for real estate teams." />
+    <meta property="og:locale" content="en_IN" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ira — AI Sales Partner for Real Estate" />
+    <meta name="twitter:description" content="Every property enquiry answered in under 60 seconds. Qualified, followed up, booked, and reported — automatically." />
+    <meta name="twitter:image" content="https://neoautomations.com/assets/og-ira.png" />
+    <meta name="twitter:image:alt" content="Ira by Neo Automations — AI sales partner for real estate teams." />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Ira",
+        "applicationCategory": "BusinessApplication",
+        "applicationSubCategory": "AI Sales Agent",
+        "operatingSystem": "Web",
+        "description": "AI sales partner for real estate teams. Captures and qualifies property enquiries, runs multi-touch follow-up across WhatsApp, Instagram and SMS, books site visits, syncs CRM, and issues a daily sales brief.",
+        "url": "https://neoautomations.com/ira.html",
+        "inLanguage": ["en", "hi"],
+        "publisher": {
+          "@type": "Organization",
+          "name": "Neo Automations",
+          "url": "https://neoautomations.com/"
+        },
+        "featureList": [
+          "Sub-60-second first response",
+          "Buyer intent qualification and lead scoring",
+          "14-day multi-channel nurture sequences",
+          "Automated site visit booking",
+          "Live CRM synchronisation",
+          "Daily sales brief"
+        ]
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@500,700,900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="shared.css?v=logo1" />
+    <link rel="stylesheet" href="css/mockups.css" />
+    <style>
+      /* ============================================================
+         Ira page styles
+
+         Composes css/foundation.css tokens only. No literal
+         colours, sizes, spacing, radii, shadows or easings.
+         The hero phone reuses the .device / .chat-* components
+         from css/mockups.css rather than re-implementing them.
+         ============================================================ */
+
+      /* ── 1. Hero ────────────────────────────────────────────── */
+      .ira-hero {
+        position: relative;
+        padding: calc(var(--nav-h) + var(--section-pad)) var(--col-pad) var(--section-pad);
+        background: var(--bg-2);
+        border-bottom: 1px solid var(--border);
+        overflow: hidden;
+      }
+
+      /* Ambient field: reads as the agent's presence, and gives the
+         device something to sit in instead of floating on flat paint. */
+      .ira-hero::before {
+        content: "";
+        position: absolute;
+        top: -10%;
+        right: -5%;
+        width: min(760px, 80vw);
+        aspect-ratio: 1;
+        background: radial-gradient(circle, var(--accent-glow) 0%, transparent 62%);
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      .ira-hero-inner {
+        position: relative;
+        max-width: var(--max-w);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1.05fr;
+        gap: clamp(var(--space-10), 6vw, var(--space-20));
+        align-items: center;
+      }
+
+      .ira-hero-h1 {
+        font-size: var(--text-5xl);
+        font-weight: var(--weight-black);
+        letter-spacing: var(--tracking-display);
+        line-height: var(--leading-display);
+        margin-bottom: var(--space-6);
+        max-width: 16ch;
+      }
+
+      .ira-hero-sub {
+        font-size: var(--text-lg);
+        color: var(--text-secondary);
+        line-height: var(--leading-lead);
+        margin-bottom: var(--space-10);
+        max-width: var(--measure-body);
+      }
+
+      .ira-hero-ctas {
+        display: flex;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+      }
+
+      /* Trust strip — replaces dead space under the CTAs. */
+      .ira-hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3) var(--space-6);
+        margin-top: var(--space-10);
+        padding-top: var(--space-6);
+        border-top: 1px solid var(--border);
+      }
+
+      .ira-hero-meta div {
+        display: flex;
+        align-items: baseline;
+        gap: var(--space-2);
+      }
+
+      .ira-hero-meta dt {
+        font-family: var(--font-mono);
+        font-size: var(--text-2xs);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+
+      .ira-hero-meta dd {
+        font-family: var(--font-display);
+        font-size: var(--text-base);
+        font-weight: var(--weight-bold);
+        color: var(--text-primary);
+        font-variant-numeric: tabular-nums;
+      }
+
+      /* Hero device — size only. No 3D tilt: perspective on a thick
+         radius is what made the previous shell look like a toy. */
+      .device--hero {
+        max-width: 300px;
+      }
+
+      /* ── 2. Problem ─────────────────────────────────────────── */
+      .problem-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-6);
+        margin-top: var(--space-16);
+      }
+
+      .prob-card {
+        padding: var(--space-8);
+        background: var(--bg-card);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border);
+        transition: transform var(--dur-3) var(--ease-out),
+                    border-color var(--dur-3) var(--ease-out),
+                    background var(--dur-3) var(--ease-out);
+      }
+
+      .prob-card:hover {
+        transform: translateY(var(--lift-lg));
+        border-color: var(--border-light);
+        background: var(--bg-card-hover);
+      }
+
+      .prob-icon {
+        width: var(--space-10);
+        height: var(--space-10);
+        border-radius: var(--radius-sm);
+        background: var(--warning-surface);
+        border: 1px solid var(--warning-border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: var(--space-5);
+      }
+
+      .prob-icon svg {
+        width: var(--space-5);
+        height: var(--space-5);
+        stroke: var(--warning);
+      }
+
+      .prob-card h3 {
+        font-size: var(--text-base);
+        font-weight: var(--weight-bold);
+        letter-spacing: var(--tracking-body);
+        line-height: var(--leading-ui);
+        margin-bottom: var(--space-3);
+      }
+
+      .prob-card p {
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        line-height: var(--leading-body);
+      }
+
+      /* ── 3. Omnichannel ─────────────────────────────────────── */
+      .matrix-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-3);
+        margin: var(--space-12) auto 0;
+        max-width: var(--measure-lead);
+      }
+
+      /* Static informational chips. Deliberately no hover state —
+         they are not links, and a hover lift implied otherwise. */
+      .matrix-item {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        padding: var(--space-3) var(--space-5);
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-full);
+      }
+
+      .matrix-item svg {
+        width: var(--space-5);
+        height: var(--space-5);
+        stroke: var(--accent);
+        flex-shrink: 0;
+      }
+
+      .matrix-item span {
+        font-size: var(--text-sm);
+        font-weight: var(--weight-medium);
+        color: var(--text-primary);
+        white-space: nowrap;
+      }
+
+      /* ── 4. Capabilities ────────────────────────────────────── */
+      .cap-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-6);
+        margin-top: var(--space-16);
+      }
+
+      .cap-card {
+        padding: var(--space-10);
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        transition: transform var(--dur-3) var(--ease-out),
+                    border-color var(--dur-3) var(--ease-out),
+                    background var(--dur-3) var(--ease-out),
+                    box-shadow var(--dur-3) var(--ease-out);
+      }
+
+      .cap-card:hover {
+        transform: translateY(var(--lift-lg));
+        border-color: var(--border-light);
+        background: var(--bg-card-hover);
+        box-shadow: var(--elev-2);
+      }
+
+      .cap-num {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        letter-spacing: var(--tracking-label);
+        color: var(--accent);
+        margin-bottom: var(--space-5);
+      }
+
+      .cap-card h3 {
+        font-size: var(--text-xl);
+        font-weight: var(--weight-bold);
+        letter-spacing: var(--tracking-title);
+        margin-bottom: var(--space-4);
+      }
+
+      .cap-card p {
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        line-height: var(--leading-body);
+      }
+
+      /* ── 5. How Ira works ───────────────────────────────────── */
+      .how-ira-works {
+        background: var(--bg-2);
+        border-top: 1px solid var(--border);
+      }
+
+      .hw-intro {
+        padding-top: var(--section-pad);
+        text-align: center;
+      }
+
+      .hw-container {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: var(--space-16) var(--col-pad) var(--section-pad);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: clamp(var(--space-12), 6vw, var(--space-20));
+        align-items: flex-start;
+      }
+
+      /* min-width: 0 is required on both grid items: the default
+         `auto` lets the mockup's min-content size inflate the track
+         and push the page into horizontal scroll at 320px. */
+      .hw-text-col {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      /* A left rail that fills on the active step: an explicit
+         "you are here" marker.
+
+         Inactive steps step DOWN the text ramp (primary -> secondary ->
+         muted) rather than using group opacity. Group opacity composites
+         the whole subtree toward the page background, which silently
+         drags every nested pair — including the outcome pill against its
+         own tinted surface — below AA. Every value below is a token
+         already verified for contrast on this surface. */
+      .hw-step {
+        position: relative;
+        min-height: 78vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: var(--space-6);
+        border-left: 2px solid var(--border);
+        transition: border-color var(--dur-4) var(--ease-out);
+      }
+
+      .hw-step.is-active {
+        border-left-color: var(--accent);
+      }
+
+      .hw-step-num {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        color: var(--text-muted);
+        margin-bottom: var(--space-4);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        transition: color var(--dur-3) var(--ease-out);
+      }
+
+      .hw-step.is-active .hw-step-num {
+        color: var(--accent);
+      }
+
+      .hw-step h3 {
+        font-size: var(--text-2xl);
+        font-weight: var(--weight-bold);
+        margin-bottom: var(--space-5);
+        line-height: var(--leading-heading);
+        letter-spacing: var(--tracking-heading);
+        max-width: 22ch;
+        color: var(--text-secondary);
+        transition: color var(--dur-4) var(--ease-out);
+      }
+
+      .hw-step.is-active h3 {
+        color: var(--text-primary);
+      }
+
+      .hw-step p {
+        font-size: var(--text-base);
+        color: var(--text-muted);
+        line-height: var(--leading-body);
+        margin-bottom: var(--space-6);
+        max-width: var(--measure-body);
+        transition: color var(--dur-4) var(--ease-out);
+      }
+
+      .hw-step.is-active p {
+        color: var(--text-secondary);
+      }
+
+      /* Resting state is neutral so five stacked pills don't read as five
+         competing success badges; the green only lands on the active step. */
+      .hw-outcome {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-4);
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-full);
+        font-size: var(--text-sm);
+        font-weight: var(--weight-medium);
+        color: var(--text-muted);
+        align-self: flex-start;
+        transition: background var(--dur-4) var(--ease-out),
+                    border-color var(--dur-4) var(--ease-out),
+                    color var(--dur-4) var(--ease-out);
+      }
+
+      .hw-step.is-active .hw-outcome {
+        background: var(--success-surface);
+        border-color: var(--success-border);
+        color: var(--text-primary);
+      }
+
+      .hw-outcome svg {
+        width: var(--space-4);
+        height: var(--space-4);
+        stroke: var(--text-muted);
+        flex-shrink: 0;
+        transition: stroke var(--dur-4) var(--ease-out);
+      }
+
+      .hw-step.is-active .hw-outcome svg {
+        stroke: var(--success);
+      }
+
+      .hw-visual-col {
+        position: sticky;
+        top: calc(var(--nav-h) + var(--space-10));
+        height: min(620px, 76vh);
+        min-height: 480px;
+        min-width: 0;
+      }
+
+      /* Panels are stacked, so a slow symmetric crossfade left two sets of
+         legible text overlapping for the whole duration. The outgoing panel
+         now leaves fast while the incoming one eases in, and visibility is
+         switched at the end of the fade so a faded-out panel cannot paint
+         (or be read out) through the one on top of it. */
+      .hw-visual {
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(var(--space-3));
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        background: var(--bg-card);
+        box-shadow: var(--elev-2);
+        transition: opacity var(--dur-2) var(--ease-out),
+                    transform var(--dur-2) var(--ease-out),
+                    visibility 0s linear var(--dur-2);
+      }
+
+      .hw-visual.is-active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+        transition: opacity var(--dur-4) var(--ease-out),
+                    transform var(--dur-4) var(--ease-out),
+                    visibility 0s;
+      }
+
+      .hw-visual .device {
+        max-width: min(236px, 72vw);
+      }
+
+      /* Mobile: JS clones the single authored visual set into each
+         step. Hidden on desktop so nothing is cloned or paid for. */
+      .hw-visual-mobile {
+        display: none;
+      }
+
+      .how-ira-cta {
+        margin-top: var(--space-16);
+        padding: var(--space-16) var(--space-10);
+        background: linear-gradient(135deg, var(--surface), var(--bg-card));
+        border: 1px solid var(--border);
+        border-radius: var(--radius-2xl);
+        text-align: center;
+      }
+
+      .how-ira-cta h3 {
+        font-size: var(--text-2xl);
+        font-weight: var(--weight-bold);
+        margin-bottom: var(--space-4);
+        letter-spacing: var(--tracking-heading);
+        max-width: 24ch;
+        margin-inline: auto;
+      }
+
+      .how-ira-cta p {
+        font-size: var(--text-base);
+        color: var(--text-secondary);
+        margin: 0 auto var(--space-8);
+        max-width: var(--measure-body);
+      }
+
+      /* ── 6. Metrics ─────────────────────────────────────────── */
+      .metrics-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--space-8);
+        text-align: center;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: var(--space-16);
+      }
+
+      .metric-val {
+        font-family: var(--font-display);
+        font-size: var(--text-4xl);
+        font-weight: var(--weight-black);
+        letter-spacing: var(--tracking-display);
+        line-height: var(--leading-display);
+        color: var(--text-primary);
+        margin-bottom: var(--space-2);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .metric-label {
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+      }
+
+      /* ── 7. Scope ───────────────────────────────────────────── */
+      .scope-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-10);
+        margin-top: var(--space-16);
+      }
+
+      .scope-col h3 {
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
+        font-weight: var(--weight-medium);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-label);
+        color: var(--text-muted);
+        margin-bottom: var(--space-6);
+        padding-bottom: var(--space-3);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .scope-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+      }
+
+      .scope-list li {
+        display: flex;
+        gap: var(--space-3);
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        line-height: var(--leading-ui);
+      }
+
+      .scope-list svg {
+        width: var(--space-4);
+        height: var(--space-4);
+        stroke: var(--success);
+        flex-shrink: 0;
+        margin-top: var(--space-0-5);
+      }
+
+      /* ── 8. Final CTA ───────────────────────────────────────── */
+      .final-cta {
+        text-align: center;
+        padding: var(--section-pad-lg) var(--col-pad);
+        background: var(--bg-2);
+        border-top: 1px solid var(--border);
+      }
+
+      .final-cta-title {
+        font-size: var(--text-4xl);
+        font-weight: var(--weight-black);
+        letter-spacing: var(--tracking-display);
+        line-height: var(--leading-display);
+        max-width: 26ch;
+        margin: 0 auto var(--space-6);
+      }
+
+      .final-cta .section-subtitle {
+        margin: 0 auto var(--space-10);
+        text-align: center;
+      }
+
+      /* ── Responsive ─────────────────────────────────────────── */
+      @media (max-width: 1024px) {
+        .ira-hero-inner {
+          grid-template-columns: 1fr;
+          text-align: center;
+        }
+        .ira-hero-h1 { max-width: none; margin-inline: auto; }
+        .ira-hero-sub { margin-inline: auto; margin-bottom: var(--space-8); }
+        .ira-hero-ctas { justify-content: center; }
+        .ira-hero-meta { justify-content: center; }
+        .device--hero { margin: 0 auto; max-width: min(280px, 86vw); }
+        .problem-grid,
+        .scope-grid { grid-template-columns: repeat(2, 1fr); }
+        .cap-grid { grid-template-columns: 1fr; }
+        .metrics-row { grid-template-columns: repeat(2, 1fr); gap: var(--space-10); }
+        .hw-container { gap: var(--space-12); }
+      }
+
+      @media (max-width: 768px) {
+        .ira-hero {
+          padding-top: calc(var(--nav-h) + var(--space-8));
+          padding-bottom: var(--space-10);
+        }
+        .ira-hero-h1 {
+          font-size: clamp(1.75rem, 1.15rem + 3.2vw, 2.25rem);
+          line-height: 1.12;
+        }
+        .desktop-only { display: none !important; }
+        .hw-intro { padding-top: var(--section-pad-sm); }
+        .hw-container {
+          grid-template-columns: 1fr;
+          gap: 0;
+          padding: var(--space-10) var(--col-pad) var(--section-pad);
+        }
+        .hw-step {
+          min-height: auto;
+          opacity: 1;
+          margin-bottom: var(--space-20);
+          border-left-color: var(--accent);
+        }
+        .hw-step:last-of-type { margin-bottom: 0; }
+        .hw-visual-mobile { display: block; margin-top: var(--space-6); }
+        .hw-visual-mobile .hw-visual {
+          position: relative;
+          opacity: 1;
+          transform: none;
+          height: auto;
+          min-height: 420px;
+        }
+        .problem-grid,
+        .scope-grid { grid-template-columns: 1fr; }
+        .how-ira-cta {
+          padding: var(--space-10) var(--space-6);
+          margin-top: var(--space-12);
+        }
+        .matrix-item { padding: var(--space-2) var(--space-4); }
+      }
+
+      @media (max-width: 480px) {
+        .metrics-row { grid-template-columns: 1fr; gap: var(--space-8); }
+        .ira-hero-meta { flex-direction: column; align-items: center; gap: var(--space-3); }
+        .matrix-grid { gap: var(--space-2); }
+        .cap-card { padding: var(--space-6); }
+        .prob-card { padding: var(--space-6); }
+        .how-ira-cta { padding: var(--space-8) var(--space-5); }
+        /* Reclaim the rail indent and mockup gutter at 320px. */
+        .hw-step { padding-left: var(--space-4); }
+        .hw-visual-mobile .hw-visual { min-height: 0; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- NAV -->
+    <header class="site-header" id="site-header">
+      <div class="nav-inner">
+        <a href="index.html" class="logo" aria-label="Neo Automations home">
+          <span class="logo-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><rect x="1.54" y="2.28" width="10.14" height="10.14" rx="3.85"/><rect x="12.14" y="13.31" width="9.89" height="9.89" rx="3.76"/><rect x="3.34" y="22.08" width="9.15" height="9.15" rx="3.48"/><rect x="22.06" y="22.19" width="8.65" height="8.65" rx="3.29"/><rect x="-7.56" y="-1.85" width="15.13" height="3.71" rx="1.85" transform="translate(11.85 12.80) rotate(46.14)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(12.50 22.46) rotate(137.51)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(21.74 22.38) rotate(41.60)"/></svg></span>
+          <span class="logo-name">Neo Automations</span>
+        </a>
+        <nav class="nav-links">
+          <a href="services.html">Systems</a>
+          <a href="ira.html" class="active">Ira (Real Estate)</a>
+          <a href="about.html">Use Cases</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+        <div class="nav-right">
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+            <svg class="icon-dark" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+          </button>
+          <a href="login.html" class="btn-nav-login" id="nav-login-btn">
+            <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            Client Login
+          </a>
+          <a href="contact.html" class="btn-nav-primary">Start Audit</a>
+          <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MOBILE DRAWER -->
+    <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+      <nav>
+        <a href="services.html">Systems</a>
+        <a href="ira.html">Ira (Real Estate)</a>
+        <a href="about.html">Use Cases</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="mobile-drawer-cta">
+        <a href="login.html" class="btn-outline">Client Login</a>
+        <a href="contact.html" class="btn-primary">Start Automation Audit</a>
+      </div>
+    </div>
+
+    <!-- 1. HERO -->
+    <section class="ira-hero">
+      <div class="ira-hero-inner">
+        <div class="hero-text reveal visible">
+          <p class="section-eyebrow">Real Estate AI Agent</p>
+          <h1 class="ira-hero-h1">Ira, your AI sales partner.</h1>
+          <p class="ira-hero-sub">Ira replies to property leads instantly, qualifies buyer intent, follows up across WhatsApp and Instagram, books site visits, updates your CRM, and sends your team a daily sales brief.</p>
+          <div class="ira-hero-ctas">
+            <a href="contact.html" class="btn-primary">Deploy Ira</a>
+            <a href="#how-ira-works" class="btn-outline">See how Ira works</a>
+          </div>
+          <dl class="ira-hero-meta">
+            <div><dt>Response</dt><dd>&lt;60s</dd></div>
+            <div><dt>Coverage</dt><dd>24/7</dd></div>
+            <div><dt>Languages</dt><dd>EN · HI</dd></div>
+          </dl>
+        </div>
+
+        <div class="reveal visible reveal-d1" id="demo">
+          <div class="device device--hero">
+            <div class="device-notch"></div>
+            <div class="device-screen">
+              <div class="device-status" aria-hidden="true">
+                <span class="device-time">9:41</span>
+                <svg class="device-sys" viewBox="0 0 68 12" fill="none">
+                  <rect x="0" y="8" width="2.8" height="3.2" rx="0.5" fill="currentColor" opacity="0.35"/>
+                  <rect x="4.2" y="5.8" width="2.8" height="5.4" rx="0.5" fill="currentColor" opacity="0.35"/>
+                  <rect x="8.4" y="3.6" width="2.8" height="7.6" rx="0.5" fill="currentColor"/>
+                  <rect x="12.6" y="1.4" width="2.8" height="9.8" rx="0.5" fill="currentColor"/>
+                  <path d="M29 9.6a3.4 3.4 0 0 1 5 0" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                  <path d="M27.2 7.6a5.8 5.8 0 0 1 8.6 0" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                  <path d="M25.4 5.6a8.2 8.2 0 0 1 12.2 0" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                  <circle cx="31.5" cy="10.8" r="1" fill="currentColor"/>
+                  <rect x="47.5" y="2" width="16.5" height="8" rx="1.8" stroke="currentColor" stroke-width="1.15"/>
+                  <rect x="49.2" y="3.5" width="11.4" height="5" rx="0.8" fill="currentColor"/>
+                  <rect x="64.6" y="4.2" width="1.5" height="3.6" rx="0.4" fill="currentColor"/>
+                </svg>
+              </div>
+              <div class="chat-header">
+                <span class="chat-header-back" aria-hidden="true">‹</span>
+                <div class="chat-header-avatar" aria-hidden="true">I</div>
+                <div class="chat-header-info">
+                  <div class="chat-header-name">Ira · Real Estate</div>
+                  <div class="chat-header-status" data-chat-status>online</div>
+                </div>
+              </div>
+              <div class="chat-body" id="ira-hero-chat" aria-label="Example conversation between a property buyer and Ira">
+                <div class="chat-bubble in show">
+                  Hi, I saw your property listing on MagicBricks. Can I get more details?
+                  <span class="chat-time">2:14 AM</span>
+                </div>
+
+                <div class="chat-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+
+                <div class="chat-bubble out">
+                  Hello! Thanks for reaching out. Yes, The Summit has premium 3 &amp; 4 BHK units available starting at ₹1.5Cr. Are you looking to move in this year?
+                  <span class="chat-time">2:14 AM</span>
+                </div>
+
+                <div class="chat-bubble in">
+                  Yes, looking to move by December. What's the exact location?
+                  <span class="chat-time">2:16 AM</span>
+                </div>
+
+                <div class="chat-typing" aria-hidden="true"><span></span><span></span><span></span></div>
+
+                <div class="chat-bubble out">
+                  It's located in the prime sector of Hitech City. I can share the exact pin and floor plans. Would you like to schedule a site visit this weekend to see it in person?
+                  <span class="chat-time">2:16 AM</span>
+                </div>
+              </div>
+              <div class="chat-composer" aria-hidden="true">
+                <span class="chat-composer-btn">+</span>
+                <span class="chat-composer-field">Message</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. PROBLEM SECTION -->
+    <section class="section-pad">
+      <div class="container reveal">
+        <p class="section-eyebrow">The Bottleneck</p>
+        <h2 class="section-title">Property sales are lost in the gaps</h2>
+        <div class="problem-grid">
+          <div class="prob-card reveal">
+            <div class="prob-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" stroke-width="1.5"/></svg></div>
+            <h3>Night Leads Go Cold</h3>
+            <p>Buyers often browse and inquire late at night. A response 10 hours later is usually ignored.</p>
+          </div>
+          <div class="prob-card reveal reveal-d1">
+            <div class="prob-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke-width="1.5"/><polyline points="12 6 12 12 16 14" stroke-width="1.5"/></svg></div>
+            <h3>Manual Follow-ups Fail</h3>
+            <p>Sales teams prioritize fresh leads, meaning older unqualified leads rarely get the 5-7 touches required.</p>
+          </div>
+          <div class="prob-card reveal reveal-d2">
+            <div class="prob-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="3" width="20" height="14" rx="2" ry="2" stroke-width="1.5"/><line x1="8" y1="21" x2="16" y2="21" stroke-width="1.5"/><line x1="12" y1="17" x2="12" y2="21" stroke-width="1.5"/></svg></div>
+            <h3>Empty CRMs</h3>
+            <p>Reps hate data entry. Crucial buyer context, budgets, and timelines are lost in personal WhatsApp chats.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. MATRIX -->
+    <section class="matrix-wrap section-pad">
+      <div class="container reveal">
+        <p class="section-eyebrow is-centered">Omnichannel Capture</p>
+        <h2 class="section-title is-centered">Ira connects everywhere</h2>
+        <p class="section-subtitle is-centered">Stop relying on manual lead distribution. Ira aggregates, responds, and qualifies leads across all your top channels instantly.</p>
+
+        <div class="matrix-grid">
+          <div class="matrix-item"><svg viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke-width="1.5"/></svg><span>WhatsApp Business</span></div>
+          <div class="matrix-item"><svg viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke-width="1.5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke-width="1.5"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" stroke-width="1.5"/></svg><span>Instagram DMs</span></div>
+          <div class="matrix-item"><svg viewBox="0 0 24 24" fill="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke-width="1.5"/></svg><span>Facebook Ads</span></div>
+          <div class="matrix-item"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" stroke-width="1.5"/><line x1="3" y1="9" x2="21" y2="9" stroke-width="1.5"/><line x1="9" y1="21" x2="9" y2="9" stroke-width="1.5"/></svg><span>Property Portals (APIs)</span></div>
+          <div class="matrix-item"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke-width="1.5"/><path d="M22 6l-10 7L2 6" stroke-width="1.5"/></svg><span>Website Enquiries</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. CAPABILITIES -->
+    <section class="section-pad">
+      <div class="container reveal">
+        <p class="section-eyebrow">Capabilities</p>
+        <h2 class="section-title">What Ira Handles</h2>
+        
+        <div class="cap-grid">
+          <div class="cap-card reveal">
+            <span class="cap-num">01</span>
+            <h3>Instant Qualification</h3>
+            <p>Ira asks the right questions conversationally. She determines timeline, budget, preferred locations, and financing readiness before a human ever steps in.</p>
+          </div>
+          <div class="cap-card reveal reveal-d1">
+            <span class="cap-num">02</span>
+            <h3>14-Day Nurture</h3>
+            <p>Leads that don't book immediately aren't lost. Ira runs natural, multi-touch follow-up sequences across two weeks to re-engage silent prospects.</p>
+          </div>
+          <div class="cap-card reveal">
+            <span class="cap-num">03</span>
+            <h3>CRM Synchronization</h3>
+            <p>Every lead score, budget, and conversation summary is instantly synced to HubSpot, Salesforce, or your custom CRM. Zero manual data entry.</p>
+          </div>
+          <div class="cap-card reveal reveal-d1">
+            <span class="cap-num">04</span>
+            <h3>Smart Handoff</h3>
+            <p>When a lead asks a complex question or requests a callback, Ira alerts the assigned sales rep with the full conversation history for a seamless takeover.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. HOW IRA WORKS -->
+    <section class="how-ira-works" id="how-ira-works">
+      <div class="container hw-intro">
+        <p class="section-eyebrow is-centered">The Journey</p>
+        <h2 class="section-title is-centered is-wide">How Ira Converts Property Enquiries Into Site Visits</h2>
+        <p class="section-subtitle is-centered">From the first message to the morning sales brief, Ira manages the complete lead journey so your team never loses a serious buyer to slow follow-up.</p>
+      </div>
+      
+      <div class="hw-container">
+        <!-- TEXT COLUMN -->
+        <div class="hw-text-col">
+          
+          <div class="hw-step is-active" data-step="1">
+            <span class="hw-step-num">STEP 01 — Instant Lead Capture</span>
+            <h3>Ira starts the conversation before the lead goes cold.</h3>
+            <p>When a buyer enquires through WhatsApp, Instagram, your website, a property portal, or a lead ad, Ira captures the enquiry instantly and begins a natural conversation within seconds.</p>
+            <div class="hw-outcome"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Every enquiry gets an instant first response.</div>
+            
+            <div class="hw-visual-mobile" aria-hidden="true"></div>
+          </div>
+
+          <div class="hw-step" data-step="2">
+            <span class="hw-step-num">STEP 02 — Buyer Intent Mapping</span>
+            <h3>Ira understands what the buyer is really looking for.</h3>
+            <p>Ira identifies budget, location preference, configuration, possession timeline, urgency, and buying intent, then builds a clean lead profile for your sales team.</p>
+            <div class="hw-outcome"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Your team knows buyer intent before the first call.</div>
+            
+            <div class="hw-visual-mobile" aria-hidden="true"></div>
+          </div>
+
+          <div class="hw-step" data-step="3">
+            <span class="hw-step-num">STEP 03 — Smart Follow-Up Engine</span>
+            <h3>Ira follows up without sounding repetitive.</h3>
+            <p>Most buyers need multiple touchpoints before they book a visit. Ira sends timed, relevant follow-ups across WhatsApp, SMS, and email based on how the buyer responds.</p>
+            <div class="hw-outcome"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Follow-ups keep running even when your team is busy.</div>
+            
+            <div class="hw-visual-mobile" aria-hidden="true"></div>
+          </div>
+
+          <div class="hw-step" data-step="4">
+            <span class="hw-step-num">STEP 04 — Site Visit Booking</span>
+            <h3>Ira turns interest into confirmed visits.</h3>
+            <p>When a buyer is ready, Ira shares available time slots, confirms the visit, updates the calendar, sends reminders, and gives the sales rep full context before the meeting.</p>
+            <div class="hw-outcome"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> More serious buyers become scheduled site visits.</div>
+            
+            <div class="hw-visual-mobile" aria-hidden="true"></div>
+          </div>
+
+          <div class="hw-step" data-step="5">
+            <span class="hw-step-num">STEP 05 — Daily Sales Brief</span>
+            <h3>Ira gives your team the day before the day starts.</h3>
+            <p>Every morning, Ira sends a crisp action brief showing hot leads, site visits, overnight replies, follow-ups due, and buyers who need a human call.</p>
+            <div class="hw-outcome"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Sales reps start the day with clarity.</div>
+            
+            <div class="hw-visual-mobile" aria-hidden="true"></div>
+          </div>
+          
+          <div class="how-ira-cta">
+            <h3>Let Ira handle your next 100 property enquiries.</h3>
+            <p>See how Ira captures, qualifies, follows up, books, and briefs your sales team automatically.</p>
+            <a href="contact.html" class="btn-primary">Book Ira Demo</a>
+          </div>
+          
+        </div>
+        
+        <!-- VISUAL COLUMN (DESKTOP) -->
+        <div class="hw-visual-col desktop-only" id="hw-visual-col">
+
+          <div class="hw-visual is-active" id="hw-vis-1">
+            <div class="step-mockup">
+              <div class="mock-ribbon">Buyer enquires on WhatsApp → Ira replies in under 60 seconds</div>
+              <div class="device">
+                <div class="device-notch"></div>
+                <div class="device-screen">
+                  <div class="device-status" aria-hidden="true">
+                    <span class="device-time">9:41</span>
+                    <svg class="device-sys" viewBox="0 0 68 12" fill="none">
+                      <rect x="0" y="8" width="2.8" height="3.2" rx="0.5" fill="currentColor" opacity="0.35"/>
+                      <rect x="4.2" y="5.8" width="2.8" height="5.4" rx="0.5" fill="currentColor" opacity="0.35"/>
+                      <rect x="8.4" y="3.6" width="2.8" height="7.6" rx="0.5" fill="currentColor"/>
+                      <rect x="12.6" y="1.4" width="2.8" height="9.8" rx="0.5" fill="currentColor"/>
+                      <path d="M29 9.6a3.4 3.4 0 0 1 5 0" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                      <path d="M27.2 7.6a5.8 5.8 0 0 1 8.6 0" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                      <path d="M25.4 5.6a8.2 8.2 0 0 1 12.2 0" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                      <circle cx="31.5" cy="10.8" r="1" fill="currentColor"/>
+                      <rect x="47.5" y="2" width="16.5" height="8" rx="1.8" stroke="currentColor" stroke-width="1.15"/>
+                      <rect x="49.2" y="3.5" width="11.4" height="5" rx="0.8" fill="currentColor"/>
+                      <rect x="64.6" y="4.2" width="1.5" height="3.6" rx="0.4" fill="currentColor"/>
+                    </svg>
+                  </div>
+                  <div class="chat-header">
+                    <span class="chat-header-back">‹</span>
+                    <div class="chat-header-avatar">I</div>
+                    <div class="chat-header-info">
+                      <div class="chat-header-name">Ira · Real Estate</div>
+                      <div class="chat-header-status">online</div>
+                    </div>
+                  </div>
+                  <div class="chat-channel-bar">
+                    <span class="chat-channel is-active">WhatsApp</span>
+                    <span class="chat-channel">MagicBricks</span>
+                  </div>
+                  <div class="chat-body">
+                    <div class="chat-bubble in show">Hi, I saw your 3BHK listing on MagicBricks. Is it still available?</div>
+                    <div class="chat-bubble out show">Hello! Yes, Skyview Residences 3BHK is available from ₹1.2Cr. Would you like floor plans or a site visit this week?</div>
+                  </div>
+                  <div class="chat-status-bar show">Ira responded in 42 seconds · Lead saved</div>
+                  <div class="chat-composer" aria-hidden="true">
+                    <span class="chat-composer-btn">+</span>
+                    <span class="chat-composer-field">Message</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hw-visual" id="hw-vis-2">
+            <div class="step-mockup">
+              <div class="mock-ribbon">Ira extracts budget, location & timeline — your team sees a scored profile instantly</div>
+              <div class="lead-card show">
+                <div class="lead-card-top">
+                  <div class="lead-avatar">AS</div>
+                  <div>
+                    <div class="lead-name">Aarav Sharma</div>
+                    <div class="lead-meta">MagicBricks · 2 min ago</div>
+                    <span class="lead-tag">Priority lead</span>
+                  </div>
+                  <div class="lead-score-ring"><strong><span class="count-up" data-target="88">0</span></strong><span>Score</span></div>
+                </div>
+                <div class="lead-fields">
+                  <div class="lead-field"><span class="lead-field-label">Looking for</span><span class="lead-field-val">3 BHK</span></div>
+                  <div class="lead-field"><span class="lead-field-label">Preferred area</span><span class="lead-field-val">Gurugram Sec 62</span></div>
+                  <div class="lead-field"><span class="lead-field-label">Budget</span><span class="lead-field-val">₹1.2 – 1.5 Cr</span></div>
+                  <div class="lead-field"><span class="lead-field-label">Timeline</span><span class="lead-field-val">Visit-ready</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hw-visual" id="hw-vis-3">
+            <div class="step-mockup">
+              <div class="mock-ribbon">Automated follow-ups go out on Day 1, 4 & 7 — each message is contextual, not generic</div>
+              <div class="fu-timeline show">
+                <div class="fu-event">
+                  <div class="fu-dot">D1</div>
+                  <div class="fu-content">
+                    <div class="fu-day">Day 1 · WhatsApp</div>
+                    <div class="fu-text">"Welcome Aarav! Here are 3 projects matching your budget in Sector 62."</div>
+                  </div>
+                </div>
+                <div class="fu-event">
+                  <div class="fu-dot">D4</div>
+                  <div class="fu-content">
+                    <div class="fu-day">Day 4 · SMS</div>
+                    <div class="fu-text">"Skyview has 2 units left in your budget. Want to see them this Saturday?"</div>
+                  </div>
+                </div>
+                <div class="fu-event is-highlight">
+                  <div class="fu-dot">D7</div>
+                  <div class="fu-content">
+                    <div class="fu-day">Day 7 · WhatsApp</div>
+                    <div class="fu-text">"3 families booked visits at Skyview this week. Shall I reserve a slot for you?"</div>
+                    <div class="fu-reply">Buyer replied: "Yes, Saturday works"</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hw-visual" id="hw-vis-4">
+            <div class="step-mockup">
+              <div class="mock-ribbon">Buyer picks a slot → calendar updated → confirmation sent to buyer & sales rep</div>
+              <div class="booking-card show">
+                <div class="booking-head"><strong>Pick a site visit slot</strong><span>Skyview Residences · Gurugram</span></div>
+                <div class="booking-slots">
+                  <div class="booking-slot"><span class="booking-slot-time">Fri 4PM</span><div class="booking-slot-info">Skyview Residences<span>Available</span></div></div>
+                  <div class="booking-slot is-selected"><span class="booking-slot-time">Sat 11:30</span><div class="booking-slot-info">Aarav Sharma · 3 BHK<span>Confirmed</span></div></div>
+                  <div class="booking-slot"><span class="booking-slot-time">Sun 4PM</span><div class="booking-slot-info">Skyview Residences<span>Available</span></div></div>
+                </div>
+                <div class="booking-confirm">Visit confirmed · CRM updated · Reminder scheduled</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hw-visual" id="hw-vis-5">
+            <div class="step-mockup">
+              <div class="mock-ribbon">Every morning your team gets a brief — hot leads, visits today, and who needs a call</div>
+              <div class="brief-card show">
+                <div class="brief-header">
+                  <span class="brief-header-left">Ira · Daily Sales Brief</span>
+                  <span class="brief-header-time">7:00 AM</span>
+                </div>
+                <div class="brief-stats">
+                  <div class="brief-stat"><span class="brief-stat-label">Hot leads today</span><span class="brief-stat-val hot"><span class="count-up" data-target="12">0</span></span></div>
+                  <div class="brief-stat"><span class="brief-stat-label">Site visits scheduled</span><span class="brief-stat-val"><span class="count-up" data-target="3">0</span></span></div>
+                  <div class="brief-stat"><span class="brief-stat-label">Follow-ups due</span><span class="brief-stat-val"><span class="count-up" data-target="8">0</span></span></div>
+                </div>
+                <div class="brief-opportunity">
+                  <div class="brief-opportunity-label">Top opportunity</div>
+                  <div class="brief-opportunity-text">Aarav Sharma requested floor plans for Skyview — visit Sat 11:30 AM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. METRICS -->
+    <section class="section-pad">
+      <div class="container reveal">
+        <dl class="metrics-row">
+          <div>
+            <dd class="metric-val">&lt;60s</dd>
+            <dt class="metric-label">Response Time</dt>
+          </div>
+          <div>
+            <dd class="metric-val">24/7</dd>
+            <dt class="metric-label">Active Coverage</dt>
+          </div>
+          <div>
+            <dd class="metric-val">14-day</dd>
+            <dt class="metric-label">Nurture Window</dt>
+          </div>
+          <div>
+            <dd class="metric-val">0</dd>
+            <dt class="metric-label">Missed Follow-ups</dt>
+          </div>
+        </dl>
+
+        <!-- 9. WHAT YOU GET -->
+        <div class="scope-grid reveal">
+          <div class="scope-col">
+            <h3>Capture &amp; Connect</h3>
+            <ul class="scope-list">
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> WhatsApp Business Integration</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Instagram DM & Comments</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Real Estate Portal APIs</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Website Form Webhooks</li>
+            </ul>
+          </div>
+          <div class="scope-col">
+            <h3>Sales Intelligence</h3>
+            <ul class="scope-list">
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Multilingual (Hinglish/English)</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Buyer Intent Detection</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Automated Site Booking</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Seamless Human Handoff</li>
+            </ul>
+          </div>
+          <div class="scope-col">
+            <h3>Operations</h3>
+            <ul class="scope-list">
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Live CRM Synchronization</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Daily Team Briefings</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Hot Lead SMS Alerts</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Monthly Strategy Review</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. FAQ -->
+    <section class="section-pad section-band">
+      <div class="container reveal">
+        <p class="section-eyebrow">FAQ</p>
+        <h2 class="section-title">Common questions</h2>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Will Ira sound like a bot?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-a"><div class="faq-a-inner">No. Ira is configured with advanced LLMs specifically prompted to emulate a professional real estate executive. The tone is consultative, polite, and deeply contextual.</div></div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Can Ira speak Hindi and Hinglish?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-a"><div class="faq-a-inner">Yes. Ira detects the language of the inbound lead and seamlessly matches it, natively handling Roman Hindi (Hinglish) alongside English.</div></div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Can she update my existing CRM?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-a"><div class="faq-a-inner">Yes. We connect Ira to Salesforce, HubSpot, GoHighLevel, Zoho, or any custom CRM via webhooks to ensure every qualified detail is logged automatically.</div></div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              What happens when a buyer wants a human call?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-a"><div class="faq-a-inner">Ira recognizes intent for human escalation instantly. She acknowledges the request, pauses automation, and pings the assigned sales rep with the full chat history.</div></div>
+          </div>
+          
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              How long does setup take?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-a"><div class="faq-a-inner">Depending on the complexity of your CRM and portal integrations, deployment typically takes 7 to 14 days from strategy sign-off.</div></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+      <div class="container reveal">
+        <h2 class="final-cta-title">Your next site visit could start with a message your team never saw.</h2>
+        <p class="section-subtitle">Ira makes sure every property enquiry is answered, qualified, followed up, booked, and reported before it slips away.</p>
+        <a href="contact.html" class="btn-primary btn-lg">Deploy Ira Today</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo">
+              <span class="logo-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><rect x="1.54" y="2.28" width="10.14" height="10.14" rx="3.85"/><rect x="12.14" y="13.31" width="9.89" height="9.89" rx="3.76"/><rect x="3.34" y="22.08" width="9.15" height="9.15" rx="3.48"/><rect x="22.06" y="22.19" width="8.65" height="8.65" rx="3.29"/><rect x="-7.56" y="-1.85" width="15.13" height="3.71" rx="1.85" transform="translate(11.85 12.80) rotate(46.14)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(12.50 22.46) rotate(137.51)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(21.74 22.38) rotate(41.60)"/></svg></span>
+              <span class="logo-name">Neo Automations</span>
+            </a>
+            <p>Custom AI operating systems for businesses that demand precision execution at scale.</p>
+          </div>
+          <div class="footer-col">
+            <h3>Systems</h3>
+            <ul>
+              <li><a href="services.html">LeadFlow AI</a></li>
+              <li><a href="ira.html">Ira (Real Estate)</a></li>
+              <li><a href="services.html">ReplyOps AI</a></li>
+              <li><a href="services.html">ScheduleSync AI</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="about.html">Use Cases</a></li>
+              <li><a href="pricing.html">Pricing</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Portal</h3>
+            <ul>
+              <li><a href="contact.html">Audit Request</a></li>
+              <li><a href="#">Client Login</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Neo Automations. All rights reserved.</p>
+          <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+    <script type="module" src="js/ira-steps.js"></script>
+    <script type="module" src="js/ira-hero-chat.js"></script>
+  </body>
+</html>

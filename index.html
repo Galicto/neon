@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <script>document.documentElement.classList.add("js");</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neo Automations — AI Operating Systems for Business</title>
+    <meta name="description" content="Neo Automations builds custom AI operating systems that answer every lead, qualify intent, book meetings, and keep your CRM current — around the clock, without adding headcount." />
+    <meta name="theme-color" content="#08080b" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://neoautomations.com/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Neo Automations" />
+    <meta property="og:title" content="Neo Automations — AI Operating Systems for Business" />
+    <meta property="og:description" content="Custom AI systems that answer every lead, book the meeting, and update your CRM — in seconds, around the clock." />
+    <meta property="og:url" content="https://neoautomations.com/" />
+    <meta property="og:image" content="https://neoautomations.com/assets/og-home.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Neo Automations — AI operating systems for business." />
+    <meta property="og:locale" content="en_IN" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Neo Automations — AI Operating Systems for Business" />
+    <meta name="twitter:description" content="Custom AI systems that answer every lead, book the meeting, and update your CRM — in seconds, around the clock." />
+    <meta name="twitter:image" content="https://neoautomations.com/assets/og-home.png" />
+    <meta name="twitter:image:alt" content="Neo Automations — AI operating systems for business." />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Neo Automations",
+        "url": "https://neoautomations.com/",
+        "description": "Neo Automations builds custom AI operating systems that capture leads, respond instantly, book appointments, and synchronise CRM data for businesses.",
+        "email": "hello@neoautomations.com",
+        "makesOffer": {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Service",
+            "name": "AI automation systems",
+            "serviceType": "Business process automation"
+          }
+        }
+      }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@500,700,900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="stylesheet" href="shared.css?v=logo1" />
+    <link rel="stylesheet" href="css/mockups.css" />
+    <style>
+      /* ============================================================
+         Homepage styles
+
+         Composes css/foundation.css tokens only — no literal colours,
+         sizes, spacing, radii, shadows or easings. Nav, footer,
+         buttons, section headers and reveals all come from
+         shared.css so this page is the same component set as every
+         other page on the site.
+         ============================================================ */
+
+      /* ── 1. Hero ────────────────────────────────────────────── */
+      .hero {
+        position: relative;
+        padding: calc(var(--nav-h) + var(--section-pad)) var(--col-pad) var(--section-pad);
+        background: var(--bg-2);
+        border-bottom: 1px solid var(--border);
+        overflow: hidden;
+      }
+
+      /* Ambient field so the artifact sits in something rather than
+         floating on flat paint. Mirrors the Ira hero treatment. */
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: -12%;
+        right: -6%;
+        width: min(720px, 78vw);
+        aspect-ratio: 1;
+        background: radial-gradient(circle, var(--accent-glow) 0%, transparent 62%);
+        opacity: 0.45;
+        pointer-events: none;
+      }
+
+      .hero-inner {
+        position: relative;
+        max-width: var(--max-w);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1.02fr;
+        gap: clamp(var(--space-10), 6vw, var(--space-20));
+        align-items: center;
+      }
+
+      /* Column is a flexbox, so children stretch by default — the
+         eyebrow and CTA row must opt out or the pill inflates to the
+         full column width. */
+      .hero-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        min-width: 0;
+      }
+
+      .hero-h1 {
+        font-size: var(--text-5xl);
+        font-weight: var(--weight-black);
+        letter-spacing: var(--tracking-display);
+        line-height: var(--leading-display);
+        margin-bottom: var(--space-6);
+        max-width: 15ch;
+        text-wrap: balance;
+      }
+
+      .hero-sub {
+        font-size: var(--text-lg);
+        color: var(--text-secondary);
+        line-height: var(--leading-lead);
+        max-width: var(--measure-body);
+        margin-bottom: var(--space-8);
+      }
+
+      .hero-ctas {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        margin-bottom: var(--space-10);
+      }
+
+      /* Three facts, not a paragraph — carries the proof without copy. */
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-8);
+        padding-top: var(--space-6);
+        border-top: 1px solid var(--border);
+        width: 100%;
+      }
+
+      .hero-meta dt {
+        font-family: var(--font-mono);
+        font-size: var(--text-2xs);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-label);
+        color: var(--text-muted);
+        margin-bottom: var(--space-1);
+      }
+
+      .hero-meta dd {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: var(--weight-bold);
+        letter-spacing: var(--tracking-title);
+        color: var(--text-primary);
+      }
+
+      /* ── Hero artifact: one automation run ──────────────────────
+         Replaces a fake browser window (traffic lights, sidebar,
+         mostly-empty stage). This sizes to its content, so there is
+         no dead space, and every row states a real outcome. */
+      .run {
+        position: relative;
+        background: var(--bg-card);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-xl);
+        box-shadow: var(--elev-3);
+        overflow: hidden;
+        --run-mark: 22px;
+      }
+
+      .run-top,
+      .run-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-4);
+        padding: var(--space-4) var(--space-5);
+        background: var(--bg-2);
+      }
+
+      .run-top { border-bottom: 1px solid var(--border); }
+      .run-foot { border-top: 1px solid var(--border); }
+
+      .run-live {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-family: var(--font-mono);
+        font-size: var(--text-2xs);
+        font-weight: var(--weight-medium);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-label);
+        color: var(--success);
+      }
+
+      .run-live-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: var(--radius-full);
+        background: var(--success);
+        animation: run-pulse 2s var(--ease-in-out) infinite;
+      }
+
+      @keyframes run-pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.35; }
+      }
+
+      .run-id {
+        font-family: var(--font-mono);
+        font-size: var(--text-2xs);
+        color: var(--text-muted);
+      }
+
+      .run-steps {
+        padding: var(--space-4) var(--space-5);
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-1);
+      }
+
+      .run-step {
+        --run-row-pad: var(--space-3);
+        position: relative;
+        display: grid;
+        grid-template-columns: var(--run-mark) minmax(0, 1fr) auto;
+        align-items: start;
+        column-gap: var(--space-4);
+        padding: var(--run-row-pad) 0;
+      }
+
+      /* Rail from this mark's centre to the next, independent of
+         row height — wrapping labels no longer throw the line off. */
+      .run-step:not(:last-child)::before {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        left: calc(var(--run-mark) / 2 - 1px);
+        top: calc(var(--run-row-pad) + var(--run-mark) / 2);
+        bottom: calc(-1 * (var(--space-1) + var(--run-row-pad)) - var(--run-mark) / 2);
+        width: 2px;
+        background: var(--border-strong);
+        transition: background var(--dur-3) var(--ease-out);
+      }
+
+      .run-step.is-done:not(:last-child)::before {
+        background: var(--accent);
+      }
+
+      .run-mark {
+        position: relative;
+        z-index: 1;
+        width: var(--run-mark);
+        height: var(--run-mark);
+        border-radius: var(--radius-full);
+        border: 2px solid var(--border-strong);
+        background: var(--bg-card);
+        display: grid;
+        place-content: center;
+        transition: border-color var(--dur-3) var(--ease-out),
+                    background var(--dur-3) var(--ease-out),
+                    box-shadow var(--dur-3) var(--ease-out);
+      }
+
+      .run-step.is-active .run-mark {
+        border-color: var(--accent);
+        box-shadow: 0 0 0 4px var(--accent-surface);
+      }
+
+      .run-step.is-done .run-mark {
+        border-color: var(--accent);
+        background: var(--accent);
+      }
+
+      .run-step.is-done .run-mark::after {
+        content: "";
+        width: 0.5rem;
+        height: 0.28rem;
+        border-left: 2px solid var(--inverse-text);
+        border-bottom: 2px solid var(--inverse-text);
+        transform: rotate(-45deg) translateY(-1px);
+      }
+
+      .run-label {
+        display: block;
+        font-size: var(--text-sm);
+        font-weight: var(--weight-medium);
+        color: var(--text-muted);
+        transition: color var(--dur-3) var(--ease-out);
+      }
+
+      .run-step > span:nth-child(2) { min-width: 0; }
+
+      .run-step.is-active .run-label,
+      .run-step.is-done .run-label {
+        color: var(--text-primary);
+      }
+
+      .run-meta {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: var(--text-2xs);
+        color: var(--text-muted);
+        margin-top: var(--space-0-5);
+        overflow-wrap: anywhere;
+      }
+
+      .run-t {
+        font-family: var(--font-mono);
+        font-size: var(--text-2xs);
+        color: var(--text-muted);
+        opacity: 0;
+        padding-top: 2px;
+        transition: opacity var(--dur-3) var(--ease-out);
+        font-variant-numeric: tabular-nums;
+      }
+
+      .run-step.is-done .run-t { opacity: 1; }
+
+      .run-foot-k {
+        font-size: var(--text-xs);
+        color: var(--text-muted);
+      }
+
+      .run-foot-v {
+        font-family: var(--font-mono);
+        font-size: var(--text-lg);
+        font-weight: var(--weight-medium);
+        color: var(--text-primary);
+        font-variant-numeric: tabular-nums;
+        min-width: 3ch;
+        text-align: right;
+      }
+
+      /* ── 2. Problem ─────────────────────────────────────────── */
+      .problem-statement {
+        font-family: var(--font-display);
+        font-size: var(--text-3xl);
+        font-weight: var(--weight-bold);
+        letter-spacing: var(--tracking-heading);
+        line-height: var(--leading-heading);
+        max-width: 26ch;
+        margin: 0 auto var(--space-16);
+        text-align: center;
+        text-wrap: balance;
+      }
+
+      .problem-statement span { color: var(--text-muted); }
+
+      .stats-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-6);
+      }
+
+      .stat-item {
+        text-align: center;
+        padding: var(--space-6) var(--space-4);
+        border-left: 1px solid var(--border);
+      }
+
+      .stat-item:first-child { border-left: none; }
+
+      .stat-num {
+        font-family: var(--font-display);
+        font-size: var(--text-4xl);
+        font-weight: var(--weight-black);
+        letter-spacing: var(--tracking-display);
+        line-height: var(--leading-display);
+        color: var(--text-primary);
+      }
+
+      .stat-num.is-warning { color: var(--warning); }
+
+      .stat-label {
+        margin-top: var(--space-3);
+        font-size: var(--text-sm);
+        color: var(--text-secondary);
+        line-height: var(--leading-body);
+        max-width: 18ch;
+        margin-inline: auto;
+      }
+
+      /* ── 3. How it works ────────────────────────────────────────
+         One section replacing the old "Three pillars" grid plus the
+         five-step Ira journey, which said the same thing twice. */
+      .flow {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-6);
+        margin-top: var(--space-16);
+      }
+
+      .flow-stage {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: var(--space-8);
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        min-width: 0;
+        transition: border-color var(--dur-3) var(--ease-out),
+                    background var(--dur-3) var(--ease-out),
+                    transform var(--dur-3) var(--ease-out),
+                    box-shadow var(--dur-3) var(--ease-out);
+      }
+
+      /* Active is colour only. Translating an auto-playing card also
+         moves the connector that meets its edge, so the row visibly
+         steps out of alignment three times a cycle. The lift is
+         reserved for hover, where the user causes it. */
+      .flow-stage.is-active {
+        border-color: var(--accent-border);
+        background: var(--bg-card-hover);
+        box-shadow: var(--elev-2);
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .flow-stage:hover {
+          transform: translateY(var(--lift-lg));
+          box-shadow: var(--elev-2);
+        }
+
+        .flow-stage:not(.is-active):hover {
+          border-color: var(--border-light);
+        }
+      }
+
+      /* Connector between cards, sitting behind them. Reads as the
+         handoff from one stage to the next. */
+      .flow-stage:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: calc(var(--space-8) + var(--space-6));
+        left: 100%;
+        width: var(--space-6);
+        height: 2px;
+        background: var(--border-strong);
+        pointer-events: none;
+        transition: background var(--dur-3) var(--ease-out);
+      }
+
+      .flow-stage.is-done:not(:last-child)::after {
+        background: var(--accent);
+      }
+
+      .flow-num {
+        font-family: var(--font-mono);
+        font-size: var(--text-2xs);
+        font-weight: var(--weight-medium);
+        letter-spacing: var(--tracking-label);
+        color: var(--text-muted);
+        margin-bottom: var(--space-6);
+        transition: color var(--dur-3) var(--ease-out);
+      }
+
+      .flow-stage.is-active .flow-num { color: var(--accent); }
+
+      .flow-icon {
+        width: var(--space-12);
+        height: var(--space-12);
+        display: grid;
+        place-content: center;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+        margin-bottom: var(--space-6);
+        transition: background var(--dur-3) var(--ease-out),
+                    border-color var(--dur-3) var(--ease-out);
+      }
+
+      .flow-stage.is-active .flow-icon {
+        background: var(--accent-surface);
+        border-color: var(--accent-border);
+      }
+
+      .flow-icon svg {
+        width: var(--space-5);
+        height: var(--space-5);
+        stroke: var(--text-secondary);
+        fill: none;
+        stroke-width: 1.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        transition: stroke var(--dur-3) var(--ease-out);
+      }
+
+      .flow-stage.is-active .flow-icon svg { stroke: var(--accent); }
+
+      .flow-stage h3 {
+        font-size: var(--text-xl);
+        margin-bottom: var(--space-3);
+      }
+
+      .flow-stage p {
+        font-size: var(--text-base);
+        color: var(--text-secondary);
+        line-height: var(--leading-body);
+      }
+
+      /* ── 4. Ira spotlight ───────────────────────────────────── */
+      .ira-spot { position: relative; overflow: hidden; }
+
+      .ira-spot::before {
+        content: "";
+        position: absolute;
+        bottom: -20%;
+        left: -8%;
+        width: min(620px, 70vw);
+        aspect-ratio: 1;
+        background: radial-gradient(circle, var(--accent-glow) 0%, transparent 64%);
+        opacity: 0.35;
+        pointer-events: none;
+      }
+
+      .ira-spot-inner {
+        position: relative;
+        display: grid;
+        grid-template-columns: 1fr 0.85fr;
+        gap: clamp(var(--space-10), 6vw, var(--space-20));
+        align-items: center;
+      }
+
+      .ira-spot-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        min-width: 0;
+      }
+
+      .ira-spot-metrics {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-8);
+        margin: var(--space-8) 0;
+        padding: var(--space-6) 0;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+        width: 100%;
+      }
+
+      .ira-spot-metrics dt {
+        font-family: var(--font-mono);
+        font-size: var(--text-2xs);
+        text-transform: uppercase;
+        letter-spacing: var(--tracking-label);
+        color: var(--text-muted);
+        margin-bottom: var(--space-1);
+      }
+
+      .ira-spot-metrics dd {
+        font-family: var(--font-display);
+        font-size: var(--text-2xl);
+        font-weight: var(--weight-black);
+        letter-spacing: var(--tracking-heading);
+        color: var(--text-primary);
+      }
+
+      .ira-spot .device {
+        max-width: min(268px, 72vw);
+      }
+
+      /* ── 5. Proof ───────────────────────────────────────────── */
+      .proof { text-align: center; }
+
+      .proof-quote {
+        font-family: var(--font-display);
+        font-size: var(--text-2xl);
+        font-weight: var(--weight-bold);
+        letter-spacing: var(--tracking-heading);
+        line-height: var(--leading-heading);
+        max-width: 34ch;
+        margin: 0 auto var(--space-6);
+        text-wrap: balance;
+      }
+
+      .proof-author {
+        font-size: var(--text-sm);
+        color: var(--text-muted);
+      }
+
+      .placeholder-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-family: var(--font-mono);
+        font-size: var(--text-2xs);
+        font-weight: var(--weight-medium);
+        letter-spacing: var(--tracking-label);
+        text-transform: uppercase;
+        color: var(--warning);
+        background: var(--warning-surface);
+        border: 1px solid var(--warning-border);
+        padding: var(--space-1) var(--space-3);
+        border-radius: var(--radius-full);
+        margin-bottom: var(--space-6);
+      }
+
+      /* ── 6. Final CTA ───────────────────────────────────────── */
+      .final-cta { text-align: center; }
+
+      .final-cta .section-title,
+      .final-cta .section-subtitle {
+        margin-inline: auto;
+        text-align: center;
+      }
+
+      .final-cta .btn-primary { margin-top: var(--space-8); }
+
+      .final-cta-note {
+        margin-top: var(--space-5);
+        font-size: var(--text-sm);
+        color: var(--text-muted);
+      }
+
+      /* ── Responsive ─────────────────────────────────────────── */
+      @media (max-width: 1024px) {
+        .hero {
+          padding-top: calc(var(--nav-h) + var(--space-10));
+          padding-bottom: var(--space-12);
+        }
+
+        .hero-inner,
+        .ira-spot-inner {
+          grid-template-columns: 1fr;
+          gap: var(--space-10);
+        }
+
+        .run { width: 100%; max-width: 32rem; margin-inline: auto; }
+
+        .flow { grid-template-columns: 1fr; gap: var(--space-4); }
+
+        .flow-stage:not(:last-child)::after {
+          top: 100%;
+          left: calc(var(--space-8) + var(--space-6));
+          width: 2px;
+          height: var(--space-4);
+        }
+
+        .ira-spot-text { align-items: flex-start; }
+      }
+
+      @media (max-width: 768px) {
+        .hero {
+          padding-top: calc(var(--nav-h) + var(--space-8));
+          padding-bottom: var(--space-10);
+        }
+
+        .hero-inner { gap: var(--space-8); }
+
+        .hero-h1 {
+          font-size: clamp(1.75rem, 1.15rem + 3.2vw, 2.25rem);
+          line-height: 1.12;
+          max-width: 14ch;
+          margin-bottom: var(--space-4);
+        }
+
+        .hero-sub {
+          font-size: var(--text-base);
+          margin-bottom: var(--space-6);
+        }
+
+        .hero-ctas {
+          width: 100%;
+          margin-bottom: var(--space-8);
+        }
+
+        .hero-meta {
+          gap: var(--space-6);
+          padding-top: var(--space-5);
+        }
+
+        .run {
+          --run-mark: 18px;
+          border-radius: var(--radius-lg);
+        }
+
+        .run-step {
+          --run-row-pad: var(--space-2);
+          column-gap: var(--space-3);
+        }
+
+        .run-label { font-size: var(--text-xs); }
+        .run-foot-v { font-size: var(--text-base); }
+        .run-top,
+        .run-foot,
+        .run-steps { padding-inline: var(--space-4); }
+        .run-top,
+        .run-foot { padding-block: var(--space-3); }
+        .run-steps { padding-block: var(--space-3); }
+
+        .stats-row { grid-template-columns: 1fr; gap: 0; }
+
+        .stat-item {
+          border-left: none;
+          border-top: 1px solid var(--border);
+          padding: var(--space-6) var(--space-4);
+        }
+
+        .stat-item:first-child { border-top: none; }
+        .stat-num { font-size: var(--text-3xl); }
+        .stat-label { max-width: 28ch; }
+
+        .problem-statement {
+          font-size: var(--text-2xl);
+          margin-bottom: var(--space-10);
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero-ctas { flex-direction: column; align-items: stretch; }
+        .hero-ctas .btn-primary,
+        .hero-ctas .btn-outline { width: 100%; }
+
+        .hero-meta { gap: var(--space-5); }
+
+        .run-id { max-width: 42%; overflow: hidden; text-overflow: ellipsis; }
+
+        .flow-stage { padding: var(--space-6); }
+        .flow-stage:not(:last-child)::after {
+          left: calc(var(--space-6) + var(--space-6));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to main content</a>
+
+    <!-- NAV -->
+    <header class="site-header" id="site-header">
+      <div class="nav-inner">
+        <a href="index.html" class="logo" aria-label="Neo Automations home">
+          <span class="logo-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><rect x="1.54" y="2.28" width="10.14" height="10.14" rx="3.85"/><rect x="12.14" y="13.31" width="9.89" height="9.89" rx="3.76"/><rect x="3.34" y="22.08" width="9.15" height="9.15" rx="3.48"/><rect x="22.06" y="22.19" width="8.65" height="8.65" rx="3.29"/><rect x="-7.56" y="-1.85" width="15.13" height="3.71" rx="1.85" transform="translate(11.85 12.80) rotate(46.14)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(12.50 22.46) rotate(137.51)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(21.74 22.38) rotate(41.60)"/></svg></span>
+          <span class="logo-name">Neo Automations</span>
+        </a>
+        <nav class="nav-links">
+          <a href="services.html">Systems</a>
+          <a href="ira.html">Ira (Real Estate)</a>
+          <a href="about.html">Use Cases</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+        <div class="nav-right">
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+            <svg class="icon-dark" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+          </button>
+          <a href="login.html" class="btn-nav-login">
+            <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            Client Login
+          </a>
+          <a href="contact.html" class="btn-nav-primary">Start Audit</a>
+          <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MOBILE DRAWER -->
+    <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+      <nav>
+        <a href="services.html">Systems</a>
+        <a href="ira.html">Ira (Real Estate)</a>
+        <a href="about.html">Use Cases</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="mobile-drawer-cta">
+        <a href="login.html" class="btn-outline">Client Login</a>
+        <a href="contact.html" class="btn-primary">Start Automation Audit</a>
+      </div>
+    </div>
+
+    <main id="main">
+
+      <!-- 1. HERO -->
+      <section class="hero">
+        <div class="hero-inner">
+          <div class="hero-text reveal visible">
+            <p class="section-eyebrow">AI Operating Systems</p>
+            <h1 class="hero-h1">Your business, running itself.</h1>
+            <p class="hero-sub">Custom AI systems that answer every lead, book the meeting, and update your CRM — in seconds, around the clock.</p>
+            <div class="hero-ctas">
+              <a href="contact.html" class="btn-primary">Start Automation Audit</a>
+              <a href="ira.html" class="btn-outline">See Ira in Action</a>
+            </div>
+            <dl class="hero-meta">
+              <div><dt>Response</dt><dd>&lt;60s</dd></div>
+              <div><dt>Coverage</dt><dd>24/7</dd></div>
+              <div><dt>Handoff</dt><dd>Zero</dd></div>
+            </dl>
+          </div>
+
+          <div class="hero-visual reveal visible reveal-d1">
+            <div class="run" id="hero-run" aria-label="Example automation run, from enquiry to CRM update">
+              <div class="run-top">
+                <span class="run-live"><span class="run-live-dot" aria-hidden="true"></span>Live</span>
+                <span class="run-id">run_8f2a41</span>
+              </div>
+              <ol class="run-steps">
+                <li class="run-step" data-run="0">
+                  <span class="run-mark" aria-hidden="true"></span>
+                  <span>
+                    <span class="run-label">Lead captured</span>
+                    <span class="run-meta">WhatsApp enquiry</span>
+                  </span>
+                  <span class="run-t">0.4s</span>
+                </li>
+                <li class="run-step" data-run="1">
+                  <span class="run-mark" aria-hidden="true"></span>
+                  <span>
+                    <span class="run-label">Replied and qualified</span>
+                    <span class="run-meta">Budget · timeline · intent</span>
+                  </span>
+                  <span class="run-t">14s</span>
+                </li>
+                <li class="run-step" data-run="2">
+                  <span class="run-mark" aria-hidden="true"></span>
+                  <span>
+                    <span class="run-label">Meeting booked</span>
+                    <span class="run-meta">Thu 3:00 PM</span>
+                  </span>
+                  <span class="run-t">31s</span>
+                </li>
+                <li class="run-step" data-run="3">
+                  <span class="run-mark" aria-hidden="true"></span>
+                  <span>
+                    <span class="run-label">CRM updated</span>
+                    <span class="run-meta">HubSpot · score 92</span>
+                  </span>
+                  <span class="run-t">41s</span>
+                </li>
+              </ol>
+              <div class="run-foot">
+                <span class="run-foot-k">Total handling time</span>
+                <span class="run-foot-v" id="run-elapsed">41s</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. PROBLEM -->
+      <section class="section-pad section-band">
+        <div class="container">
+          <p class="section-eyebrow is-centered reveal">The cost of manual ops</p>
+          <h2 class="problem-statement reveal reveal-d1">Slow replies cost you revenue <span>you already earned.</span></h2>
+          <div class="stats-row reveal reveal-d2">
+            <div class="stat-item">
+              <p class="stat-num"><span class="count-up" data-target="78" data-suffix="%">0%</span></p>
+              <p class="stat-label">of leads go cold after a five-minute wait</p>
+            </div>
+            <div class="stat-item">
+              <p class="stat-num"><span class="count-up" data-target="6" data-suffix="x">0x</span></p>
+              <p class="stat-label">more likely to convert inside 60 seconds</p>
+            </div>
+            <div class="stat-item">
+              <p class="stat-num is-warning"><span class="count-up" data-target="40" data-prefix="₹" data-suffix="L+">₹0L+</span></p>
+              <p class="stat-label">lost each year to follow-up gaps</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. HOW IT WORKS -->
+      <section class="section-pad" id="how-it-works">
+        <div class="container">
+          <p class="section-eyebrow is-centered reveal">How it works</p>
+          <h2 class="section-title is-centered reveal reveal-d1">Three stages. One system.</h2>
+          <ol class="flow" id="flow">
+            <li class="flow-stage reveal" data-stage="0">
+              <span class="flow-num">01</span>
+              <div class="flow-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              </div>
+              <h3>Capture</h3>
+              <p>Every channel into one pipeline — WhatsApp, forms, ads, portals.</p>
+            </li>
+            <li class="flow-stage reveal reveal-d1" data-stage="1">
+              <span class="flow-num">02</span>
+              <div class="flow-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              </div>
+              <h3>Execute</h3>
+              <p>Replies, qualifies, follows up, and books — in your voice, all night.</p>
+            </li>
+            <li class="flow-stage reveal reveal-d2" data-stage="2">
+              <span class="flow-num">03</span>
+              <div class="flow-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              </div>
+              <h3>Sync</h3>
+              <p>Your CRM, calendar, and team stay current without data entry.</p>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- 4. IRA SPOTLIGHT -->
+      <section class="section-pad section-band ira-spot">
+        <div class="container ira-spot-inner">
+          <div class="ira-spot-text reveal">
+            <p class="section-eyebrow">Flagship agent</p>
+            <h2 class="section-title">Meet Ira, built for real estate.</h2>
+            <p class="section-subtitle">Ira answers property enquiries, qualifies buyers, books site visits, and briefs your sales team every morning.</p>
+            <dl class="ira-spot-metrics">
+              <div><dt>First reply</dt><dd>&lt;60s</dd></div>
+              <div><dt>Languages</dt><dd>EN · HI</dd></div>
+              <div><dt>Nurture</dt><dd>14 days</dd></div>
+            </dl>
+            <a href="ira.html" class="btn-primary">Explore Ira</a>
+          </div>
+
+          <div class="reveal reveal-d1">
+            <div class="device">
+              <div class="device-notch"></div>
+              <div class="device-screen">
+                <div class="device-status" aria-hidden="true">
+                  <span class="device-time">9:41</span>
+                  <svg class="device-sys" viewBox="0 0 68 12" fill="none">
+                    <rect x="0" y="8" width="2.8" height="3.2" rx="0.5" fill="currentColor" opacity="0.35"/>
+                    <rect x="4.2" y="5.8" width="2.8" height="5.4" rx="0.5" fill="currentColor" opacity="0.35"/>
+                    <rect x="8.4" y="3.6" width="2.8" height="7.6" rx="0.5" fill="currentColor"/>
+                    <rect x="12.6" y="1.4" width="2.8" height="9.8" rx="0.5" fill="currentColor"/>
+                    <path d="M29 9.6a3.4 3.4 0 0 1 5 0" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                    <path d="M27.2 7.6a5.8 5.8 0 0 1 8.6 0" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                    <path d="M25.4 5.6a8.2 8.2 0 0 1 12.2 0" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/>
+                    <circle cx="31.5" cy="10.8" r="1" fill="currentColor"/>
+                    <rect x="47.5" y="2" width="16.5" height="8" rx="1.8" stroke="currentColor" stroke-width="1.15"/>
+                    <rect x="49.2" y="3.5" width="11.4" height="5" rx="0.8" fill="currentColor"/>
+                    <rect x="64.6" y="4.2" width="1.5" height="3.6" rx="0.4" fill="currentColor"/>
+                  </svg>
+                </div>
+                <div class="chat-header">
+                  <span class="chat-header-back" aria-hidden="true">‹</span>
+                  <div class="chat-header-avatar" aria-hidden="true">I</div>
+                  <div class="chat-header-info">
+                    <div class="chat-header-name">Ira · Real Estate</div>
+                    <div class="chat-header-status">online</div>
+                  </div>
+                </div>
+                <div class="chat-body chat-body--end">
+                  <div class="chat-bubble in show">Is the 3BHK at Skyview still available?</div>
+                  <div class="chat-bubble out show">Yes — from ₹1.2Cr, possession 2027. Would you like a site visit this week?</div>
+                  <div class="chat-bubble in show">Saturday works.</div>
+                  <div class="chat-bubble out show">Booked for Saturday 11:30 AM. I have sent you the directions.</div>
+                </div>
+                <div class="chat-status-bar show">Visit booked · CRM updated</div>
+                <div class="chat-composer" aria-hidden="true">
+                  <span class="chat-composer-btn">+</span>
+                  <span class="chat-composer-field">Message</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. PROOF -->
+      <section class="section-pad proof">
+        <div class="container">
+          <span class="placeholder-badge reveal">Placeholder testimonial</span>
+          <blockquote class="proof-quote reveal reveal-d1">“Our response time went from hours to seconds — and our close rate followed.”</blockquote>
+          <!-- TODO: replace with a real, attributed client testimonial before launch -->
+          <p class="proof-author reveal reveal-d2">— Client Name, Title at Company</p>
+        </div>
+      </section>
+
+      <!-- 6. FINAL CTA -->
+      <section class="section-pad-lg section-band final-cta">
+        <div class="container">
+          <h2 class="section-title is-centered reveal">Ready to automate your operations?</h2>
+          <p class="section-subtitle is-centered reveal reveal-d1">Start with a free audit. We map your workflows, find the bottlenecks, and show you exactly what an AI operating system looks like for your business.</p>
+          <a href="contact.html" class="btn-primary btn-lg reveal reveal-d2">Book a Demo</a>
+          <p class="final-cta-note reveal reveal-d3">No commitment · 30-minute call · Custom roadmap included</p>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo">
+              <span class="logo-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><rect x="1.54" y="2.28" width="10.14" height="10.14" rx="3.85"/><rect x="12.14" y="13.31" width="9.89" height="9.89" rx="3.76"/><rect x="3.34" y="22.08" width="9.15" height="9.15" rx="3.48"/><rect x="22.06" y="22.19" width="8.65" height="8.65" rx="3.29"/><rect x="-7.56" y="-1.85" width="15.13" height="3.71" rx="1.85" transform="translate(11.85 12.80) rotate(46.14)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(12.50 22.46) rotate(137.51)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(21.74 22.38) rotate(41.60)"/></svg></span>
+              <span class="logo-name">Neo Automations</span>
+            </a>
+            <p>Custom AI operating systems for businesses that demand precision execution at scale.</p>
+          </div>
+          <div class="footer-col">
+            <h3>Systems</h3>
+            <ul>
+              <li><a href="services.html">LeadFlow AI</a></li>
+              <li><a href="ira.html">Ira (Real Estate)</a></li>
+              <li><a href="services.html">ReplyOps AI</a></li>
+              <li><a href="services.html">ScheduleSync AI</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="about.html">Use Cases</a></li>
+              <li><a href="pricing.html">Pricing</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Portal</h3>
+            <ul>
+              <li><a href="contact.html">Audit Request</a></li>
+              <li><a href="login.html">Client Login</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Neo Automations. All rights reserved.</p>
+          <div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a></div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+    <script type="module" src="js/home.js"></script>
+  </body>
+</html>

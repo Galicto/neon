@@ -1,0 +1,1082 @@
+/* ============================================================
+   Neo Automations — Product mockup components
+
+   Shared by index.html and ira.html. Everything composes from
+   css/foundation.css tokens.
+
+   Exception, declared deliberately: the chat mockup reproduces
+   WhatsApp's real interface colours. Those are brand constants,
+   not theme values, so they are namespaced --wa-* and are the
+   only literals permitted in this file. They must NOT respond to
+   the light/dark toggle — WhatsApp dark mode looks the same on a
+   light website, and faking it breaks the realism the mockup is
+   there to provide.
+
+   Corollary: the device screen stays dark in BOTH themes, so any
+   text drawn on it must also be theme-invariant. Themed tokens like
+   --accent flip to a darker value for light page surfaces and fail
+   contrast once placed on this dark chrome, so chrome UI uses the
+   --chrome-* set below instead. Ratios are against --device-screen.
+   ============================================================ */
+
+:root {
+  --wa-header-from: #075e54;
+  --wa-header-to: #128c7e;
+  --wa-canvas: #0b141a;
+  --wa-bubble-in: #1f2c34;
+  --wa-bubble-out: #005c4b;
+  --wa-text: #e9edef;
+  --device-shell: #0c0c10;
+  --device-screen: #111116;
+
+  --chrome-fill: rgba(255, 255, 255, 0.06);
+  --chrome-border: rgba(255, 255, 255, 0.10);
+  --chrome-text-muted: rgba(255, 255, 255, 0.68); /* 6.0:1 */
+  --chrome-accent: #a89bff;                       /* 7.4:1 */
+  --chrome-accent-surface: rgba(139, 123, 255, 0.18);
+  --chrome-accent-border: rgba(139, 123, 255, 0.38);
+  --chrome-success: #3ddc97;                      /* 9.3:1 */
+  --chrome-success-surface: rgba(61, 220, 151, 0.12);
+  --chrome-success-border: rgba(61, 220, 151, 0.28);
+}
+
+/* ── iPhone 17 Pro Max ────────────────────────────────────────
+   Chassis 78 × 163.4 mm. Display 6.9" 1320×2868. Thin Ceramic
+   Shield bezel, Dynamic Island, action button, Deep Blue
+   unibody. Flat and front-on — a 3D tilt thickens the bezel
+   and is what made the previous shell look like a toy. */
+
+.device {
+  --phone-bezel: 5px;
+  --phone-island-w: 88px;
+  --phone-island-h: 26px;
+  --phone-island-top: 10px;
+  --phone-safe-top: 52px;
+  --phone-safe-bottom: 16px;
+  --phone-frame: #1c3348;
+  --phone-frame-hi: #5a7a96;
+  --phone-frame-lo: #0c1824;
+
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 300px;
+  min-width: 0;
+  margin: 0 auto;
+  aspect-ratio: 78 / 163.4;
+  display: flex;
+  flex-direction: column;
+  padding: var(--phone-bezel);
+  border-radius: var(--radius-device);
+  container-type: inline-size;
+  container-name: phone;
+  background:
+    linear-gradient(165deg, rgba(255, 255, 255, 0.22) 0%, transparent 34%),
+    linear-gradient(180deg, #4a6d8c 0%, var(--phone-frame) 42%, var(--phone-frame-lo) 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.32),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.5),
+    inset 1px 0 0 rgba(255, 255, 255, 0.1),
+    inset -1px 0 0 rgba(0, 0, 0, 0.4),
+    0 0 0 0.5px rgba(8, 16, 28, 0.7),
+    var(--elev-3),
+    0 28px 64px rgba(12, 24, 40, 0.28);
+}
+
+/* Action + volume (left). Same footprint, stacked with shadows. */
+.device::before {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 16%;
+  width: 3px;
+  height: 22px;
+  border-radius: 1px 0 0 1px;
+  background: linear-gradient(90deg, var(--phone-frame-hi), var(--phone-frame-lo));
+  box-shadow:
+    0 36px 0 0 var(--phone-frame),
+    0 70px 0 0 var(--phone-frame);
+  pointer-events: none;
+}
+
+/* Power (right). */
+.device::after {
+  content: "";
+  position: absolute;
+  right: -2px;
+  top: 26%;
+  width: 3px;
+  height: 56px;
+  border-radius: 0 1px 1px 0;
+  background: linear-gradient(270deg, var(--phone-frame-hi), var(--phone-frame-lo));
+  pointer-events: none;
+}
+
+/* Dynamic Island — sits in the screen, not as a bezel cutout.
+   Width tracks the chassis so a 236px how-it-works phone does not
+   squeeze the status icons under a full-size 88px pill. */
+.device-notch {
+  position: absolute;
+  top: calc(var(--phone-bezel) + var(--phone-island-top));
+  left: 50%;
+  transform: translateX(-50%);
+  width: 29%;
+  aspect-ratio: 88 / 26;
+  height: auto;
+  background: #000;
+  border-radius: var(--radius-full);
+  z-index: 8;
+  pointer-events: none;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.device-notch::before,
+.device-notch::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: var(--radius-full);
+}
+
+/* Face ID window */
+.device-notch::before {
+  left: 20%;
+  width: 9.5%;
+  aspect-ratio: 1;
+  height: auto;
+  background: #0b0d10;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Front camera */
+.device-notch::after {
+  right: 16%;
+  width: 12%;
+  aspect-ratio: 1;
+  height: auto;
+  background:
+    radial-gradient(circle at 35% 32%, #4a7aa8 0%, #12304c 42%, #05080c 70%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.device-screen {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--device-screen);
+  border-radius: calc(var(--radius-device) - var(--phone-bezel));
+  overflow: hidden;
+}
+
+/* Status row shares the island's vertical band: time left, glyphs right,
+   nothing in the reserved center, nothing in the bezel. */
+.device-status {
+  position: absolute;
+  top: var(--phone-island-top);
+  left: 0;
+  right: 0;
+  height: 26px;
+  z-index: 7;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32%;
+  padding: 0 24px;
+  pointer-events: none;
+  color: #fff;
+}
+
+.device-time {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-size: clamp(10px, 4cqw, 12px);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+
+.device-sys {
+  flex: 0 0 auto;
+  width: 48px;
+  width: clamp(44px, 17.5cqw, 52px);
+  height: 11px;
+  height: clamp(10px, 4cqw, 12px);
+  color: #fff;
+  display: block;
+  overflow: visible;
+}
+
+/* Home indicator */
+.device-screen::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 7px;
+  transform: translateX(-50%);
+  width: 108px;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.42);
+  z-index: 7;
+  pointer-events: none;
+}
+
+/* ── Chat ───────────────────────────────────────────────────── */
+.chat-header {
+  display: flex;
+  align-items: center;
+  gap: clamp(6px, 2.4cqw, 10px);
+  padding: calc(var(--phone-safe-top, 52px) + 2px) clamp(8px, 3.2cqw, 12px) 8px;
+  background: linear-gradient(180deg, var(--wa-header-from) 0%, var(--wa-header-to) 100%);
+  color: #fff;
+  flex-shrink: 0;
+  border-radius: calc(var(--radius-device) - var(--phone-bezel))
+                 calc(var(--radius-device) - var(--phone-bezel)) 0 0;
+}
+
+.chat-header-back {
+  opacity: 0.7;
+  font-size: clamp(14px, 5.4cqw, 18px);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.chat-header-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.chat-header-name {
+  font-size: 11px;
+  font-size: clamp(10px, 4cqw, 12.5px);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-header-status {
+  font-size: 9px;
+  font-size: clamp(8px, 2.9cqw, 10px);
+  opacity: 0.78;
+  margin-top: 1px;
+}
+
+.chat-header-avatar {
+  width: 24px;
+  width: clamp(22px, 8.4cqw, 28px);
+  height: 24px;
+  height: clamp(22px, 8.4cqw, 28px);
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-size: clamp(9px, 3.2cqw, 11px);
+  font-weight: var(--weight-bold);
+  flex-shrink: 0;
+}
+
+.chat-body {
+  flex: 1;
+  background: var(--wa-canvas);
+  background-image: radial-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 16px 16px;
+  padding: 8px 8px 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 6px;
+  overflow: hidden;
+  scrollbar-width: none;
+  min-height: 0;
+}
+
+.chat-body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Anchor a short, static conversation to the bottom of the canvas the
+   way a real messaging app does, instead of leaving dead space under
+   the last bubble. margin-top on the first child rather than
+   justify-content:flex-end, which clips the top of an overflowing
+   scroll column in WebKit. */
+.chat-body--end > :first-child {
+  margin-top: auto;
+}
+
+.chat-channel-bar {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 4px;
+  flex-shrink: 0;
+  padding: 6px 8px 0;
+  background: var(--wa-canvas);
+  overflow: hidden;
+}
+
+.chat-channel {
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-size: clamp(7.5px, 2.6cqw, 9px);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: var(--radius-full);
+  background: var(--chrome-fill);
+  color: var(--chrome-text-muted);
+  border: 1px solid var(--chrome-border);
+  white-space: nowrap;
+  transition: background var(--dur-2) var(--ease-out),
+              color var(--dur-2) var(--ease-out),
+              border-color var(--dur-2) var(--ease-out);
+}
+
+.chat-channel.is-active {
+  background: var(--chrome-accent-surface);
+  color: var(--chrome-accent);
+  border-color: var(--chrome-accent-border);
+}
+
+.chat-bubble {
+  max-width: 82%;
+  padding: 6px 8px;
+  font-size: 11px;
+  font-size: clamp(10px, 3.7cqw, 12px);
+  line-height: 1.32;
+  letter-spacing: -0.01em;
+  color: var(--wa-text);
+  flex-shrink: 0;
+}
+
+/* Hidden messages are out of flow so the phone is never a wall of
+   invisible bubbles with one clipped line showing. Entry is a 180ms
+   pop — WhatsApp-speed, not a 500ms fade. */
+.chat-bubble:not(.show),
+.chat-typing:not(.show) {
+  display: none;
+}
+
+.chat-bubble.show {
+  display: block;
+  animation: msg-in 180ms var(--ease-out) both;
+}
+
+@keyframes msg-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.chat-bubble.in {
+  align-self: flex-start;
+  background: var(--wa-bubble-in);
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-lg) var(--radius-xs);
+}
+
+.chat-bubble.out {
+  align-self: flex-end;
+  background: var(--wa-bubble-out);
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-xs) var(--radius-lg);
+}
+
+.chat-bubble .chat-time {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-size: clamp(7.5px, 2.6cqw, 9px);
+  opacity: 0.55;
+  margin-top: 3px;
+  text-align: right;
+}
+
+.chat-typing {
+  align-self: flex-end;
+  display: none;
+  gap: 4px;
+  align-items: center;
+  padding: 8px 10px;
+  background: var(--wa-bubble-out);
+  border-radius: var(--radius-lg) var(--radius-lg) var(--radius-xs) var(--radius-lg);
+}
+
+.chat-typing.show {
+  display: flex;
+  animation: msg-in 160ms var(--ease-out) both;
+}
+
+.chat-typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.5);
+  animation: typing-bounce 1.2s var(--ease-in-out) infinite;
+}
+
+.chat-typing span:nth-child(2) { animation-delay: 0.15s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+.chat-status-bar {
+  padding: 6px 8px;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  font-size: clamp(7.5px, 2.5cqw, 9px);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--chrome-success);
+  background: var(--chrome-success-surface);
+  border-top: 1px solid var(--chrome-success-border);
+  opacity: 0;
+  transition: opacity var(--dur-3) var(--ease-out) 120ms;
+}
+
+.is-active .chat-status-bar.show,
+.show .chat-status-bar.show,
+.chat-status-bar.show {
+  opacity: 1;
+}
+
+.chat-composer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px 22px;
+  background: #1a1a1c;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.chat-composer-btn {
+  width: 24px;
+  width: clamp(22px, 8cqw, 26px);
+  height: 24px;
+  height: clamp(22px, 8cqw, 26px);
+  border-radius: var(--radius-full);
+  background: #3a3a3c;
+  color: #fff;
+  display: grid;
+  place-content: center;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.chat-composer-field {
+  flex: 1;
+  min-width: 0;
+  height: 26px;
+  height: clamp(24px, 9cqw, 28px);
+  border-radius: var(--radius-full);
+  background: #2c2c2e;
+  color: rgba(255, 255, 255, 0.38);
+  font-size: 10px;
+  font-size: clamp(9.5px, 3.4cqw, 11px);
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+/* When there's no composer, keep the last pane off the home indicator. */
+.device-screen > .chat-body:last-child,
+.device-screen > .chat-status-bar:last-child {
+  padding-bottom: calc(var(--phone-safe-bottom, 16px) + var(--space-2));
+}
+
+/* ── Explainer ribbon ───────────────────────────────────────── */
+.mock-ribbon {
+  padding: var(--space-2) var(--space-3);
+  background: var(--accent-surface);
+  border: 1px solid var(--accent-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-ui);
+  color: var(--text-primary);
+  margin-bottom: var(--space-3);
+  text-align: center;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity var(--dur-4) var(--ease-out),
+              transform var(--dur-4) var(--ease-out);
+}
+
+.is-active .mock-ribbon,
+.show .mock-ribbon,
+.mock-ribbon.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Lead profile card ──────────────────────────────────────── */
+.lead-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--elev-2);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--dur-5) var(--ease-out),
+              transform var(--dur-5) var(--ease-out);
+}
+
+.is-active .lead-card,
+.show .lead-card,
+.lead-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lead-card-top {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  margin-bottom: var(--space-5);
+  padding-bottom: var(--space-5);
+  border-bottom: 1px solid var(--border);
+}
+
+.lead-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+  background: linear-gradient(135deg, var(--accent-surface), var(--surface));
+  border: 1px solid var(--accent-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  color: var(--accent);
+}
+
+.lead-name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  letter-spacing: var(--tracking-title);
+  line-height: var(--leading-title);
+}
+
+.lead-meta {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.lead-score-ring {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-full);
+  border: 3px solid var(--border);
+  border-top-color: var(--success);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+}
+
+.lead-score-ring strong {
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  color: var(--success);
+  line-height: 1;
+}
+
+.lead-score-ring span {
+  font-size: 8px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+}
+
+.lead-tag {
+  display: inline-block;
+  margin-top: var(--space-2);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-full);
+  background: var(--warning-surface);
+  border: 1px solid var(--warning-border);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--warning);
+}
+
+.lead-fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.lead-field {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+  font-size: var(--text-sm);
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity var(--dur-3) var(--ease-out),
+              transform var(--dur-3) var(--ease-out);
+}
+
+.lead-field:last-child {
+  border-bottom: none;
+}
+
+.is-active .lead-field,
+.show .lead-field {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.is-active .lead-field:nth-child(1), .show .lead-field:nth-child(1) { transition-delay: 80ms; }
+.is-active .lead-field:nth-child(2), .show .lead-field:nth-child(2) { transition-delay: 150ms; }
+.is-active .lead-field:nth-child(3), .show .lead-field:nth-child(3) { transition-delay: 220ms; }
+.is-active .lead-field:nth-child(4), .show .lead-field:nth-child(4) { transition-delay: 290ms; }
+
+.lead-field-label {
+  color: var(--text-muted);
+}
+
+.lead-field-val {
+  font-weight: var(--weight-medium);
+  text-align: right;
+}
+
+/* ── Follow-up timeline ─────────────────────────────────────── */
+.fu-timeline {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.fu-timeline::before {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: var(--space-6);
+  bottom: var(--space-6);
+  width: 2px;
+  background: linear-gradient(var(--border-light), var(--accent), var(--border-light));
+  opacity: 0.5;
+}
+
+.fu-event {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity var(--dur-3) var(--ease-out),
+              transform var(--dur-3) var(--ease-out);
+}
+
+.is-active .fu-event,
+.show .fu-event {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.is-active .fu-event:nth-child(1), .show .fu-event:nth-child(1) { transition-delay: 60ms; }
+.is-active .fu-event:nth-child(2), .show .fu-event:nth-child(2) { transition-delay: 180ms; }
+.is-active .fu-event:nth-child(3), .show .fu-event:nth-child(3) { transition-delay: 300ms; }
+
+.fu-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  background: var(--surface);
+  border: 2px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+  color: var(--text-muted);
+  position: relative;
+  z-index: 1;
+}
+
+.fu-event.is-highlight .fu-dot {
+  background: var(--accent-surface);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.fu-content {
+  flex: 1;
+  padding: var(--space-3);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.fu-event.is-highlight .fu-content {
+  border-color: var(--accent-border);
+  background: var(--bg-card-hover);
+}
+
+.fu-day {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-1);
+}
+
+.fu-text {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: var(--leading-ui);
+}
+
+.fu-reply {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border);
+  font-size: var(--text-xs);
+  color: var(--success);
+  font-weight: var(--weight-medium);
+}
+
+/* ── Booking card ───────────────────────────────────────────── */
+.booking-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--dur-5) var(--ease-out),
+              transform var(--dur-5) var(--ease-out);
+}
+
+.is-active .booking-card,
+.show .booking-card,
+.booking-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.booking-head {
+  text-align: center;
+  margin-bottom: var(--space-5);
+}
+
+.booking-head strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  margin-bottom: var(--space-1);
+}
+
+.booking-head span {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+.booking-slots {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.booking-slot {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: background var(--dur-3) var(--ease-out),
+              border-color var(--dur-3) var(--ease-out),
+              transform var(--dur-3) var(--ease-out),
+              box-shadow var(--dur-3) var(--ease-out);
+}
+
+.booking-slot-time {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  color: var(--accent);
+  min-width: 72px;
+}
+
+.booking-slot-info {
+  flex: 1;
+  font-size: var(--text-sm);
+}
+
+.booking-slot-info span {
+  display: block;
+  font-size: var(--text-2xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.booking-slot.is-selected {
+  background: var(--inverse-bg);
+  border-color: var(--inverse-bg);
+  transform: scale(1.02);
+  box-shadow: var(--elev-2);
+}
+
+.booking-slot.is-selected .booking-slot-time,
+.booking-slot.is-selected .booking-slot-info {
+  color: var(--inverse-text);
+}
+
+.booking-slot.is-selected .booking-slot-info span {
+  color: color-mix(in srgb, var(--inverse-text) 60%, transparent);
+}
+
+.booking-confirm {
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--success-surface);
+  border: 1px solid var(--success-border);
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--success);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--dur-3) var(--ease-out) 320ms,
+              transform var(--dur-3) var(--ease-out) 320ms;
+}
+
+.is-active .booking-confirm,
+.show .booking-confirm {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Daily brief ────────────────────────────────────────────── */
+.brief-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity var(--dur-5) var(--ease-out),
+              transform var(--dur-5) var(--ease-out);
+}
+
+.is-active .brief-card,
+.show .brief-card,
+.brief-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.brief-header {
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.brief-header-left {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.brief-header-time {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--accent);
+}
+
+.brief-stats {
+  padding: var(--space-2) var(--space-5) var(--space-4);
+}
+
+.brief-stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border);
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity var(--dur-3) var(--ease-out),
+              transform var(--dur-3) var(--ease-out);
+}
+
+.brief-stat:last-child {
+  border-bottom: none;
+}
+
+.is-active .brief-stat,
+.show .brief-stat {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.is-active .brief-stat:nth-child(1), .show .brief-stat:nth-child(1) { transition-delay: 80ms; }
+.is-active .brief-stat:nth-child(2), .show .brief-stat:nth-child(2) { transition-delay: 160ms; }
+.is-active .brief-stat:nth-child(3), .show .brief-stat:nth-child(3) { transition-delay: 240ms; }
+
+.brief-stat-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+
+.brief-stat-val {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  font-weight: var(--weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.brief-stat-val.hot {
+  color: var(--warning);
+}
+
+.brief-opportunity {
+  margin: 0 var(--space-5) var(--space-5);
+  padding: var(--space-4);
+  background: var(--success-surface);
+  border: 1px solid var(--success-border);
+  border-radius: var(--radius-md);
+  opacity: 0;
+  transition: opacity var(--dur-3) var(--ease-out) 300ms;
+}
+
+.is-active .brief-opportunity,
+.show .brief-opportunity {
+  opacity: 1;
+}
+
+.brief-opportunity-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--success);
+  margin-bottom: var(--space-1);
+}
+
+.brief-opportunity-text {
+  font-size: var(--text-sm);
+  line-height: var(--leading-ui);
+  color: var(--text-primary);
+}
+
+/* ── Step mockup wrapper ────────────────────────────────────── */
+.step-mockup {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--space-5);
+  justify-content: center;
+  min-width: 0;
+}
+
+@media (max-width: 480px) {
+  .step-mockup { padding: var(--space-3); }
+}
+
+/* Cards inside mockups must be allowed to compress; several use
+   space-between rows whose min-content would otherwise set the floor. */
+.lead-card,
+.booking-card,
+.brief-card,
+.fu-timeline,
+.lead-field,
+.brief-stat,
+.booking-slot,
+.fu-content {
+  min-width: 0;
+}
+
+.lead-field-val,
+.brief-stat-label,
+.fu-text,
+.booking-slot-info {
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+/* ── Reduced motion: land everything in its final state ─────── */
+@media (prefers-reduced-motion: reduce) {
+  .chat-bubble,
+  .chat-typing,
+  .chat-status-bar,
+  .mock-ribbon,
+  .lead-card,
+  .lead-field,
+  .fu-event,
+  .booking-card,
+  .booking-confirm,
+  .brief-card,
+  .brief-stat,
+  .brief-opportunity {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .chat-typing {
+    display: none !important;
+  }
+
+  .chat-bubble.show,
+  .chat-bubble {
+    animation: none !important;
+    display: block !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

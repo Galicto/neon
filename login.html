@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In — Neo Client OS</title>
+    <meta name="description" content="Sign in to your Neo Automations client dashboard." />
+    <meta name="theme-color" content="#08080b" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="dashboard.css?v=logo1" />
+  </head>
+  <body class="dashboard-body">
+    <div class="login-page">
+      <div class="login-card" id="login-card">
+        <div class="login-logo">
+          <div class="login-logo-icon"><svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><rect x="1.54" y="2.28" width="10.14" height="10.14" rx="3.85"/><rect x="12.14" y="13.31" width="9.89" height="9.89" rx="3.76"/><rect x="3.34" y="22.08" width="9.15" height="9.15" rx="3.48"/><rect x="22.06" y="22.19" width="8.65" height="8.65" rx="3.29"/><rect x="-7.56" y="-1.85" width="15.13" height="3.71" rx="1.85" transform="translate(11.85 12.80) rotate(46.14)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(12.50 22.46) rotate(137.51)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(21.74 22.38) rotate(41.60)"/></svg></div>
+          <span class="login-logo-text">Neo Automations</span>
+        </div>
+
+        <h1 class="login-title">Welcome back</h1>
+        <p class="login-subtitle">Sign in to your Client Dashboard</p>
+
+        <div class="login-error" id="login-error">Invalid email or password. Please try again.</div>
+
+        <form id="login-form" autocomplete="on">
+          <div class="login-field">
+            <label for="login-email">Email address</label>
+            <input
+              type="email"
+              id="login-email"
+              name="email"
+              value="demo@neoautomations.com"
+              maxlength="120"
+              autocomplete="username"
+              required
+            />
+          </div>
+          <div class="login-field">
+            <label for="login-password">Password</label>
+            <input
+              type="password"
+              id="login-password"
+              name="password"
+              value="test@123"
+              autocomplete="current-password"
+              maxlength="64"
+              required
+            />
+          </div>
+          <button type="submit" class="login-btn" id="login-btn">
+            Sign in
+          </button>
+        </form>
+
+        <p class="login-hint">
+          Demo:
+          <button type="button" class="login-fill" id="login-fill">demo@neoautomations.com / test@123</button>
+        </p>
+
+        <div class="login-back">
+          <a href="index.html">← Back to Neo Automations</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/login.js"></script>
+  </body>
+</html>

@@ -1,0 +1,164 @@
+<!doctype html>
+<!--
+  Open Graph card source — 1200×630.
+
+  Built from the real design system rather than drawn by hand, so the
+  link preview can never drift from the site. To regenerate after a
+  token or copy change, render this file at exactly 1200×630 and
+  export as assets/og-ira.png.
+-->
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <title>OG card — Ira</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@500,700,900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/foundation.css" />
+    <style>
+      html, body { width: 1200px; height: 630px; overflow: hidden; }
+
+      .og {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        padding: 72px 80px;
+        background: var(--bg);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: hidden;
+      }
+
+      /* Same ambient field as the live hero. */
+      .og::before {
+        content: "";
+        position: absolute;
+        top: -22%;
+        right: -12%;
+        width: 780px;
+        height: 780px;
+        background: radial-gradient(circle, var(--accent-glow) 0%, transparent 62%);
+        opacity: 0.85;
+      }
+
+      /* Faint grid: reads as system/infrastructure without shouting. */
+      .og::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(to right, rgba(255,255,255,0.028) 1px, transparent 1px),
+          linear-gradient(to bottom, rgba(255,255,255,0.028) 1px, transparent 1px);
+        background-size: 48px 48px;
+        mask-image: linear-gradient(115deg, #000 0%, transparent 62%);
+        -webkit-mask-image: linear-gradient(115deg, #000 0%, transparent 62%);
+      }
+
+      .og > * { position: relative; z-index: 1; }
+
+      .og-brand {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .og-mark {
+        width: 38px;
+        height: 38px;
+        border-radius: var(--radius-sm);
+        background: var(--accent);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .og-mark svg { width: 22px; height: 22px; stroke: var(--inverse-text); }
+
+      .og-brand span {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: var(--weight-bold);
+        letter-spacing: var(--tracking-title);
+        color: var(--text-primary);
+      }
+
+      .og-eyebrow {
+        font-family: var(--font-mono);
+        font-size: 15px;
+        font-weight: var(--weight-medium);
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: var(--space-5);
+      }
+
+      .og-title {
+        font-family: var(--font-display);
+        font-size: 76px;
+        font-weight: var(--weight-black);
+        line-height: 1.02;
+        letter-spacing: -0.04em;
+        color: var(--text-primary);
+        max-width: 15ch;
+        margin-bottom: var(--space-6);
+      }
+
+      .og-sub {
+        font-size: 24px;
+        line-height: 1.45;
+        color: var(--text-secondary);
+        max-width: 34ch;
+      }
+
+      .og-stats {
+        display: flex;
+        gap: var(--space-12);
+        padding-top: var(--space-8);
+        border-top: 1px solid var(--border);
+      }
+
+      .og-stat dt {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+      }
+
+      .og-stat dd {
+        font-family: var(--font-display);
+        font-size: 30px;
+        font-weight: var(--weight-bold);
+        color: var(--text-primary);
+        font-variant-numeric: tabular-nums;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="og">
+      <div class="og-brand">
+        <div class="og-mark">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </div>
+        <span>Neo Automations</span>
+      </div>
+
+      <div>
+        <p class="og-eyebrow">Real Estate AI Agent</p>
+        <h1 class="og-title">Ira, your AI sales partner.</h1>
+        <p class="og-sub">Every property enquiry answered, qualified, followed up, and booked — before it goes cold.</p>
+      </div>
+
+      <dl class="og-stats">
+        <div class="og-stat"><dt>Response</dt><dd>&lt;60s</dd></div>
+        <div class="og-stat"><dt>Coverage</dt><dd>24/7</dd></div>
+        <div class="og-stat"><dt>Nurture</dt><dd>14-day</dd></div>
+        <div class="og-stat"><dt>Missed follow-ups</dt><dd>0</dd></div>
+      </dl>
+    </div>
+  </body>
+</html>

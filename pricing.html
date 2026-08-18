@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <script>document.documentElement.classList.add("js");</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pricing — Neo Automations</title>
+    <meta name="description" content="See what slow replies cost you each month. Custom-quoted AI systems — fair, explained, never a surprise." />
+    <meta name="theme-color" content="#08080b" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@400,500,700,900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="shared.css?v=logo1" />
+    <link rel="stylesheet" href="css/pricing.css" />
+  </head>
+  <body>
+
+    <!-- NAV -->
+    <header class="site-header" id="site-header">
+      <div class="nav-inner">
+        <a href="index.html" class="logo" aria-label="Neo Automations home">
+          <span class="logo-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><rect x="1.54" y="2.28" width="10.14" height="10.14" rx="3.85"/><rect x="12.14" y="13.31" width="9.89" height="9.89" rx="3.76"/><rect x="3.34" y="22.08" width="9.15" height="9.15" rx="3.48"/><rect x="22.06" y="22.19" width="8.65" height="8.65" rx="3.29"/><rect x="-7.56" y="-1.85" width="15.13" height="3.71" rx="1.85" transform="translate(11.85 12.80) rotate(46.14)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(12.50 22.46) rotate(137.51)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(21.74 22.38) rotate(41.60)"/></svg></span>
+          <span class="logo-name">Neo Automations</span>
+        </a>
+
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="services.html">Systems</a>
+          <a href="ira.html">Ira (Real Estate)</a>
+          <a href="about.html">Use Cases</a>
+          <a href="pricing.html" class="active">Pricing</a>
+        </nav>
+
+        <div class="nav-right">
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+            <!-- Moon (dark mode) -->
+            <svg class="icon-dark" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+            <!-- Sun (light mode) -->
+            <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </button>
+          <a href="login.html" class="btn-nav-login" id="nav-login-btn">
+            <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            Client Login
+          </a>
+          <a href="contact.html" class="btn-nav-primary">Start Audit</a>
+          <button class="menu-btn" id="menu-btn" aria-label="Open navigation menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MOBILE DRAWER -->
+    <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+      <nav>
+        <a href="services.html">Systems</a>
+          <a href="ira.html">Ira (Real Estate)</a>
+        <a href="about.html">Use Cases</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="mobile-drawer-cta">
+        <a href="login.html" class="btn-outline" style="width:100%; margin-bottom:12px;">Client Login</a>
+        <a href="contact.html" class="btn-primary" style="width:100%;">Start Automation Audit</a>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="price-hero" aria-labelledby="price-h1">
+      <p class="price-label">Pricing</p>
+      <h1 class="price-hero-h1" id="price-h1">
+        <span class="price-hero-line">Slow replies already</span>
+        <span class="price-hero-line">have a price.</span>
+      </h1>
+      <p class="price-hero-sub">We do not charge everyone the same. A business doing 50 leads a month should not pay the same as one doing 500. You get a custom quote — always fair, always explained, never a surprise.</p>
+      <div class="price-stats">
+        <div class="price-stat">
+          <div class="price-stat-val">₹0</div>
+          <div class="price-stat-lbl">Cost to book an audit</div>
+        </div>
+        <div class="price-stat-sep" role="presentation"></div>
+        <div class="price-stat">
+          <div class="price-stat-val">2–4 wks</div>
+          <div class="price-stat-lbl">Typical time to go-live</div>
+        </div>
+        <div class="price-stat-sep" role="presentation"></div>
+        <div class="price-stat">
+          <div class="price-stat-val">Custom</div>
+          <div class="price-stat-lbl">Quote scoped to you</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROI -->
+    <section class="price-roi" id="roi" aria-labelledby="price-roi-h2">
+      <div class="price-roi-inner">
+        <p class="price-label">Calculate your ROI</p>
+        <h2 class="price-roi-h2" id="price-roi-h2">Find out what slow responses are costing you every month.</h2>
+        <p class="price-roi-lead">Move the sliders. See the real number.</p>
+
+        <div class="calc-box" aria-label="ROI calculator">
+          <div class="calc-block">
+            <div class="calc-lbl" id="roi-industry-label">Your business</div>
+            <div class="price-tabs" role="group" aria-labelledby="roi-industry-label">
+              <button type="button" class="roi-chip is-on" data-roi-industry="realty" aria-pressed="true">Real estate</button>
+              <button type="button" class="roi-chip" data-roi-industry="clinic" aria-pressed="false">Clinics</button>
+              <button type="button" class="roi-chip" data-roi-industry="education" aria-pressed="false">Education</button>
+              <button type="button" class="roi-chip" data-roi-industry="agency" aria-pressed="false">Agencies</button>
+            </div>
+          </div>
+
+          <div class="calc-block">
+            <div class="calc-lbl" id="roi-speed-label">How fast you reply</div>
+            <div class="price-tabs" role="group" aria-labelledby="roi-speed-label">
+              <button type="button" class="roi-chip" data-roi-speed="fast" aria-pressed="false">Under 5 min</button>
+              <button type="button" class="roi-chip" data-roi-speed="hour" aria-pressed="false">Same hour</button>
+              <button type="button" class="roi-chip is-on" data-roi-speed="morning" aria-pressed="true">Next morning</button>
+              <button type="button" class="roi-chip" data-roi-speed="late" aria-pressed="false">A day+</button>
+            </div>
+          </div>
+
+          <div class="calc-block">
+            <div class="roi-row-head">
+              <span class="roi-q" id="label-leads">How many leads do you get per month?</span>
+              <span class="roi-disp" id="roi-disp-leads">120 / month</span>
+            </div>
+            <input type="range" class="roi-slider" id="roi-leads" min="10" max="1000" step="10" value="120" aria-labelledby="label-leads" />
+            <div class="roi-markers" aria-hidden="true"><span>10</span><span>500</span><span>1000+</span></div>
+          </div>
+
+          <div class="calc-block">
+            <div class="roi-row-head">
+              <span class="roi-q" id="label-value">What is your average deal value?</span>
+              <span class="roi-disp" id="roi-disp-value">₹80L</span>
+            </div>
+            <input type="range" class="roi-slider" id="roi-value" min="1000000" max="50000000" step="500000" value="8000000" aria-labelledby="label-value" />
+            <div class="roi-markers" aria-hidden="true">
+              <span id="roi-mark-value-min">₹10L</span>
+              <span id="roi-mark-value-mid">₹2.6Cr</span>
+              <span id="roi-mark-value-max">₹5Cr+</span>
+            </div>
+          </div>
+
+          <div class="calc-block">
+            <div class="roi-row-head">
+              <span class="roi-q" id="label-close">What percentage of leads do you currently close?</span>
+              <span class="roi-disp" id="roi-disp-close">5%</span>
+            </div>
+            <input type="range" class="roi-slider" id="roi-close" min="1" max="40" step="1" value="5" aria-labelledby="label-close" />
+            <div class="roi-markers" aria-hidden="true"><span>1%</span><span>20%</span><span>40%</span></div>
+          </div>
+
+          <div class="calc-result" aria-live="polite">
+            <p class="calc-result-kicker">Estimated monthly leak</p>
+            <p class="calc-result-num" id="roi-leak">₹0</p>
+            <p class="calc-result-hint"><span id="roi-reached-now">0</span> leads reached today (<span id="roi-coverage-now">40%</span>) → <span id="roi-reached-neo">0</span> with Neo (<span id="roi-coverage-neo">95%</span>)</p>
+            <dl class="calc-kpis">
+              <div class="calc-kpi">
+                <dt>Today</dt>
+                <dd id="roi-rev-now">₹0</dd>
+              </div>
+              <div class="calc-kpi-sep" role="presentation"></div>
+              <div class="calc-kpi">
+                <dt>Recoverable</dt>
+                <dd id="roi-recoverable">₹0</dd>
+              </div>
+              <div class="calc-kpi-sep" role="presentation"></div>
+              <div class="calc-kpi">
+                <dt>With Neo</dt>
+                <dd id="roi-rev-neo">₹0</dd>
+              </div>
+            </dl>
+            <span id="roi-extra-deals" hidden>0</span>
+            <div class="calc-cta">
+              <a href="contact.html" class="btn-primary">Request an audit</a>
+            </div>
+          </div>
+        </div>
+
+        <details class="calc-note">
+          <summary>How this is modelled</summary>
+          <p>Unreached leads sit at your current close rate. Close rate is not inflated. Neo is modelled at 95% first-response coverage. Reply speed maps to 80% / 55% / 40% / 25%. An estimate, not a guarantee.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- HOW WE PRICE -->
+    <section class="price-how" aria-labelledby="price-how-h2">
+      <div class="container">
+        <p class="price-label is-left">How we price</p>
+        <h2 class="price-how-h2" id="price-how-h2">Fair pricing that makes sense for your business size.</h2>
+        <p class="price-how-sub">We never charge a small operator the same as a large team. Your quote is based on three things — nothing hidden, nothing complicated.</p>
+        <div class="factors-grid">
+          <article class="factor-item">
+            <span class="factor-num">01</span>
+            <h3>How many workflows you run</h3>
+            <p>More sequences mean more design, configuration, and testing. Higher volume also means the system works harder — and returns more.</p>
+            <div class="factor-scale">
+              <span class="factor-scale-lbl">Impact on price</span>
+              <div class="factor-dots" aria-hidden="true"><span class="factor-dot is-on"></span><span class="factor-dot is-on"></span><span class="factor-dot is-on"></span><span class="factor-dot is-on"></span><span class="factor-dot is-on"></span></div>
+            </div>
+          </article>
+          <article class="factor-item">
+            <span class="factor-num">02</span>
+            <h3>Which channels you need</h3>
+            <p>WhatsApp only is the most common setup. Adding email, web forms, or social DMs adds scope — and reaches leads you would otherwise miss.</p>
+            <div class="factor-scale">
+              <span class="factor-scale-lbl">Impact on price</span>
+              <div class="factor-dots" aria-hidden="true"><span class="factor-dot is-on"></span><span class="factor-dot is-on"></span><span class="factor-dot is-on"></span><span class="factor-dot is-on"></span><span class="factor-dot"></span></div>
+            </div>
+          </article>
+          <article class="factor-item">
+            <span class="factor-num">03</span>
+            <h3>How custom the build is</h3>
+            <p>A standard first-response system covers most teams. Custom CRM work, reporting, and multi-step reasoning add to the build.</p>
+            <div class="factor-scale">
+              <span class="factor-scale-lbl">Impact on price</span>
+              <div class="factor-dots" aria-hidden="true"><span class="factor-dot is-on"></span><span class="factor-dot is-on"></span><span class="factor-dot"></span><span class="factor-dot"></span><span class="factor-dot"></span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHASE CARDS -->
+    <section class="price-band" aria-labelledby="price-phases-h2">
+      <div class="container">
+        <p class="price-label is-left">Three phases</p>
+        <h2 class="price-h2" id="price-phases-h2">Audit. Build. Run.</h2>
+        <p class="price-lead">Each phase is a discrete engagement. Start with an audit, build the system, then keep it sharp.</p>
+        <div class="pricing-grid">
+
+          <div class="price-card">
+            <span class="price-tier">Phase 01</span>
+            <h3 class="price-name">Automation Audit</h3>
+            <p class="price-desc">A structured discovery process that maps your workflows, identifies bottlenecks, and produces a custom AI blueprint.</p>
+            <ul class="price-list">
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Workflow discovery session</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Bottleneck mapping &amp; scoring</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Automation opportunity score</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Tool &amp; integration review</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> AI system blueprint</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Timeline estimate</li>
+            </ul>
+            <a href="contact.html" class="btn-outline price-cta">Book Audit</a>
+          </div>
+
+          <div class="price-card featured">
+            <span class="price-tier">Phase 02 · Most common</span>
+            <h3 class="price-name">System Build</h3>
+            <p class="price-desc">Custom engineering, integration, and deployment of your AI operating layer on top of your existing stack.</p>
+            <ul class="price-list">
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Custom workflow design</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> AI agent configuration</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> CRM, calendar, WhatsApp &amp; email integration</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Testing &amp; QA</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Team handoff &amp; documentation</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Launch support</li>
+            </ul>
+            <a href="contact.html" class="btn-primary price-cta">Get Proposal</a>
+          </div>
+
+          <div class="price-card">
+            <span class="price-tier">Phase 03</span>
+            <h3 class="price-name">Managed Optimization</h3>
+            <p class="price-desc">Continuous refinement of your deployed AI systems with monthly strategy reviews and performance monitoring.</p>
+            <ul class="price-list">
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Performance monitoring</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Prompt &amp; workflow refinement</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Monthly strategy review</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> New automation recommendations</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Reporting improvements</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Reliability checks</li>
+            </ul>
+            <a href="contact.html" class="btn-outline price-cta">Learn More</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- WHAT HAPPENS AFTER -->
+    <section class="price-band is-recessed" aria-labelledby="price-process-h2">
+      <div class="container">
+        <p class="price-label is-left">After you book</p>
+        <h2 class="price-h2" id="price-process-h2">From first call to live system</h2>
+        <p class="price-lead">A clear, four-step path from process discovery to deployment — no ambiguity, no surprises.</p>
+        <div class="process-track">
+          <div class="process-step">
+            <div class="step-circle"><span>01</span></div>
+            <h4>Process Discovery Call</h4>
+            <p>A structured 60-minute call to understand your current workflows, tools, and highest-friction points.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-circle"><span>02</span></div>
+            <h4>Automation Map &amp; Scope</h4>
+            <p>We produce a prioritised automation map with effort estimates and expected impact per workflow.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-circle"><span>03</span></div>
+            <h4>Build Proposal</h4>
+            <p>A detailed proposal with system architecture, integration plan, and exact deliverables.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-circle"><span>04</span></div>
+            <h4>Deployment Timeline</h4>
+            <p>Agreed milestones, testing windows, and a handoff plan for a smooth go-live.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WHO THIS IS FOR -->
+    <section class="price-band" aria-labelledby="price-who-h2">
+      <div class="container">
+        <p class="price-label is-left">Right fit</p>
+        <h2 class="price-h2" id="price-who-h2">Who this is for</h2>
+        <p class="price-lead">Neo Automations works best with businesses that have clear operational bottlenecks and the readiness to move fast.</p>
+        <div class="who-grid">
+          <div class="who-item">
+            <div class="who-text">
+              <h4>Businesses losing leads to slow response</h4>
+              <p>You're generating leads but they go cold before your team can reach them. AI responds in seconds.</p>
+            </div>
+          </div>
+          <div class="who-item">
+            <div class="who-text">
+              <h4>Teams doing repetitive follow-ups manually</h4>
+              <p>Your team spends hours on tasks that a trained AI system can execute automatically and consistently.</p>
+            </div>
+          </div>
+          <div class="who-item">
+            <div class="who-text">
+              <h4>Owners who want cleaner CRM and reporting</h4>
+              <p>Data hygiene and real-time reporting without demanding anything from your sales or ops team.</p>
+            </div>
+          </div>
+          <div class="who-item">
+            <div class="who-text">
+              <h4>Companies ready to automate sales, support, and ops</h4>
+              <p>You're past the idea stage. You're ready to deploy a real system that runs your operations 24/7.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="price-band is-recessed" aria-labelledby="price-faq-h2">
+      <div class="container">
+        <p class="price-label is-left">FAQ</p>
+        <h2 class="price-h2" id="price-faq-h2">Common questions</h2>
+        <div class="faq-list">
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false">
+              Do you offer fixed packages?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">No. Every engagement is scoped based on your specific workflows, tools, and team structure. Cookie-cutter packages produce cookie-cutter results. We price based on actual scope, not arbitrary tiers.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false">
+              How accurate is the ROI calculator?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">It is a leakage model, not a forecast. It holds your close rate constant and only changes how many leads get a first response. Use it to size the problem. The audit is where we look at your actual numbers.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false">
+              Can you connect with my current CRM?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">Yes. We work with all major CRMs including HubSpot, Salesforce, GoHighLevel, Zoho, Pipedrive, and custom systems via API. The audit phase maps your current tool stack before any build begins.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false">
+              How long does setup take?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">A focused automation system — covering one or two workflows — typically goes live within 2–4 weeks. Larger multi-workflow deployments run 6–10 weeks. We provide a detailed timeline before any work begins.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false">
+              Is this only for real estate?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">Not at all. Neo Automations deploys across real estate, clinics, education providers, agencies, e-commerce, hospitality, local services, and financial services. If your business handles leads, appointments, or repetitive ops, we can automate it.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false">
+              Do you provide ongoing support?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">Yes. Phase 3 (Managed Optimization) is a monthly engagement covering performance monitoring, prompt tuning, workflow improvements, and strategy reviews. Many clients run this after an initial build.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-q" aria-expanded="false">
+              Can it work with WhatsApp, email, forms, and calendars?
+              <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">Yes. Our systems are built to work across WhatsApp (via official API), email, web forms, booking platforms like Calendly and Google Calendar, and any channel that supports API or webhook integration.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="final-cta">
+      <div class="final-cta-inner">
+        <p class="price-label">Ready to begin</p>
+        <h2 class="price-h2">Build the AI system your team actually needs.</h2>
+        <p class="price-lead">Book a no-obligation audit call. We'll review your workflows and tell you exactly where AI can deliver the fastest return.</p>
+        <div class="final-cta-btns">
+          <a href="contact.html" class="btn-primary">Start Automation Audit</a>
+          <a href="services.html" class="btn-outline">Explore Systems</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo">
+              <span class="logo-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><rect x="1.54" y="2.28" width="10.14" height="10.14" rx="3.85"/><rect x="12.14" y="13.31" width="9.89" height="9.89" rx="3.76"/><rect x="3.34" y="22.08" width="9.15" height="9.15" rx="3.48"/><rect x="22.06" y="22.19" width="8.65" height="8.65" rx="3.29"/><rect x="-7.56" y="-1.85" width="15.13" height="3.71" rx="1.85" transform="translate(11.85 12.80) rotate(46.14)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(12.50 22.46) rotate(137.51)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(21.74 22.38) rotate(41.60)"/></svg></span>
+              <span class="logo-name">Neo Automations</span>
+            </a>
+            <p>Custom AI operating systems for businesses that demand precision execution at scale.</p>
+          </div>
+          <div class="footer-col">
+            <h3>Systems</h3>
+            <ul>
+              <li><a href="services.html">LeadFlow AI</a></li>
+              <li><a href="ira.html">Ira (Real Estate)</a></li>
+              <li><a href="services.html">ReplyOps AI</a></li>
+              <li><a href="services.html">ScheduleSync AI</a></li>
+              <li><a href="services.html">PipelineCore AI</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="about.html">Use Cases</a></li>
+              <li><a href="pricing.html">Pricing</a></li>
+              <li><a href="contact.html">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h3>Engage</h3>
+            <ul>
+              <li><a href="contact.html">Book Audit</a></li>
+              <li><a href="contact.html">Get Proposal</a></li>
+              <li><a href="agents.html">Client Portal</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Neo Automations. All rights reserved.</p>
+          <div class="footer-bottom-links">
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+    <script src="js/roi.js" defer></script>
+  </body>
+</html>

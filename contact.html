@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <script>document.documentElement.classList.add("js");</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Start Audit — Neo Automations</title>
+    <meta name="description" content="Request a free automation audit from Neo Automations. We'll map your bottlenecks and design a custom AI operating system." />
+    <meta name="theme-color" content="#08080b" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@500,700,900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="shared.css?v=logo1" />
+    <style>
+      .contact-wrap { display: grid; grid-template-columns: 1fr 1fr; min-height: 100vh; }
+      .contact-info {
+        background: var(--bg-2);
+        padding: calc(var(--nav-h) + 80px) var(--col-pad) 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-right: 1px solid var(--border);
+      }
+      .info-inner { max-width: 480px; margin: 0 auto; width: 100%; }
+      .info-h1 { font-size: var(--text-4xl); font-weight: 600; letter-spacing: -0.05em; margin-bottom: var(--space-6); color: var(--text-primary); line-height: 1.1; }
+      .info-sub { font-size: var(--text-lg); color: var(--text-secondary); line-height: 1.6; margin-bottom: var(--space-12); }
+      .info-items { display: flex; flex-direction: column; gap: var(--space-8); }
+      .info-item { display: flex; gap: var(--space-4); align-items: flex-start; }
+      .info-item svg { width: 24px; height: 24px; stroke: var(--accent); flex-shrink: 0; }
+      .info-item h4 { font-size: var(--text-base); font-weight: 500; margin-bottom: var(--space-2); color: var(--text-primary); }
+      .info-item p { font-size: var(--text-base); color: var(--text-secondary); line-height: 1.5; }
+      .contact-form {
+        padding: calc(var(--nav-h) + 80px) var(--col-pad) 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg);
+      }
+      .form-inner { max-width: 480px; width: 100%; }
+      .input-group { margin-bottom: var(--space-6); }
+      .input-label { display: block; font-size: var(--text-sm); font-weight: 500; color: var(--text-secondary); margin-bottom: var(--space-2); }
+      textarea.form-control { min-height: 120px; resize: vertical; }
+      .submit-btn { width: 100%; }
+      .hp {
+        position: absolute;
+        left: -10000px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+      }
+      @media (max-width: 900px) {
+        .contact-wrap { grid-template-columns: 1fr; }
+        .contact-info { border-right: none; border-bottom: 1px solid var(--border); }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <header class="site-header" id="site-header">
+      <div class="nav-inner">
+        <a href="index.html" class="logo" aria-label="Neo Automations home">
+          <span class="logo-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><rect x="1.54" y="2.28" width="10.14" height="10.14" rx="3.85"/><rect x="12.14" y="13.31" width="9.89" height="9.89" rx="3.76"/><rect x="3.34" y="22.08" width="9.15" height="9.15" rx="3.48"/><rect x="22.06" y="22.19" width="8.65" height="8.65" rx="3.29"/><rect x="-7.56" y="-1.85" width="15.13" height="3.71" rx="1.85" transform="translate(11.85 12.80) rotate(46.14)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(12.50 22.46) rotate(137.51)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(21.74 22.38) rotate(41.60)"/></svg></span>
+          <span class="logo-name">Neo Automations</span>
+        </a>
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="services.html">Systems</a>
+          <a href="ira.html">Ira (Real Estate)</a>
+          <a href="about.html">Use Cases</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+        <div class="nav-right">
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle light and dark mode">
+            <svg class="icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+          </button>
+          <a href="login.html" class="btn-nav-login" id="nav-login-btn">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            Client Login
+          </a>
+          <a href="contact.html" class="btn-nav-primary">Start Audit</a>
+          <button class="menu-btn" id="menu-btn" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-drawer">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true" role="dialog" aria-label="Mobile navigation">
+      <nav aria-label="Mobile navigation">
+        <a href="services.html">Systems</a>
+        <a href="ira.html">Ira (Real Estate)</a>
+        <a href="about.html">Use Cases</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="mobile-drawer-cta">
+        <a href="login.html" class="btn-outline">Client Login</a>
+        <a href="contact.html" class="btn-primary">Start Automation Audit</a>
+      </div>
+    </div>
+
+    <main id="main-content" class="contact-wrap">
+      <div class="contact-info">
+        <div class="info-inner reveal visible">
+          <h1 class="info-h1">Initiate Automation Audit</h1>
+          <p class="info-sub">Tell us about your operational bottlenecks. We'll review your systems and map out a custom AI architecture.</p>
+          <div class="info-items">
+            <div class="info-item">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2"/></svg>
+              <div>
+                <h4>Direct Contact</h4>
+                <!-- TODO: replace with real contact details before launch -->
+                <p>hello@neoautomations.com<br>+1 (800) 555-0199</p>
+              </div>
+            </div>
+            <div class="info-item">
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/></svg>
+              <div>
+                <h4>HQ</h4>
+                <!-- TODO: replace with real address before launch -->
+                <p>San Francisco, CA<br>Engineering &amp; Operations</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <div class="form-inner reveal visible">
+          <!-- TODO: wire form to backend (Formspree, /api/contact, or similar) before launch -->
+          <form id="auditForm" novalidate>
+            <div class="hp" aria-hidden="true">
+              <label>Company website
+                <input type="text" name="website" tabindex="-1" autocomplete="off" />
+              </label>
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="audit-name">Full Name</label>
+              <input type="text" id="audit-name" name="name" class="form-control" required autocomplete="name" maxlength="80" placeholder="John Doe" />
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="audit-email">Work Email</label>
+              <input type="email" id="audit-email" name="email" class="form-control" required autocomplete="email" maxlength="120" inputmode="email" placeholder="john@company.com" />
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="audit-company">Company / Website</label>
+              <input type="text" id="audit-company" name="company" class="form-control" autocomplete="organization" maxlength="120" placeholder="company.com" />
+            </div>
+            <div class="input-group">
+              <label class="input-label" for="audit-bottleneck">Biggest Workflow Bottleneck</label>
+              <textarea id="audit-bottleneck" name="bottleneck" class="form-control" required maxlength="2000" placeholder="e.g. We spend 10 hours a day following up with leads..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary submit-btn">Submit Audit Request</button>
+            <p class="form-status" id="form-status" hidden role="status"></p>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>

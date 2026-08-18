@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <script>document.documentElement.classList.add("js");</script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Systems — Neo Automations</title>
+    <meta name="description" content="Explore Neo Automations' six AI systems: LeadFlow, ReplyOps, ScheduleSync, PipelineCore, InsightLoop, and TaskGrid. Premium automation architecture." />
+    <meta name="theme-color" content="#08080b" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+    <link href="https://api.fontshare.com/v2/css?f%5B%5D=satoshi@500,700,900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/foundation.css" />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="shared.css?v=logo1" />
+    <style>
+      .page-hero {
+        padding: calc(var(--nav-h) + 120px) var(--col-pad) 80px;
+        max-width: var(--max-w);
+        margin: 0 auto;
+        text-align: center;
+      }
+      .page-hero-h1 {
+        font-size: var(--text-5xl);
+        font-weight: 600;
+        letter-spacing: -0.06em;
+        line-height: 1.05;
+        color: var(--text-primary);
+        max-width: 800px;
+        margin: 0 auto 24px;
+      }
+      .page-hero-sub {
+        font-size: var(--text-lg);
+        color: var(--text-secondary);
+        line-height: 1.6;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      /* Systems Detail Cards */
+      .systems-detail-inner {
+        max-width: var(--max-w);
+        margin: 0 auto;
+        padding: 0 var(--col-pad);
+        display: flex;
+        flex-direction: column;
+        gap: 120px;
+      }
+
+      .system-detail {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 64px;
+        align-items: center;
+      }
+
+      .system-detail:nth-child(even) {
+        grid-template-columns: 1.2fr 1fr;
+      }
+      .system-detail:nth-child(even) .system-detail-visual {
+        order: -1;
+      }
+
+      .system-detail-label {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .system-detail-name {
+        font-size: var(--text-4xl);
+        font-weight: 600;
+        letter-spacing: -0.05em;
+        color: var(--text-primary);
+        margin-bottom: 16px;
+      }
+
+      .system-detail-tagline {
+        font-size: var(--text-lg);
+        color: var(--text-secondary);
+        line-height: 1.6;
+        margin-bottom: 32px;
+      }
+
+      .system-detail-features {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 40px;
+      }
+
+      .system-detail-features li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 15px;
+        color: var(--text-secondary);
+      }
+      .system-detail-features svg {
+        width: 18px;
+        height: 18px;
+        stroke: var(--accent);
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      .system-detail-visual {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+        padding: 48px;
+        box-shadow: 0 32px 64px -12px rgba(0,0,0,0.5);
+      }
+
+      .visual-title {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      .visual-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+        background: var(--surface);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-md);
+        margin-bottom: 12px;
+      }
+
+      .visual-icon svg {
+        width: 20px; height: 20px;
+        stroke: var(--text-primary);
+      }
+
+      .visual-label {
+        flex: 1;
+        font-size: 14px;
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+      .visual-label span { color: var(--text-secondary); font-weight: 400; }
+
+      .visual-status {
+        font-size: 11px;
+        font-weight: 600;
+        padding: 4px 10px;
+        border-radius: var(--radius-full);
+      }
+      .vs-live { background: var(--accent-dim); color: var(--accent); }
+      .vs-done { background: var(--green-dim); color: var(--green); }
+      
+      .integration-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 32px;
+      }
+      .int-chip {
+        padding: 6px 12px;
+        background: var(--surface);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-sm);
+        font-size: 12px;
+        color: var(--text-secondary);
+        font-weight: 500;
+      }
+
+      /* CTA Block */
+      .svc-cta {
+        padding: 160px 0;
+        text-align: center;
+        background: var(--bg-2);
+        border-top: 1px solid var(--border);
+      }
+
+      @media (max-width: 1024px) {
+        .system-detail, .system-detail:nth-child(even) { grid-template-columns: 1fr; gap: 48px; }
+        .system-detail:nth-child(even) .system-detail-visual { order: unset; }
+        .system-detail-visual { padding: 32px; }
+      }
+    </style>
+  </head>
+  <body>
+
+    <!-- NAV -->
+    <header class="site-header" id="site-header">
+      <div class="nav-inner">
+        <a href="index.html" class="logo">
+          <span class="logo-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><rect x="1.54" y="2.28" width="10.14" height="10.14" rx="3.85"/><rect x="12.14" y="13.31" width="9.89" height="9.89" rx="3.76"/><rect x="3.34" y="22.08" width="9.15" height="9.15" rx="3.48"/><rect x="22.06" y="22.19" width="8.65" height="8.65" rx="3.29"/><rect x="-7.56" y="-1.85" width="15.13" height="3.71" rx="1.85" transform="translate(11.85 12.80) rotate(46.14)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(12.50 22.46) rotate(137.51)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(21.74 22.38) rotate(41.60)"/></svg></span>
+          <span class="logo-name">Neo Automations</span>
+        </a>
+        <nav class="nav-links">
+          <a href="services.html" style="color:var(--text-primary);">Systems</a>
+          <a href="about.html">Use Cases</a>
+          <a href="pricing.html">Pricing</a>
+        </nav>
+        <div class="nav-right">
+          <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode">
+            <svg class="icon-dark" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="icon-light" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+          </button>
+          <a href="login.html" class="btn-nav-login" id="nav-login-btn">
+            <svg viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            Client Login
+          </a>
+          <a href="contact.html" class="btn-nav-primary">Start Audit</a>
+          <button class="menu-btn" id="menu-btn" aria-label="Open menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MOBILE DRAWER -->
+    <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+      <nav>
+        <a href="services.html">Systems</a>
+          <a href="ira.html">Ira (Real Estate)</a>
+        <a href="about.html">Use Cases</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="mobile-drawer-cta">
+        <a href="login.html" class="btn-outline" style="width:100%; margin-bottom:12px;">Client Login</a>
+        <a href="contact.html" class="btn-primary" style="width:100%;">Start Automation Audit</a>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <div style="border-bottom:1px solid var(--border); background:var(--bg-2);">
+      <div class="page-hero reveal visible">
+        <div class="section-eyebrow" style="justify-content:center;">Architecture</div>
+        <h1 class="page-hero-h1">Modules Built For<br>Precision Execution</h1>
+        <p class="page-hero-sub">Six powerful AI systems. Deploy one to solve an immediate bottleneck, or combine them to automate your entire operational layer.</p>
+      </div>
+    </div>
+
+    <!-- SYSTEMS DETAIL -->
+    <section class="section-pad">
+      <div class="systems-detail-inner">
+
+        <!-- LeadFlow -->
+        <div class="system-detail reveal">
+          <div class="system-detail-content">
+            <div class="system-detail-label">
+              <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Module 01
+            </div>
+            <h2 class="system-detail-name">LeadFlow AI</h2>
+            <p class="system-detail-tagline">Captures every inbound lead, scores intent, and routes conversations autonomously.</p>
+            <ul class="system-detail-features">
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round"/></svg> Multi-channel ingest (Web, IG, WhatsApp)</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round"/></svg> Real-time intent and budget scoring</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round"/></svg> Automated handoffs for high-value leads</li>
+            </ul>
+            <div class="integration-chips">
+              <span class="int-chip">WhatsApp API</span><span class="int-chip">Forms</span><span class="int-chip">Social DMs</span>
+            </div>
+          </div>
+          <div class="system-detail-visual">
+            <div class="visual-title">Live Ingestion Feed</div>
+            <div class="visual-row"><div class="visual-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke-width="2" stroke-linecap="round"/></svg></div><div class="visual-label">WhatsApp <span>· New Lead</span></div><div class="visual-status vs-live">Qualifying</div></div>
+            <div class="visual-row"><div class="visual-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2" stroke-width="2"/><path d="M3 8h18M9 16V8" stroke-width="2"/></svg></div><div class="visual-label">Web Form <span>· High Intent</span></div><div class="visual-status vs-done">Routed</div></div>
+          </div>
+        </div>
+
+        <!-- ReplyOps -->
+        <div class="system-detail reveal">
+          <div class="system-detail-content">
+            <div class="system-detail-label">
+              <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Module 02
+            </div>
+            <h2 class="system-detail-name">ReplyOps AI</h2>
+            <p class="system-detail-tagline">Resolves queries, handles FAQs, and triages support tickets instantly.</p>
+            <ul class="system-detail-features">
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round"/></svg> Trained strictly on your policy docs</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round"/></svg> Detects frustration for immediate escalation</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round"/></svg> 80%+ autonomous resolution rate</li>
+            </ul>
+            <div class="integration-chips">
+              <span class="int-chip">Intercom</span><span class="int-chip">Zendesk</span><span class="int-chip">Email</span>
+            </div>
+          </div>
+          <div class="system-detail-visual">
+            <div class="visual-title">Support Operations</div>
+            <div class="visual-row"><div class="visual-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-width="2" stroke-linecap="round"/></svg></div><div class="visual-label">Policy Query <span>· Resolved</span></div><div class="visual-status vs-done">3s</div></div>
+            <div class="visual-row"><div class="visual-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke-width="2"/><path d="M12 8v4M12 16h.01" stroke-width="2" stroke-linecap="round"/></svg></div><div class="visual-label">Complaint <span>· Triaging</span></div><div class="visual-status vs-live">Escalated</div></div>
+          </div>
+        </div>
+
+        <!-- ScheduleSync -->
+        <div class="system-detail reveal">
+          <div class="system-detail-content">
+            <div class="system-detail-label">
+              <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Module 03
+            </div>
+            <h2 class="system-detail-name">ScheduleSync AI</h2>
+            <p class="system-detail-tagline">Manages your entire booking and appointment lifecycle without manual coordination.</p>
+            <ul class="system-detail-features">
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round"/></svg> Natural language conversational booking</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round"/></svg> Multi-step reminder sequences to cut no-shows</li>
+              <li><svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke-width="2" stroke-linecap="round"/></svg> Auto-handles rescheduling requests</li>
+            </ul>
+            <div class="integration-chips">
+              <span class="int-chip">Google Calendar</span><span class="int-chip">Calendly</span>
+            </div>
+          </div>
+          <div class="system-detail-visual">
+            <div class="visual-title">Calendar Sync</div>
+            <div class="visual-row"><div class="visual-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M19 4H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z" stroke-width="2"/><path d="M16 2v4M8 2v4M2 10h20" stroke-width="2"/></svg></div><div class="visual-label">Consultation <span>· 11:00 AM</span></div><div class="visual-status vs-done">Confirmed</div></div>
+            <div class="visual-row"><div class="visual-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke-width="2"/></svg></div><div class="visual-label">Reminder Sent <span>· Tomorrow</span></div><div class="visual-status vs-done">Sent</div></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="svc-cta">
+      <div class="container reveal">
+        <h2 class="section-title">Determine your required modules.</h2>
+        <p class="section-subtitle" style="margin: 24px auto 40px; text-align: center;">Book a consultation to map your current workflow against Neo's infrastructure.</p>
+        <a href="contact.html" class="btn-primary">Start Automation Audit</a>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <a href="index.html" class="logo">
+              <span class="logo-icon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><rect x="1.54" y="2.28" width="10.14" height="10.14" rx="3.85"/><rect x="12.14" y="13.31" width="9.89" height="9.89" rx="3.76"/><rect x="3.34" y="22.08" width="9.15" height="9.15" rx="3.48"/><rect x="22.06" y="22.19" width="8.65" height="8.65" rx="3.29"/><rect x="-7.56" y="-1.85" width="15.13" height="3.71" rx="1.85" transform="translate(11.85 12.80) rotate(46.14)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(12.50 22.46) rotate(137.51)"/><rect x="-6.22" y="-1.85" width="12.44" height="3.71" rx="1.85" transform="translate(21.74 22.38) rotate(41.60)"/></svg></span>
+              <span class="logo-name">Neo Automations</span>
+            </a>
+            <p>Custom AI operating systems for businesses that demand precision execution at scale.</p>
+          </div>
+          <div class="footer-col">
+            <h3>Systems</h3>
+            <ul><li><a href="services.html">LeadFlow AI</a></li>
+              <li><a href="ira.html">Ira (Real Estate)</a></li><li><a href="services.html">ReplyOps AI</a></li><li><a href="services.html">ScheduleSync AI</a></li></ul>
+          </div>
+          <div class="footer-col">
+            <h3>Company</h3>
+            <ul><li><a href="about.html">Use Cases</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="contact.html">Contact</a></li></ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>© 2026 Neo Automations. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
