@@ -853,6 +853,25 @@
             </div>
           </div>
         </div>
+        <div class="dash-card" style="margin-top:16px;">
+          <div class="dash-card-header">
+            <span class="dash-card-title">Support</span>
+          </div>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <div class="summary-item-label">Email</div>
+              <div class="summary-item-value"><a href="mailto:info@neointegrations.com">Info@neointegrations.com</a></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-item-label">Phone</div>
+              <div class="summary-item-value"><a href="tel:+918789359477">+91 87893 59477</a></div>
+            </div>
+            <div class="summary-item">
+              <div class="summary-item-label">LinkedIn</div>
+              <div class="summary-item-value"><a href="https://www.linkedin.com/in/raj-aryan-aa43742a1" target="_blank" rel="noopener noreferrer">Raj Aryan</a></div>
+            </div>
+          </div>
+        </div>
       </div>
     `;
   }

@@ -272,6 +272,7 @@
 
       const email = (auditForm.email?.value || '').trim();
       const name = (auditForm.name?.value || '').trim();
+      const company = (auditForm.company?.value || '').trim();
       const bottleneck = (auditForm.bottleneck?.value || '').trim();
       const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -283,10 +284,19 @@
         return;
       }
 
+      const lines = [`Name: ${name}`, `Email: ${email}`];
+      if (company) lines.push(`Company: ${company}`);
+      lines.push('', 'Biggest workflow bottleneck:', bottleneck);
+      const body = lines.join('\n');
+
+      window.location.href =
+        'mailto:info@neointegrations.com' +
+        '?subject=' + encodeURIComponent('Automation audit request — ' + name) +
+        '&body=' + encodeURIComponent(body);
+
       if (status) {
         status.hidden = false;
-        status.textContent =
-          'Request received locally. TODO: wire this form to your backend before launch.';
+        status.textContent = 'Opening your email app to send this to Info@neointegrations.com.';
       }
       const btn = auditForm.querySelector('[type="submit"]');
       if (btn) btn.disabled = true;
