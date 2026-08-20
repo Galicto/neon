@@ -317,7 +317,7 @@
         });
         const data = await res.json().catch(() => ({}));
         if (res.ok && data.ok !== false) return data;
-        if (res.status === 400 || res.status === 429) {
+        if (res.status === 400 || res.status === 429 || res.status === 502) {
           throw new Error(data.error || FAIL_HINT);
         }
       } catch (err) {

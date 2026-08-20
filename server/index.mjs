@@ -26,10 +26,10 @@ const NODE_ENV = process.env.NODE_ENV || "development";
 const IS_PROD = NODE_ENV === "production";
 const COOKIE = "neo_staff_sid";
 const SESSION_MS = 8 * 60 * 60 * 1000;
-const CONTACT_TO = process.env.CONTACT_TO || "Info@neointegrations.com";
+const CONTACT_TO = process.env.CONTACT_TO || "info@neointegrations.com";
 const WHATSAPP_TO = String(process.env.WHATSAPP_TO || "918789359477").replace(/\D/g, "");
 const CONTACT_FROM =
-  process.env.CONTACT_FROM || "Neo Integrations <Info@neointegrations.com>";
+  process.env.CONTACT_FROM || "Neo Integrations <info@neointegrations.com>";
 
 function outboundFetch(url, opts, ms = 8000) {
   return fetch(url, { ...opts, signal: AbortSignal.timeout(ms) });
@@ -292,15 +292,18 @@ async function getTransporter() {
     if (process.env.RESEND_API_KEY) {
       return { kind: "resend", key: process.env.RESEND_API_KEY };
     }
-    if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
-      const port = Number(process.env.SMTP_PORT || 587);
+    const user = (process.env.SMTP_USER || "").trim();
+    const pass = process.env.SMTP_PASS || "";
+    if (user && pass) {
+      const host = (process.env.SMTP_HOST || "smtpout.secureserver.net").trim();
+      const port = Number(process.env.SMTP_PORT || 465);
       const transport = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
+        host,
         port,
         secure: port === 465,
-        auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+        auth: { user, pass },
       });
-      return { kind: "smtp", transport };
+      return { kind: "smtp", transport, host };
     }
     return { kind: "none" };
   })();
@@ -385,7 +388,9 @@ async function sendContactMail(lead) {
     return { via: "smtp" };
   }
 
-  return sendViaFormSubmit({ ...lead, subject, text });
+  throw new Error(
+    "Email is not configured. Set SMTP_USER and SMTP_PASS (Titan/GoDaddy mailbox) in .env."
+  );
 }
 
 async function sendWhatsApp(lead) {
@@ -680,27 +685,30 @@ app.post("/api/contact", contactLimiter, async (req, res) => {
       }),
   ]);
 
-  if (!mailResult.ok && !waResult.ok && !tgResult.ok && !ntfyResult.ok) {
+  if (!mailResult.ok) {
     return res.status(502).json({
       ok: false,
-      error: "We saved your request but notification delivery failed. Write to Info@neointegrations.com.",
+      error:
+        mailResult.error ||
+        "We saved your request but could not email info@neointegrations.com. Check SMTP in .env.",
       saved: true,
+      email: false,
+      phone: ntfyResult.ok,
     });
   }
 
-  const parts = [];
-  if (mailResult.ok) parts.push("email");
+  const parts = ["email"];
   if (waResult.ok) parts.push("WhatsApp");
   if (tgResult.ok) parts.push("Telegram");
   if (ntfyResult.ok) parts.push("phone");
 
   res.json({
     ok: true,
-    email: mailResult.ok,
+    email: true,
     whatsapp: waResult.ok,
     telegram: tgResult.ok,
     phone: ntfyResult.ok,
-    message: "Request sent. The team is notified.",
+    message: "Request sent. Check info@neointegrations.com.",
     delivered: parts,
   });
 });
@@ -874,9 +882,17 @@ app.use(
 
 db.prepare("DELETE FROM sessions WHERE expires_at < ?").run(Date.now());
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   const alerts = writeAlertCard();
+  const mail = await getTransporter();
   console.log(`Neo site + ops server on http://localhost:${PORT}`);
   console.log("Staff login: http://localhost:" + PORT + "/staff/login");
+  if (mail.kind === "smtp") {
+    console.log("Audit email: SMTP " + (mail.host || "") + " → " + CONTACT_TO);
+  } else if (mail.kind === "resend") {
+    console.log("Audit email: Resend → " + CONTACT_TO);
+  } else {
+    console.warn("Audit email: NOT CONFIGURED. Add SMTP_USER and SMTP_PASS in .env (Titan mailbox).");
+  }
   console.log("Phone alerts (ntfy): " + alerts);
 });
