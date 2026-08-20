@@ -261,12 +261,13 @@
     pipelineObserver.observe(pipeline);
   }
 
-  /* ── Contact form (placeholder handler) ────────────────── */
+  /* ── Contact form ──────────────────────────────────────── */
   const auditForm = document.getElementById('auditForm');
   if (auditForm) {
-    auditForm.addEventListener('submit', (e) => {
+    auditForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const status = document.getElementById('form-status');
+      const btn = auditForm.querySelector('[type="submit"]');
       const trap = auditForm.querySelector('[name="website"]');
       if (trap && trap.value) return;
 
@@ -276,7 +277,7 @@
       const bottleneck = (auditForm.bottleneck?.value || '').trim();
       const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-      if (!name || !validEmail || !bottleneck) {
+      if (!name || !validEmail || bottleneck.length < 8) {
         if (status) {
           status.hidden = false;
           status.textContent = 'Enter a name, a valid work email, and a short description of the bottleneck.';
@@ -284,22 +285,44 @@
         return;
       }
 
-      const lines = [`Name: ${name}`, `Email: ${email}`];
-      if (company) lines.push(`Company: ${company}`);
-      lines.push('', 'Biggest workflow bottleneck:', bottleneck);
-      const body = lines.join('\n');
-
-      window.location.href =
-        'mailto:info@neointegrations.com' +
-        '?subject=' + encodeURIComponent('Automation audit request — ' + name) +
-        '&body=' + encodeURIComponent(body);
-
+      if (btn) {
+        btn.disabled = true;
+        btn.dataset.label = btn.textContent;
+        btn.textContent = 'Sending…';
+      }
       if (status) {
         status.hidden = false;
-        status.textContent = 'Opening your email app to send this to Info@neointegrations.com.';
+        status.textContent = 'Sending your request…';
       }
-      const btn = auditForm.querySelector('[type="submit"]');
-      if (btn) btn.disabled = true;
+
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ name, email, company, bottleneck, website: trap ? trap.value : '' }),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok || data.ok === false) {
+          throw new Error(data.error || 'Could not send. Write to Info@neointegrations.com.');
+        }
+        if (status) {
+          status.textContent = data.message || 'Request sent. We will reply to your work email.';
+        }
+        auditForm.reset();
+        if (btn) {
+          btn.textContent = 'Sent';
+        }
+      } catch (err) {
+        if (status) {
+          status.textContent =
+            err.message || 'Could not reach the server. Confirm the site is running with npm start, or email Info@neointegrations.com.';
+        }
+        if (btn) {
+          btn.disabled = false;
+          btn.textContent = btn.dataset.label || 'Submit Audit Request';
+        }
+      }
     });
   }
 

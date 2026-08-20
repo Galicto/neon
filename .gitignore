@@ -1,5 +1,11 @@
 .DS_Store
 .vercel
-
-# Cursor IDE (local plans and agent state)
 .cursor/
+.env
+.env.local
+node_modules/
+data/
+*.sqlite
+*.sqlite-journal
+server/data/
+demo-dashboard/.env.local

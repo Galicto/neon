@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Staff sign in — Neo Automations</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/ops/ops.css" />
+  </head>
+  <body class="ops">
+    <main class="ops-login">
+      <div class="ops-login-card">
+        <p class="ops-kicker">Internal</p>
+        <h1>Staff sign in</h1>
+        <p>Admin and manager access. This is not the client product demo.</p>
+        <div class="ops-error" id="ops-error" role="alert"></div>
+        <form id="ops-login-form">
+          <div class="ops-field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="username" required maxlength="120" />
+          </div>
+          <div class="ops-field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" autocomplete="current-password" required maxlength="128" />
+          </div>
+          <button class="ops-btn" type="submit" style="width:100%">Sign in</button>
+        </form>
+        <p class="ops-hint">Sessions expire after 8 hours. Passwords are stored as scrypt hashes, never in the browser.</p>
+      </div>
+    </main>
+    <script src="/ops/ops.js" defer></script>
+  </body>
+</html>

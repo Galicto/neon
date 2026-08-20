@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en" data-role="manager">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Manager — Neo Automations</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/ops/ops.css" />
+  </head>
+  <body class="ops ops-app">
+    <div class="ops-shell">
+      <aside class="ops-side">
+        <div class="ops-brand">Neo ops<span>Manager</span></div>
+        <nav class="ops-nav" aria-label="Manager">
+          <button type="button" class="is-on" data-panel="panel-overview">Overview</button>
+          <button type="button" data-panel="panel-leads">Audit requests</button>
+        </nav>
+        <div class="ops-side-foot">
+          <strong id="ops-email">—</strong>
+          <span id="ops-role">manager</span>
+          <button class="ops-btn ghost" id="ops-logout" type="button" style="margin-top:10px;width:100%">Sign out</button>
+        </div>
+      </aside>
+      <main class="ops-main">
+        <div class="ops-error" id="ops-error" role="alert"></div>
+
+        <section class="ops-panel is-on" id="panel-overview">
+          <div class="ops-top">
+            <div>
+              <h1>Overview</h1>
+              <p>Leads from the public audit form. User management is admin-only.</p>
+            </div>
+          </div>
+          <p class="ops-banner" id="ops-placeholders"></p>
+          <div class="ops-kpis" id="ops-kpis"></div>
+        </section>
+
+        <section class="ops-panel" id="panel-leads">
+          <div class="ops-top">
+            <div>
+              <h1>Audit requests</h1>
+              <p>Reply in email, then mark status here.</p>
+            </div>
+          </div>
+          <div class="ops-card" id="ops-leads"></div>
+        </section>
+      </main>
+    </div>
+    <script src="/ops/ops.js" defer></script>
+  </body>
+</html>

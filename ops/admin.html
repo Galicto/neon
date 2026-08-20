@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en" data-role="admin">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Admin — Neo Automations</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/ops/ops.css" />
+  </head>
+  <body class="ops ops-app">
+    <div class="ops-shell">
+      <aside class="ops-side">
+        <div class="ops-brand">Neo ops<span>Admin</span></div>
+        <nav class="ops-nav" aria-label="Admin">
+          <button type="button" class="is-on" data-panel="panel-overview">Overview</button>
+          <button type="button" data-panel="panel-leads">Audit requests</button>
+          <button type="button" data-panel="panel-team">Staff</button>
+          <button type="button" data-panel="panel-audit">Audit log</button>
+          <button type="button" data-panel="panel-settings">Settings</button>
+        </nav>
+        <div class="ops-side-foot">
+          <strong id="ops-email">—</strong>
+          <span id="ops-role">admin</span>
+          <button class="ops-btn ghost" id="ops-logout" type="button" style="margin-top:10px;width:100%">Sign out</button>
+        </div>
+      </aside>
+      <main class="ops-main">
+        <div class="ops-error" id="ops-error" role="alert"></div>
+
+        <section class="ops-panel is-on" id="panel-overview">
+          <div class="ops-top">
+            <div>
+              <h1>Overview</h1>
+              <p>Inbound audit requests from the public site.</p>
+            </div>
+          </div>
+          <p class="ops-banner" id="ops-placeholders"></p>
+          <div class="ops-kpis" id="ops-kpis"></div>
+        </section>
+
+        <section class="ops-panel" id="panel-leads">
+          <div class="ops-top">
+            <div>
+              <h1>Audit requests</h1>
+              <p>View, note, and mark status. Emails are stored even if SMTP delivery fails.</p>
+            </div>
+          </div>
+          <div class="ops-card" id="ops-leads"></div>
+        </section>
+
+        <section class="ops-panel" id="panel-team">
+          <div class="ops-top">
+            <div>
+              <h1>Staff</h1>
+              <p>Managers can work leads. Only admins can add or disable managers. New admins are provisioned from the server environment.</p>
+            </div>
+          </div>
+          <div class="ops-card">
+            <header>Create manager</header>
+            <form id="ops-create-user" class="ops-form-row">
+              <div class="ops-field" style="margin:0">
+                <label for="new-email">Email</label>
+                <input id="new-email" name="email" type="email" required maxlength="120" />
+              </div>
+              <div class="ops-field" style="margin:0">
+                <label for="new-password">Temporary password (12+)</label>
+                <input id="new-password" name="password" type="password" required minlength="12" maxlength="128" />
+              </div>
+              <button class="ops-btn" type="submit">Create</button>
+            </form>
+          </div>
+          <div class="ops-card">
+            <header>Accounts</header>
+            <table class="ops-table" id="ops-users">
+              <thead><tr><th>Email</th><th>Role</th><th>Status</th><th></th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="ops-panel" id="panel-audit">
+          <div class="ops-top">
+            <div>
+              <h1>Audit log</h1>
+              <p>Sign-ins, lead updates, and staff changes.</p>
+            </div>
+          </div>
+          <div class="ops-card" id="ops-audit"></div>
+        </section>
+
+        <section class="ops-panel" id="panel-settings">
+          <div class="ops-top">
+            <div>
+              <h1>Settings</h1>
+              <p>Structure only — values come from the server environment.</p>
+            </div>
+          </div>
+          <div class="ops-card">
+            <header>Needs your input</header>
+            <div class="ops-empty">
+              Domain, Resend/SMTP keys, session secret, and staff passwords live in <code>.env</code> on the server — not in this UI. Rotate the generated admin/manager passwords after first boot.
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="/ops/ops.js" defer></script>
+  </body>
+</html>

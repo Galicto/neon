@@ -1,5 +1,6 @@
 /**
- * Mock client login. Demo-only — not a real auth system.
+ * Product demo login only. Not production auth.
+ * Real staff access is /staff/login (server-side sessions).
  */
 (function () {
   var DEMO_EMAIL = "demo@neoautomations.com";
@@ -35,19 +36,6 @@
     try { localStorage.setItem("neo_auth", payload); } catch (e) {}
   }
 
-  function parse(email, password) {
-    email = (email || "").trim().toLowerCase();
-    password = (password || "").trim();
-    if (email.indexOf("/") !== -1) {
-      var parts = email.split("/");
-      var left = (parts[0] || "").trim();
-      var right = (parts[1] || "").trim();
-      if (left) email = left;
-      if (right && !password) password = right;
-    }
-    return { email: email, password: password };
-  }
-
   if (fill) {
     fill.addEventListener("click", function (e) {
       e.preventDefault();
@@ -57,17 +45,18 @@
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    var parsed = parse(emailEl.value, passEl.value);
-    var ok = parsed.password === DEMO_PASS;
+    var email = (emailEl.value || "").trim().toLowerCase();
+    var password = passEl.value || "";
+    var ok = email === DEMO_EMAIL && password === DEMO_PASS;
 
     if (!ok) {
-      showError("Use " + DEMO_EMAIL + " and password test@123");
+      showError("This is a product demo. Use the fill button, or sign in to staff at /staff/login.");
       return;
     }
 
     if (err) err.classList.remove("visible");
     if (btn) btn.disabled = true;
-    persist(parsed.email || DEMO_EMAIL);
+    persist(email);
     window.location.href = "dashboard.html";
   });
 })();

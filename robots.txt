@@ -1,4 +1,14 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /manager
+Disallow: /staff/
+Disallow: /ops/
+Disallow: /api/
+Disallow: /login.html
+Disallow: /dashboard.html
+Disallow: /dashboard-app.js
+Disallow: /dashboard-data.js
+Disallow: /dashboard.css
 
 Sitemap: https://neoautomations.com/sitemap.xml

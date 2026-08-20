@@ -264,7 +264,7 @@ const DashboardData = (() => {
     teamHighlight: 'Priya Singh booked 5 site visits yesterday — highest this week.',
   };
 
-  /* ── AI & Automation Health ──────────────────────────────── */
+  /* ── AI & NeoIntegration Health ──────────────────────────────── */
   const MOCK_AI_HEALTH = {
     apiCalls24h: 2847,
     tokenCost24h: '₹1,030',

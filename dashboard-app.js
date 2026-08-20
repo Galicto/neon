@@ -59,7 +59,7 @@
     team: 'Team Performance',
     channels: 'Channel Analytics',
     briefing: 'Daily Briefing',
-    aihealth: 'AI & Automation Health',
+    aihealth: 'AI & NeoIntegration Health',
     settings: 'Settings & Integrations',
   };
 
@@ -750,14 +750,14 @@
     contentEl.querySelectorAll('[data-countup]').forEach(el => countUp(el, parseFloat(el.dataset.countup)));
   }
 
-  /* ── AI & Automation Health ──────────────────────────────── */
+  /* ── AI & NeoIntegration Health ──────────────────────────────── */
   function renderAIHealth() {
     const H = D.MOCK_AI_HEALTH;
     contentEl.innerHTML = `
       <div class="dash-section">
         <div class="section-header">
           <div class="section-header-left">
-            <h1 class="section-header-title">AI & Automation Health</h1>
+            <h1 class="section-header-title">AI & NeoIntegration Health</h1>
             <p class="section-header-sub">System performance and error monitoring</p>
           </div>
         </div>
