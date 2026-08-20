@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   Neo Automations — Pricing ROI calculator
+   Neo Integrations — Pricing ROI calculator
    Conservative leakage model. Assumptions are on-page.
    ═══════════════════════════════════════════════════════════════ */
 

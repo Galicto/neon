@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   Neo Automations — Client Dashboard Mock Data Layer
+   Neo Integrations — Client Dashboard Mock Data Layer
    All data structured to match expected API response shapes.
    Swap this file's exports for real fetch() calls later.
    ═══════════════════════════════════════════════════════════════ */
@@ -133,7 +133,7 @@ const DashboardData = (() => {
     ]},
     { channel: 'email', messages: [
       { from: 'lead', text: 'Subject: Enquiry about Singapore Marina project\n\nHi,\n\nI came across your Singapore Marina project in Kondapur. Could you share the pricing and payment plan details?\n\nThanks,\nSuresh Nair', time: '11:20 AM' },
-      { from: 'ira', text: 'Dear Mr. Nair,\n\nThank you for your interest in Singapore Marina! Here are the key details:\n\n• 3 BHK: ₹1.2Cr – ₹1.4Cr (1,650-1,850 sq.ft.)\n• 4 BHK: ₹1.6Cr – ₹1.9Cr (2,100-2,400 sq.ft.)\n\nPayment plan: 20% booking → 30% construction-linked → 50% on possession.\n\nPossession expected: Dec 2027.\n\nWould you like to schedule a site visit this week?\n\nBest regards,\nIra | Neo Automations', time: '11:21 AM' },
+      { from: 'ira', text: 'Dear Mr. Nair,\n\nThank you for your interest in Singapore Marina! Here are the key details:\n\n• 3 BHK: ₹1.2Cr – ₹1.4Cr (1,650-1,850 sq.ft.)\n• 4 BHK: ₹1.6Cr – ₹1.9Cr (2,100-2,400 sq.ft.)\n\nPayment plan: 20% booking → 30% construction-linked → 50% on possession.\n\nPossession expected: Dec 2027.\n\nWould you like to schedule a site visit this week?\n\nBest regards,\nIra | Neo Integrations', time: '11:21 AM' },
     ]},
     { channel: 'facebook', messages: [
       { from: 'lead', text: 'Interested in the Jubilee Hills project', time: '4:10 PM' },

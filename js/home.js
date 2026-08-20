@@ -1,5 +1,5 @@
 /**
- * Neo Automations — Homepage motion
+ * Neo Integrations — Homepage motion
  *
  * Two sequences: the hero "run" (enquiry → CRM update) and the
  * three-stage flow. Both are driven from one small scheduler and are

@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   Neo Automations — Client Dashboard Application Logic
+   Neo Integrations — Client Dashboard Application Logic
    Router · Renderers · Animations · Interactions
    ═══════════════════════════════════════════════════════════════ */
 

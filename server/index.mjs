@@ -1,5 +1,5 @@
 /**
- * Neo Automations ops server — auth, RBAC, contact mail, static site.
+ * Neo Integrations ops server — auth, RBAC, contact mail, static site.
  * Sessions are httpOnly cookies. Passwords are scrypt hashes in SQLite.
  */
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
@@ -26,7 +26,10 @@ const NODE_ENV = process.env.NODE_ENV || "development";
 const IS_PROD = NODE_ENV === "production";
 const COOKIE = "neo_staff_sid";
 const SESSION_MS = 8 * 60 * 60 * 1000;
-const CONTACT_TO = process.env.CONTACT_TO || "info@neointegrations.com";
+const CONTACT_TO = process.env.CONTACT_TO || "Info@neointegrations.com";
+const WHATSAPP_TO = String(process.env.WHATSAPP_TO || "918789359477").replace(/\D/g, "");
+const CONTACT_FROM =
+  process.env.CONTACT_FROM || "Neo Integrations <Info@neointegrations.com>";
 
 function requireSecret() {
   let secret = process.env.SESSION_SECRET || "";
@@ -295,35 +298,55 @@ async function getTransporter() {
       });
       return { kind: "smtp", transport };
     }
-    if (!IS_PROD) {
-      const test = await nodemailer.createTestAccount();
-      const transport = nodemailer.createTransport({
-        host: test.smtp.host,
-        port: test.smtp.port,
-        secure: test.smtp.secure,
-        auth: { user: test.user, pass: test.pass },
-      });
-      console.warn("No mail provider configured — using Ethereal test inbox (dev only).");
-      return { kind: "ethereal", transport };
-    }
     return { kind: "none" };
   })();
   return transporterPromise;
 }
 
-async function sendContactMail({ name, email, company, bottleneck }) {
-  const mail = await getTransporter();
-  const subject = `NeoIntegration audit request — ${name}`;
+function leadCopy({ name, email, company, bottleneck }) {
+  const subject = `New client onboarding — ${name}`;
   const text = [
-    `Name: ${name}`,
-    `Email: ${email}`,
-    company ? `Company: ${company}` : null,
+    "A new client submitted the NeoIntegration audit form.",
     "",
-    "Biggest workflow bottleneck:",
+    `Name: ${name}`,
+    `Work email: ${email}`,
+    `Company / website: ${company || "—"}`,
+    "",
+    "Biggest workflow bottleneck / query:",
     bottleneck,
-  ]
-    .filter((line) => line !== null)
-    .join("\n");
+  ].join("\n");
+  return { subject, text };
+}
+
+async function sendViaFormSubmit({ name, email, company, bottleneck, subject, text }) {
+  const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_TO)}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      _subject: subject,
+      _template: "box",
+      _captcha: "false",
+      _replyto: email,
+      name,
+      email,
+      company: company || "—",
+      bottleneck,
+      message: text,
+    }),
+  });
+  const body = await res.text();
+  if (!res.ok) {
+    throw new Error(`FormSubmit failed (${res.status}): ${body.slice(0, 200)}`);
+  }
+  return { via: "formsubmit" };
+}
+
+async function sendContactMail(lead) {
+  const { subject, text } = leadCopy(lead);
+  const mail = await getTransporter();
 
   if (mail.kind === "resend") {
     const res = await fetch("https://api.resend.com/emails", {
@@ -333,9 +356,9 @@ async function sendContactMail({ name, email, company, bottleneck }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: process.env.CONTACT_FROM || "Neo Automations <info@neointegrations.com>",
+        from: CONTACT_FROM,
         to: [CONTACT_TO],
-        reply_to: email,
+        reply_to: lead.email,
         subject,
         text,
       }),
@@ -344,24 +367,104 @@ async function sendContactMail({ name, email, company, bottleneck }) {
       const body = await res.text();
       throw new Error(`Resend failed (${res.status}): ${body.slice(0, 200)}`);
     }
-    return { preview: null };
+    return { via: "resend" };
   }
 
-  if (mail.kind === "smtp" || mail.kind === "ethereal") {
-    const info = await mail.transport.sendMail({
-      from: process.env.CONTACT_FROM || process.env.SMTP_USER || "noreply@localhost",
+  if (mail.kind === "smtp") {
+    await mail.transport.sendMail({
+      from: CONTACT_FROM,
       to: CONTACT_TO,
-      replyTo: email,
+      replyTo: lead.email,
       subject,
       text,
     });
-    const preview = mail.kind === "ethereal" ? nodemailer.getTestMessageUrl(info) : null;
-    if (preview) console.log("Ethereal preview:", preview);
-    return { preview };
+    return { via: "smtp" };
   }
 
-  const err = new Error("Mail is not configured.");
-  err.code = "MAIL_UNCONFIGURED";
+  return sendViaFormSubmit({ ...lead, subject, text });
+}
+
+async function sendWhatsApp(lead) {
+  const { subject, text } = leadCopy(lead);
+  const message = `*${subject}*\n\n${text}`.slice(0, 4000);
+
+  if (process.env.WHATSAPP_ACCESS_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID) {
+    const id = process.env.WHATSAPP_PHONE_NUMBER_ID;
+    const res = await fetch(`https://graph.facebook.com/v21.0/${id}/messages`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.WHATSAPP_ACCESS_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        messaging_product: "whatsapp",
+        to: WHATSAPP_TO,
+        type: "text",
+        text: { preview_url: false, body: message },
+      }),
+    });
+    if (!res.ok) {
+      throw new Error(`WhatsApp Cloud API (${res.status}): ${(await res.text()).slice(0, 200)}`);
+    }
+    return "cloud";
+  }
+
+  if (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_WHATSAPP_FROM) {
+    const sid = process.env.TWILIO_ACCOUNT_SID;
+    const from = process.env.TWILIO_WHATSAPP_FROM;
+    const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`, {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${Buffer.from(`${sid}:${process.env.TWILIO_AUTH_TOKEN}`).toString("base64")}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        From: from.startsWith("whatsapp:") ? from : `whatsapp:${from}`,
+        To: `whatsapp:+${WHATSAPP_TO}`,
+        Body: message,
+      }),
+    });
+    if (!res.ok) {
+      throw new Error(`Twilio WhatsApp (${res.status}): ${(await res.text()).slice(0, 200)}`);
+    }
+    return "twilio";
+  }
+
+  if (process.env.CALLMEBOT_APIKEY) {
+    const url = new URL("https://api.callmebot.com/whatsapp.php");
+    url.searchParams.set("phone", WHATSAPP_TO);
+    url.searchParams.set("text", message);
+    url.searchParams.set("apikey", process.env.CALLMEBOT_APIKEY);
+    const res = await fetch(url);
+    const body = await res.text();
+    if (!res.ok || /error|invalid/i.test(body)) {
+      throw new Error(`CallMeBot failed: ${body.slice(0, 200)}`);
+    }
+    return "callmebot";
+  }
+
+  if (process.env.WHATSAPP_WEBHOOK_URL) {
+    const res = await fetch(process.env.WHATSAPP_WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        to: `+${WHATSAPP_TO}`,
+        subject,
+        text,
+        name: lead.name,
+        email: lead.email,
+        company: lead.company || "",
+        bottleneck: lead.bottleneck,
+      }),
+    });
+    if (!res.ok) {
+      throw new Error(`WhatsApp webhook (${res.status}): ${(await res.text()).slice(0, 200)}`);
+    }
+    return "webhook";
+  }
+
+  const err = new Error("WhatsApp is not configured.");
+  err.code = "WA_UNCONFIGURED";
   throw err;
 }
 
@@ -427,28 +530,43 @@ app.post("/api/contact", contactLimiter, async (req, res) => {
     "INSERT INTO submissions (name, email, company, bottleneck, status, notes, created_at) VALUES (?, ?, ?, ?, 'new', '', ?)"
   ).run(name, email, company, bottleneck, nowIso());
 
-  try {
-    const sent = await sendContactMail({ name, email, company, bottleneck });
-    res.json({
-      ok: true,
-      message: "Request sent. We will reply to your work email.",
-      preview: sent.preview || undefined,
+  const lead = { name, email, company, bottleneck };
+
+  const mailResult = await sendContactMail(lead)
+    .then((sent) => ({ ok: true, via: sent.via }))
+    .catch((err) => {
+      console.error("Contact mail error:", err);
+      return { ok: false, error: err.message };
     });
-  } catch (err) {
-    console.error("Contact mail error:", err);
-    if (err.code === "MAIL_UNCONFIGURED") {
-      return res.status(503).json({
-        ok: false,
-        error: "Mail is not configured on the server. The request was saved for staff, but no email was sent.",
-        saved: true,
-      });
-    }
-    res.status(502).json({
+
+  const waResult = await sendWhatsApp(lead)
+    .then((via) => ({ ok: true, via }))
+    .catch((err) => {
+      console.error("Contact WhatsApp error:", err);
+      return { ok: false, error: err.message, unconfigured: err.code === "WA_UNCONFIGURED" };
+    });
+
+  if (!mailResult.ok && !waResult.ok) {
+    return res.status(502).json({
       ok: false,
-      error: "We saved your request but email delivery failed. Try again, or write to Info@neointegrations.com.",
+      error: "We saved your request but notification delivery failed. Write to Info@neointegrations.com or WhatsApp +91 87893 59477.",
       saved: true,
     });
   }
+
+  const parts = [];
+  if (mailResult.ok) parts.push("email");
+  if (waResult.ok) parts.push("WhatsApp");
+
+  res.json({
+    ok: true,
+    email: mailResult.ok,
+    whatsapp: waResult.ok,
+    message: waResult.ok
+      ? "Request sent. The team is notified by email and WhatsApp."
+      : "Request sent by email. WhatsApp notify is not configured on the server yet.",
+    delivered: parts,
+  });
 });
 
 app.get("/api/stats", requireAuth("admin", "manager"), (_req, res) => {
@@ -623,4 +741,15 @@ db.prepare("DELETE FROM sessions WHERE expires_at < ?").run(Date.now());
 app.listen(PORT, () => {
   console.log(`Neo site + ops server on http://localhost:${PORT}`);
   console.log("Staff login: http://localhost:" + PORT + "/staff/login");
+  const waReady = Boolean(
+    process.env.CALLMEBOT_APIKEY ||
+      (process.env.WHATSAPP_ACCESS_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID) ||
+      (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_WHATSAPP_FROM) ||
+      process.env.WHATSAPP_WEBHOOK_URL
+  );
+  if (!waReady) {
+    console.warn(
+      "WhatsApp alerts are off. Add CALLMEBOT_APIKEY to .env to notify +91 87893 59477 on each audit form."
+    );
+  }
 });

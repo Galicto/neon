@@ -1,5 +1,5 @@
 /**
- * Neo Automations — Shared Site Script
+ * Neo Integrations — Shared Site Script
  * Theme · Navigation · Mobile drawer · Scroll reveal · Count-up · FAQ
  */
 (function () {
@@ -264,6 +264,66 @@
   /* ── Contact form ──────────────────────────────────────── */
   const auditForm = document.getElementById('auditForm');
   if (auditForm) {
+    const CONTACT_INBOX = 'Info@neointegrations.com';
+
+    async function postLead(payload) {
+      try {
+        const res = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok !== false) return data;
+        if (res.status === 400 || res.status === 429) {
+          throw new Error(data.error || 'Could not send. Write to Info@neointegrations.com.');
+        }
+      } catch (err) {
+        if (err.message && (err.message.indexOf('Could not send') === 0 || /enter a name|too many/i.test(err.message))) {
+          throw err;
+        }
+      }
+      return postLeadViaFormSubmit(payload);
+    }
+
+    async function postLeadViaFormSubmit(payload) {
+      const res = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(CONTACT_INBOX), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          _subject: 'New client onboarding — ' + payload.name,
+          _template: 'box',
+          _captcha: 'false',
+          _replyto: payload.email,
+          name: payload.name,
+          email: payload.email,
+          company: payload.company || '—',
+          bottleneck: payload.bottleneck,
+          message: [
+            'A new client submitted the NeoIntegration audit form.',
+            '',
+            'Name: ' + payload.name,
+            'Work email: ' + payload.email,
+            'Company / website: ' + (payload.company || '—'),
+            '',
+            'Biggest workflow bottleneck / query:',
+            payload.bottleneck,
+          ].join('\n'),
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || data.success === 'false') {
+        throw new Error(data.message || 'Could not send. Write to Info@neointegrations.com.');
+      }
+      return {
+        ok: true,
+        email: true,
+        whatsapp: false,
+        message: 'Request sent. Check Info@neointegrations.com — first-time FormSubmit sends a confirmation link.',
+      };
+    }
+
     auditForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const status = document.getElementById('form-status');
@@ -296,18 +356,15 @@
       }
 
       try {
-        const res = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'same-origin',
-          body: JSON.stringify({ name, email, company, bottleneck, website: trap ? trap.value : '' }),
+        const data = await postLead({
+          name,
+          email,
+          company,
+          bottleneck,
+          website: trap ? trap.value : '',
         });
-        const data = await res.json().catch(() => ({}));
-        if (!res.ok || data.ok === false) {
-          throw new Error(data.error || 'Could not send. Write to Info@neointegrations.com.');
-        }
         if (status) {
-          status.textContent = data.message || 'Request sent. We will reply to your work email.';
+          status.textContent = data.message || 'Request sent. The team is notified.';
         }
         auditForm.reset();
         if (btn) {
@@ -316,7 +373,7 @@
       } catch (err) {
         if (status) {
           status.textContent =
-            err.message || 'Could not reach the server. Confirm the site is running with npm start, or email Info@neointegrations.com.';
+            err.message || 'Could not reach the server. Email Info@neointegrations.com or WhatsApp +91 87893 59477.';
         }
         if (btn) {
           btn.disabled = false;
