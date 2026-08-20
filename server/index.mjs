@@ -31,6 +31,10 @@ const WHATSAPP_TO = String(process.env.WHATSAPP_TO || "918789359477").replace(/\
 const CONTACT_FROM =
   process.env.CONTACT_FROM || "Neo Integrations <Info@neointegrations.com>";
 
+function outboundFetch(url, opts, ms = 8000) {
+  return fetch(url, { ...opts, signal: AbortSignal.timeout(ms) });
+}
+
 function requireSecret() {
   let secret = process.env.SESSION_SECRET || "";
   if (secret.length >= 32) return secret;
@@ -319,7 +323,7 @@ function leadCopy({ name, email, company, bottleneck }) {
 }
 
 async function sendViaFormSubmit({ name, email, company, bottleneck, subject, text }) {
-  const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_TO)}`, {
+  const res = await outboundFetch(`https://formsubmit.co/ajax/${encodeURIComponent(CONTACT_TO)}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -507,7 +511,7 @@ function writeAlertCard() {
 
 async function sendNtfy(lead) {
   const { subject, text } = leadCopy(lead);
-  const res = await fetch(ntfyUrl(), {
+  const res = await outboundFetch(ntfyUrl(), {
     method: "POST",
     headers: {
       Title: subject,
@@ -645,37 +649,36 @@ app.post("/api/contact", contactLimiter, async (req, res) => {
 
   const lead = { name, email, company, bottleneck };
 
-  const mailResult = await sendContactMail(lead)
-    .then((sent) => ({ ok: true, via: sent.via }))
-    .catch((err) => {
-      console.error("Contact mail error:", err);
-      return { ok: false, error: err.message };
-    });
-
-  const waResult = whatsappConfigured()
-    ? await sendWhatsApp(lead)
-        .then((via) => ({ ok: true, via }))
-        .catch((err) => {
-          console.error("Contact WhatsApp error:", err);
-          return { ok: false, error: err.message };
-        })
-    : { ok: false, skipped: true };
-
-  const tgResult = process.env.TELEGRAM_BOT_TOKEN
-    ? await sendTelegram(lead)
-        .then((via) => ({ ok: true, via }))
-        .catch((err) => {
-          console.error("Contact Telegram error:", err);
-          return { ok: false, error: err.message };
-        })
-    : { ok: false, skipped: true };
-
-  const ntfyResult = await sendNtfy(lead)
-    .then((via) => ({ ok: true, via }))
-    .catch((err) => {
-      console.error("Contact ntfy error:", err);
-      return { ok: false, error: err.message };
-    });
+  const [mailResult, waResult, tgResult, ntfyResult] = await Promise.all([
+    sendContactMail(lead)
+      .then((sent) => ({ ok: true, via: sent.via }))
+      .catch((err) => {
+        console.error("Contact mail error:", err);
+        return { ok: false, error: err.message };
+      }),
+    whatsappConfigured()
+      ? sendWhatsApp(lead)
+          .then((via) => ({ ok: true, via }))
+          .catch((err) => {
+            console.error("Contact WhatsApp error:", err);
+            return { ok: false, error: err.message };
+          })
+      : Promise.resolve({ ok: false, skipped: true }),
+    process.env.TELEGRAM_BOT_TOKEN
+      ? sendTelegram(lead)
+          .then((via) => ({ ok: true, via }))
+          .catch((err) => {
+            console.error("Contact Telegram error:", err);
+            return { ok: false, error: err.message };
+          })
+      : Promise.resolve({ ok: false, skipped: true }),
+    sendNtfy(lead)
+      .then((via) => ({ ok: true, via }))
+      .catch((err) => {
+        console.error("Contact ntfy error:", err);
+        return { ok: false, error: err.message };
+      }),
+  ]);
 
   if (!mailResult.ok && !waResult.ok && !tgResult.ok && !ntfyResult.ok) {
     return res.status(502).json({

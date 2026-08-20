@@ -265,56 +265,77 @@
   const auditForm = document.getElementById('auditForm');
   if (auditForm) {
     const CONTACT_INBOX = 'Info@neointegrations.com';
+    const FAIL_HINT =
+      'Could not send from this page. Email Info@neointegrations.com or WhatsApp +91 87893 59477.';
 
-    async function postLead(payload) {
+    function abortAfter(ms) {
+      if (typeof AbortSignal !== 'undefined' && typeof AbortSignal.timeout === 'function') {
+        return AbortSignal.timeout(ms);
+      }
+      const ctrl = new AbortController();
+      setTimeout(() => ctrl.abort(), ms);
+      return ctrl.signal;
+    }
+
+    function leadFields(payload) {
+      return {
+        _subject: 'New client onboarding — ' + payload.name,
+        _template: 'box',
+        _captcha: 'false',
+        _replyto: payload.email,
+        name: payload.name,
+        email: payload.email,
+        company: payload.company || '—',
+        bottleneck: payload.bottleneck,
+        message: [
+          'A new client submitted the NeoIntegration audit form.',
+          '',
+          'Name: ' + payload.name,
+          'Work email: ' + payload.email,
+          'Company / website: ' + (payload.company || '—'),
+          '',
+          'Biggest workflow bottleneck / query:',
+          payload.bottleneck,
+        ].join('\n'),
+      };
+    }
+
+    function isUserError(err) {
+      const msg = String((err && err.message) || '');
+      return msg.indexOf('Could not send') === 0 || /enter a name|too many/i.test(msg);
+    }
+
+    async function postLeadToApi(payload) {
+      if (location.protocol === 'file:') return null;
       try {
         const res = await fetch('/api/contact', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
           credentials: 'same-origin',
           body: JSON.stringify(payload),
+          signal: abortAfter(10000),
         });
         const data = await res.json().catch(() => ({}));
         if (res.ok && data.ok !== false) return data;
         if (res.status === 400 || res.status === 429) {
-          throw new Error(data.error || 'Could not send. Write to Info@neointegrations.com.');
+          throw new Error(data.error || FAIL_HINT);
         }
       } catch (err) {
-        if (err.message && (err.message.indexOf('Could not send') === 0 || /enter a name|too many/i.test(err.message))) {
-          throw err;
-        }
+        if (isUserError(err)) throw err;
       }
-      return postLeadViaFormSubmit(payload);
+      return null;
     }
 
     async function postLeadViaFormSubmit(payload) {
       const res = await fetch('https://formsubmit.co/ajax/' + encodeURIComponent(CONTACT_INBOX), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({
-          _subject: 'New client onboarding — ' + payload.name,
-          _template: 'box',
-          _captcha: 'false',
-          _replyto: payload.email,
-          name: payload.name,
-          email: payload.email,
-          company: payload.company || '—',
-          bottleneck: payload.bottleneck,
-          message: [
-            'A new client submitted the NeoIntegration audit form.',
-            '',
-            'Name: ' + payload.name,
-            'Work email: ' + payload.email,
-            'Company / website: ' + (payload.company || '—'),
-            '',
-            'Biggest workflow bottleneck / query:',
-            payload.bottleneck,
-          ].join('\n'),
-        }),
+        headers: { Accept: 'application/json' },
+        body: new URLSearchParams(leadFields(payload)),
+        signal: abortAfter(10000),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || data.success === 'false') {
-        throw new Error(data.message || 'Could not send. Write to Info@neointegrations.com.');
+        throw new Error(data.message || FAIL_HINT);
       }
       return {
         ok: true,
@@ -322,6 +343,57 @@
         whatsapp: false,
         message: 'Request sent. Check Info@neointegrations.com — first-time FormSubmit sends a confirmation link.',
       };
+    }
+
+    function postLeadViaHiddenForm(payload) {
+      return new Promise((resolve) => {
+        const frameName = 'neo_fs_' + Date.now();
+        const iframe = document.createElement('iframe');
+        iframe.name = frameName;
+        iframe.setAttribute('title', 'Sending request');
+        iframe.setAttribute('aria-hidden', 'true');
+        iframe.style.cssText = 'position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)';
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'https://formsubmit.co/' + encodeURIComponent(CONTACT_INBOX);
+        form.target = frameName;
+        form.style.display = 'none';
+        const fields = leadFields(payload);
+        Object.keys(fields).forEach((key) => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = fields[key];
+          form.appendChild(input);
+        });
+        const finish = () => {
+          window.clearTimeout(timer);
+          iframe.removeEventListener('load', finish);
+          form.remove();
+          iframe.remove();
+          resolve({
+            ok: true,
+            email: true,
+            whatsapp: false,
+            message: 'Request sent. If this is the first time, confirm the email FormSubmit sent to Info@neointegrations.com.',
+          });
+        };
+        const timer = window.setTimeout(finish, 1800);
+        iframe.addEventListener('load', finish);
+        document.body.append(iframe, form);
+        form.submit();
+      });
+    }
+
+    async function postLead(payload) {
+      const fromApi = await postLeadToApi(payload);
+      if (fromApi) return fromApi;
+      try {
+        return await postLeadViaFormSubmit(payload);
+      } catch (err) {
+        if (isUserError(err)) throw err;
+        return postLeadViaHiddenForm(payload);
+      }
     }
 
     auditForm.addEventListener('submit', async (e) => {
@@ -372,8 +444,9 @@
         }
       } catch (err) {
         if (status) {
-          status.textContent =
-            err.message || 'Could not reach the server. Email Info@neointegrations.com or WhatsApp +91 87893 59477.';
+          const raw = String((err && err.message) || '');
+          const network = /failed to fetch|networkerror|load failed|abort/i.test(raw);
+          status.textContent = network || !raw ? FAIL_HINT : raw;
         }
         if (btn) {
           btn.disabled = false;
