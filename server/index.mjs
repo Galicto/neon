@@ -3,7 +3,7 @@
  * Sessions are httpOnly cookies. Passwords are scrypt hashes in SQLite.
  */
 import { createHash, randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
-import { mkdirSync, existsSync, writeFileSync } from "node:fs";
+import { mkdirSync, existsSync, writeFileSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { DatabaseSync } from "node:sqlite";
@@ -468,6 +468,119 @@ async function sendWhatsApp(lead) {
   throw err;
 }
 
+function ntfyTopic() {
+  if (process.env.NTFY_TOPIC) return process.env.NTFY_TOPIC.trim();
+  const file = path.join(DATA, "ntfy-topic.txt");
+  if (existsSync(file)) {
+    const existing = readFileSync(file, "utf8").trim();
+    if (existing) return existing;
+  }
+  const topic = "neo-leads-" + randomBytes(12).toString("hex");
+  writeFileSync(file, topic, { mode: 0o600 });
+  return topic;
+}
+
+function ntfyUrl() {
+  const base = (process.env.NTFY_URL || "https://ntfy.sh").replace(/\/$/, "");
+  return `${base}/${ntfyTopic()}`;
+}
+
+function writeAlertCard() {
+  const url = ntfyUrl();
+  const card = [
+    "Neo Integrations — phone alerts (no CallMeBot)",
+    "",
+    "1. Install ntfy on the phone that should get every audit form:",
+    "   iPhone:  https://apps.apple.com/app/ntfy/id1625396347",
+    "   Android: https://play.google.com/store/apps/details?id=io.heckel.ntfy",
+    "2. In the app: Subscribe to topic, paste this URL:",
+    `   ${url}`,
+    "3. Keep the topic private — it carries client names and emails.",
+    "",
+    "Optional Telegram (BotFather always replies, unlike CallMeBot):",
+    "  TELEGRAM_BOT_TOKEN=... in .env, then message your bot /start and restart the server.",
+    "",
+  ].join("\n");
+  writeFileSync(path.join(DATA, "PHONE_ALERTS.txt"), card, { mode: 0o600 });
+  return url;
+}
+
+async function sendNtfy(lead) {
+  const { subject, text } = leadCopy(lead);
+  const res = await fetch(ntfyUrl(), {
+    method: "POST",
+    headers: {
+      Title: subject,
+      Priority: "high",
+      Tags: "envelope,office",
+    },
+    body: text,
+  });
+  if (!res.ok) {
+    throw new Error(`ntfy failed (${res.status}): ${(await res.text()).slice(0, 200)}`);
+  }
+  return "ntfy";
+}
+
+async function resolveTelegramChatId(token) {
+  if (process.env.TELEGRAM_CHAT_ID) return process.env.TELEGRAM_CHAT_ID.trim();
+  const file = path.join(DATA, "telegram-chat-id.txt");
+  if (existsSync(file)) {
+    const saved = readFileSync(file, "utf8").trim();
+    if (saved) return saved;
+  }
+  const res = await fetch(`https://api.telegram.org/bot${token}/getUpdates`);
+  const data = await res.json();
+  if (!data.ok) {
+    throw new Error(`Telegram getUpdates: ${JSON.stringify(data).slice(0, 200)}`);
+  }
+  const chatId = [...(data.result || [])]
+    .reverse()
+    .map((u) => u.message?.chat?.id)
+    .find(Boolean);
+  if (!chatId) {
+    const err = new Error("Telegram bot has no chat yet. Open the bot and tap Start.");
+    err.code = "TG_NO_CHAT";
+    throw err;
+  }
+  writeFileSync(file, String(chatId), { mode: 0o600 });
+  return String(chatId);
+}
+
+async function sendTelegram(lead) {
+  const token = (process.env.TELEGRAM_BOT_TOKEN || "").trim();
+  if (!token) {
+    const err = new Error("Telegram is not configured.");
+    err.code = "TG_UNCONFIGURED";
+    throw err;
+  }
+  const { subject, text } = leadCopy(lead);
+  const chatId = await resolveTelegramChatId(token);
+  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: `*${subject}*\n\n${text}`.slice(0, 4000),
+      parse_mode: "Markdown",
+    }),
+  });
+  const body = await res.json().catch(() => ({}));
+  if (!res.ok || body.ok === false) {
+    throw new Error(`Telegram send failed: ${JSON.stringify(body).slice(0, 200)}`);
+  }
+  return "telegram";
+}
+
+function whatsappConfigured() {
+  return Boolean(
+    (process.env.WHATSAPP_ACCESS_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID) ||
+      (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_WHATSAPP_FROM) ||
+      process.env.CALLMEBOT_APIKEY ||
+      process.env.WHATSAPP_WEBHOOK_URL
+  );
+}
+
 app.get("/api/health", (_req, res) => {
   res.json({ ok: true, env: NODE_ENV });
 });
@@ -539,17 +652,35 @@ app.post("/api/contact", contactLimiter, async (req, res) => {
       return { ok: false, error: err.message };
     });
 
-  const waResult = await sendWhatsApp(lead)
+  const waResult = whatsappConfigured()
+    ? await sendWhatsApp(lead)
+        .then((via) => ({ ok: true, via }))
+        .catch((err) => {
+          console.error("Contact WhatsApp error:", err);
+          return { ok: false, error: err.message };
+        })
+    : { ok: false, skipped: true };
+
+  const tgResult = process.env.TELEGRAM_BOT_TOKEN
+    ? await sendTelegram(lead)
+        .then((via) => ({ ok: true, via }))
+        .catch((err) => {
+          console.error("Contact Telegram error:", err);
+          return { ok: false, error: err.message };
+        })
+    : { ok: false, skipped: true };
+
+  const ntfyResult = await sendNtfy(lead)
     .then((via) => ({ ok: true, via }))
     .catch((err) => {
-      console.error("Contact WhatsApp error:", err);
-      return { ok: false, error: err.message, unconfigured: err.code === "WA_UNCONFIGURED" };
+      console.error("Contact ntfy error:", err);
+      return { ok: false, error: err.message };
     });
 
-  if (!mailResult.ok && !waResult.ok) {
+  if (!mailResult.ok && !waResult.ok && !tgResult.ok && !ntfyResult.ok) {
     return res.status(502).json({
       ok: false,
-      error: "We saved your request but notification delivery failed. Write to Info@neointegrations.com or WhatsApp +91 87893 59477.",
+      error: "We saved your request but notification delivery failed. Write to Info@neointegrations.com.",
       saved: true,
     });
   }
@@ -557,14 +688,16 @@ app.post("/api/contact", contactLimiter, async (req, res) => {
   const parts = [];
   if (mailResult.ok) parts.push("email");
   if (waResult.ok) parts.push("WhatsApp");
+  if (tgResult.ok) parts.push("Telegram");
+  if (ntfyResult.ok) parts.push("phone");
 
   res.json({
     ok: true,
     email: mailResult.ok,
     whatsapp: waResult.ok,
-    message: waResult.ok
-      ? "Request sent. The team is notified by email and WhatsApp."
-      : "Request sent by email. WhatsApp notify is not configured on the server yet.",
+    telegram: tgResult.ok,
+    phone: ntfyResult.ok,
+    message: "Request sent. The team is notified.",
     delivered: parts,
   });
 });
@@ -739,17 +872,8 @@ app.use(
 db.prepare("DELETE FROM sessions WHERE expires_at < ?").run(Date.now());
 
 app.listen(PORT, () => {
+  const alerts = writeAlertCard();
   console.log(`Neo site + ops server on http://localhost:${PORT}`);
   console.log("Staff login: http://localhost:" + PORT + "/staff/login");
-  const waReady = Boolean(
-    process.env.CALLMEBOT_APIKEY ||
-      (process.env.WHATSAPP_ACCESS_TOKEN && process.env.WHATSAPP_PHONE_NUMBER_ID) ||
-      (process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_WHATSAPP_FROM) ||
-      process.env.WHATSAPP_WEBHOOK_URL
-  );
-  if (!waReady) {
-    console.warn(
-      "WhatsApp alerts are off. Add CALLMEBOT_APIKEY to .env to notify +91 87893 59477 on each audit form."
-    );
-  }
+  console.log("Phone alerts (ntfy): " + alerts);
 });

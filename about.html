@@ -331,125 +331,320 @@
         font-weight: 600;
       }
 
-      /* Live workflow — one spine, three distinct step entries. */
+      /* Live run — macOS conversation, not a checklist. */
       .wf-visual {
+        --wf-ease: cubic-bezier(0.16, 1, 0.3, 1);
         background: var(--bg);
         border: 1px solid var(--border);
-        border-radius: var(--radius-lg);
-        padding: 16px 14px 14px;
+        border-radius: var(--radius-xl);
+        padding: 18px 16px 16px;
         position: relative;
         overflow: hidden;
+        isolation: isolate;
+        transform-style: preserve-3d;
+        transition: transform 0.55s var(--wf-ease);
       }
       [data-theme="light"] .wf-visual { background: var(--bg-2); }
+      .wf-visual::before {
+        content: "";
+        position: absolute;
+        inset: auto -30% -10% -30%;
+        height: 70%;
+        background: radial-gradient(ellipse at 50% 0%, var(--accent-glow), transparent 68%);
+        opacity: 0.4;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .wf-visual.is-replying::before {
+        opacity: 0.7;
+        transition: opacity 0.6s var(--wf-ease);
+      }
+      .wf-visual:has(.wf-demo) {
+        padding: 0;
+        perspective: 1100px;
+      }
+
       .wf-visual-label {
         font-family: var(--font-mono);
         font-size: 10px;
-        letter-spacing: 0.1em;
+        letter-spacing: 0.12em;
         color: var(--text-muted);
         text-transform: uppercase;
         margin-bottom: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        position: relative;
+        z-index: 1;
       }
-      .wf-chain {
-        --wf-progress: 0;
+      .wf-visual:has(.wf-demo) > .wf-visual-label { display: none; }
+      .wf-live-pulse {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--success);
+        animation: wf-live-dot 2.4s var(--ease-out) infinite;
+        flex-shrink: 0;
+      }
+
+      .wf-chain:not(.wf-demo) {
         display: flex;
         flex-direction: column;
         gap: 8px;
-        position: relative;
       }
-      .wf-chain::before,
-      .wf-chain::after {
-        content: '';
-        position: absolute;
-        left: 23px;
-        top: 22px;
-        bottom: 22px;
-        width: 2px;
-        border-radius: 1px;
-        pointer-events: none;
-      }
-      .wf-chain::before {
-        background: var(--border);
-      }
-      .wf-chain::after {
-        bottom: auto;
-        height: calc((100% - 44px) * var(--wf-progress));
-        background: linear-gradient(180deg, var(--accent) 0%, var(--success) 100%);
-        box-shadow: 0 0 12px var(--accent-surface);
-        transition: height 560ms var(--ease-out);
-      }
-      .wf-node {
+      .wf-chain:not(.wf-demo) .wf-node {
         display: grid;
         grid-template-columns: 28px minmax(0, 1fr) auto;
-        align-items: center;
         gap: 10px;
-        padding: 10px 10px 10px 10px;
-        border-radius: var(--radius-sm);
-        background: var(--bg-card);
+        align-items: center;
+        padding: 10px;
         border: 1px solid var(--border);
-        font-size: 12px;
-        font-weight: 500;
+        border-radius: var(--radius-md);
+        font-size: 13px;
         color: var(--text-secondary);
-        position: relative;
-        min-width: 0;
-        transition: border-color var(--dur-3) var(--ease-out),
-                    background var(--dur-3) var(--ease-out);
-      }
-      .js .wf-chain.is-armed .wf-node { opacity: 0; }
-      .js .wf-chain.is-armed .wf-node.is-in { opacity: 1; }
-      .wf-node.is-in.wf-a { animation: wf-slide 0.46s var(--ease-out) both; }
-      .wf-node.is-in.wf-b { animation: wf-rise  0.50s var(--ease-out) both; }
-      .wf-node.is-in.wf-c { animation: wf-pop   0.42s var(--ease-spring) both; }
-      .wf-node.is-live {
-        border-color: var(--accent-border);
-        background: var(--accent-surface);
-        color: var(--text-primary);
       }
       .wf-node-dot {
-        width: 28px; height: 28px;
+        width: 28px;
+        height: 28px;
         border-radius: 50%;
-        background: var(--surface);
-        border: 1px solid var(--border-light);
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-        z-index: 1;
-        transition: border-color var(--dur-2) var(--ease-out),
-                    background var(--dur-2) var(--ease-out),
-                    box-shadow var(--dur-2) var(--ease-out);
+        display: grid;
+        place-content: center;
+        border: 1px solid var(--border);
+        background: var(--bg-card);
       }
       .wf-node-dot svg { width: 13px; height: 13px; stroke: var(--text-muted); }
-      .wf-node.is-live .wf-node-dot,
-      .wf-node.active-node.is-in .wf-node-dot {
-        border-color: var(--accent);
-        background: var(--accent-surface);
-        box-shadow: 0 0 0 4px var(--accent-surface);
-      }
-      .wf-node.is-live .wf-node-dot svg { stroke: var(--accent); }
       .wf-node-status {
-        font-size: 10px;
+        font-size: 11px;
         font-weight: 600;
-        padding: 3px 8px;
-        border-radius: 20px;
-        letter-spacing: 0.03em;
+        padding: 4px 10px;
+        border-radius: var(--radius-full);
         white-space: nowrap;
       }
       .status-sent { background: var(--success-surface); color: var(--success); }
       .status-live { background: var(--accent-surface); color: var(--accent); }
       .status-done { background: var(--warning-surface); color: var(--warning); }
 
-      @keyframes wf-slide {
-        from { opacity: 0; transform: translateX(-14px); }
-        to   { opacity: 1; transform: translateX(0); }
+      .wf-demo {
+        display: grid;
+        grid-template-rows: auto 196px auto;
+        position: relative;
+        z-index: 1;
+        min-height: 268px;
       }
-      @keyframes wf-rise {
-        from { opacity: 0; transform: translateY(12px); }
-        to   { opacity: 1; transform: translateY(0); }
+      .wf-demo .wf-node { display: none; }
+
+      .wf-chrome {
+        display: grid;
+        grid-template-columns: 54px 1fr auto;
+        align-items: center;
+        gap: 8px;
+        padding: 11px 14px 10px;
+        border-bottom: 1px solid var(--border);
+        background: color-mix(in srgb, var(--surface) 72%, transparent);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
       }
-      @keyframes wf-pop {
-        from { opacity: 0; transform: scale(0.92); }
-        to   { opacity: 1; transform: scale(1); }
+      .wf-dots {
+        display: flex;
+        gap: 6px;
+      }
+      .wf-dots i {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: block;
+      }
+      .wf-dots i:nth-child(1) { background: #ff5f57; }
+      .wf-dots i:nth-child(2) { background: #febc2e; }
+      .wf-dots i:nth-child(3) { background: #28c840; }
+      .wf-chrome-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 7px;
+        font-family: var(--font-mono);
+        font-size: 10px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+      }
+      .wf-clock {
+        font-family: var(--font-mono);
+        font-size: 10px;
+        color: var(--text-muted);
+        letter-spacing: 0.04em;
+      }
+
+      .wf-thread {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 8px;
+        padding: 16px 14px 10px;
+        height: 196px;
+        overflow: hidden;
+      }
+      .wf-thread.is-flush .wf-row,
+      .wf-row.is-leaving {
+        animation: wf-flush 0.4s var(--wf-ease) forwards;
+        pointer-events: none;
+      }
+
+      .wf-row {
+        display: flex;
+        align-items: flex-end;
+        gap: 8px;
+        max-width: 92%;
+      }
+      .wf-row.is-in { align-self: flex-start; }
+      .wf-row.is-out { align-self: flex-end; }
+
+      .wf-avatar {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        display: grid;
+        place-content: center;
+        flex-shrink: 0;
+        background: var(--surface);
+        border: 1px solid var(--border);
+      }
+      .wf-avatar svg {
+        width: 11px;
+        height: 11px;
+        stroke: var(--text-secondary);
+      }
+
+      .wf-msg {
+        position: relative;
+        padding: 9px 12px;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        line-height: 1.35;
+        max-width: 100%;
+      }
+      .wf-msg.is-in {
+        background: var(--bg-card);
+        color: var(--text-primary);
+        border-radius: 16px 16px 16px 5px;
+        border: 1px solid var(--border);
+        box-shadow: var(--elev-1);
+        animation: wf-pop-in 0.62s var(--ease-spring) both;
+      }
+      [data-theme="dark"] .wf-msg.is-in {
+        background: var(--surface);
+      }
+      .wf-msg.is-out {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--accent);
+        color: var(--inverse-text);
+        border-radius: 16px 16px 5px 16px;
+        animation: wf-pop-out 0.62s var(--ease-spring) both;
+        box-shadow: 0 8px 24px var(--accent-glow);
+      }
+      .wf-read {
+        display: inline-flex;
+        opacity: 0.72;
+      }
+      .wf-read svg {
+        width: 14px;
+        height: 14px;
+        stroke: currentColor;
+        fill: none;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .wf-typing {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 11px 14px;
+        background: var(--accent);
+        border-radius: 16px 16px 5px 16px;
+        animation: wf-pop-out 0.4s var(--wf-ease) both;
+      }
+      .wf-typing i {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--inverse-text);
+        opacity: 0.35;
+        animation: wf-type 1s var(--ease-in-out) infinite;
+      }
+      .wf-typing i:nth-child(2) { animation-delay: 0.14s; }
+      .wf-typing i:nth-child(3) { animation-delay: 0.28s; }
+
+      .wf-ticks {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
+        padding: 2px 14px 14px;
+      }
+      .wf-tick {
+        width: 28px;
+        height: 18px;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        cursor: pointer;
+        position: relative;
+      }
+      .wf-tick::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 4px;
+        border-radius: var(--radius-full);
+        background: var(--surface);
+        transform: translateY(-50%);
+        transition: background 0.45s var(--wf-ease), transform 0.45s var(--wf-ease);
+      }
+      .wf-tick.is-on::after {
+        background: var(--accent);
+        transform: translateY(-50%) scaleX(1.08);
+      }
+      .wf-tick:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 3px;
+      }
+
+      .case-visual.is-playing .stat-card {
+        animation: wf-stat-in 0.7s var(--wf-ease) both;
+      }
+      .case-visual.is-playing .stat-card:nth-child(2) { animation-delay: 70ms; }
+      .case-visual.is-playing .stat-card:nth-child(3) { animation-delay: 140ms; }
+
+      @keyframes wf-live-dot {
+        0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--success) 45%, transparent); }
+        50% { box-shadow: 0 0 0 6px transparent; }
+      }
+      @keyframes wf-pop-in {
+        from { opacity: 0; transform: translate3d(-10px, 12px, 0) scale(0.9); filter: blur(6px); }
+        to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+      }
+      @keyframes wf-pop-out {
+        from { opacity: 0; transform: translate3d(10px, 12px, 0) scale(0.9); filter: blur(6px); }
+        to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); filter: blur(0); }
+      }
+      @keyframes wf-type {
+        0%, 80%, 100% { transform: translateY(0); opacity: 0.28; }
+        40% { transform: translateY(-3px); opacity: 1; }
+      }
+      @keyframes wf-flush {
+        to { opacity: 0; transform: translate3d(0, -14px, 0) scale(0.97); filter: blur(5px); }
+      }
+      @keyframes wf-stat-in {
+        from { opacity: 0; transform: translateY(8px); }
+        to { opacity: 1; transform: translateY(0); }
       }
 
       /* ── Industry Filter Row ─────────────────────────────────── */
@@ -522,8 +717,15 @@
       }
       @media (prefers-reduced-motion: reduce) {
         .reveal { opacity: 1; transform: none; }
-        .js .wf-node,
-        .wf-node { opacity: 1 !important; transform: none !important; animation: none !important; }
+        .wf-live-pulse,
+        .wf-msg.is-in,
+        .wf-msg.is-out,
+        .wf-typing,
+        .wf-typing i,
+        .case-visual.is-playing .stat-card { animation: none !important; }
+        .wf-visual { transform: none !important; }
+        .wf-thread { height: auto; min-height: 196px; }
+        .wf-demo { grid-template-rows: auto auto auto; }
         .stat-num[data-target] { }
       }
 
@@ -544,14 +746,9 @@
         .case-problem { font-size: 14px; }
         .case-visual { padding: 16px; }
         .final-cta h2 { font-size: clamp(28px,8vw,44px); }
-        .wf-node {
-          grid-template-columns: 28px minmax(0, 1fr);
-          font-size: 11px;
-        }
-        .wf-node-status {
-          grid-column: 2;
-          justify-self: start;
-        }
+        .wf-demo { min-height: 268px; grid-template-rows: auto 196px auto; }
+        .wf-thread { height: 196px; padding: 12px; }
+        .wf-msg { font-size: 12px; }
         .hero-tag-row { gap: 8px; }
       }
       @media (max-width: 480px) {
@@ -560,9 +757,7 @@
         .stat-num { font-size: 16px; }
         .stat-label { font-size: 8px; }
         .stat-card { padding: 12px 6px; }
-        .wf-chain::before,
-        .wf-chain::after { left: 21px; }
-        .wf-node { overflow-wrap: break-word; }
+        .wf-thread { height: 196px; }
       }
     </style>
   </head>
@@ -725,21 +920,21 @@
               </div>
             </div>
             <div class="wf-visual">
-              <div class="wf-visual-label">Live Workflow</div>
+              <div class="wf-visual-label"><span class="wf-live-pulse" aria-hidden="true"></span>Live workflow</div>
               <div class="wf-chain">
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-                  Lead arrives via MagicBricks
+                  <span class="wf-node-copy">Lead arrives via MagicBricks</span>
                   <span class="wf-node-status status-sent">Reply sent</span>
                 </div>
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-                  Buyer scored: 88/100 · 3BHK · ₹1.4Cr
+                  <span class="wf-node-copy">Buyer scored: 88/100 · 3BHK · ₹1.4Cr</span>
                   <span class="wf-node-status status-live">Qualified</span>
                 </div>
                 <div class="wf-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-                  Sat 11:30 AM slot confirmed
+                  <span class="wf-node-copy">Sat 11:30 AM slot confirmed</span>
                   <span class="wf-node-status status-done">Booked</span>
                 </div>
               </div>
@@ -799,21 +994,21 @@
               </div>
             </div>
             <div class="wf-visual">
-              <div class="wf-visual-label">Live Workflow</div>
+              <div class="wf-visual-label"><span class="wf-live-pulse" aria-hidden="true"></span>Live workflow</div>
               <div class="wf-chain">
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-                  "Book dermatology slot for Thursday"
+                  <span class="wf-node-copy">"Book dermatology slot for Thursday"</span>
                   <span class="wf-node-status status-sent">Replied</span>
                 </div>
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-                  Thu 3:30 PM · Dr. Mehta confirmed
+                  <span class="wf-node-copy">Thu 3:30 PM · Dr. Mehta confirmed</span>
                   <span class="wf-node-status status-live">Booked</span>
                 </div>
                 <div class="wf-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
-                  24h reminder scheduled
+                  <span class="wf-node-copy">24h reminder scheduled</span>
                   <span class="wf-node-status status-done">Active</span>
                 </div>
               </div>
@@ -869,21 +1064,21 @@
               </div>
             </div>
             <div class="wf-visual">
-              <div class="wf-visual-label">Live Workflow</div>
+              <div class="wf-visual-label"><span class="wf-live-pulse" aria-hidden="true"></span>Live workflow</div>
               <div class="wf-chain">
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-                  JEE enquiry · Grade 11 · Maths
+                  <span class="wf-node-copy">JEE enquiry · Grade 11 · Maths</span>
                   <span class="wf-node-status status-sent">Matched</span>
                 </div>
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-                  Demo: Sat 10 AM · Physics batch
+                  <span class="wf-node-copy">Demo: Sat 10 AM · Physics batch</span>
                   <span class="wf-node-status status-live">Booked</span>
                 </div>
                 <div class="wf-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13 19.79 19.79 0 0 1 1.61 4.4 2 2 0 0 1 3.6 2.24h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L7.91 9.91"/></svg></div>
-                  Counsellor briefed · Slot ready
+                  <span class="wf-node-copy">Counsellor briefed · Slot ready</span>
                   <span class="wf-node-status status-done">Handoff</span>
                 </div>
               </div>
@@ -939,21 +1134,21 @@
               </div>
             </div>
             <div class="wf-visual">
-              <div class="wf-visual-label">Live Workflow</div>
+              <div class="wf-visual-label"><span class="wf-live-pulse" aria-hidden="true"></span>Live workflow</div>
               <div class="wf-chain">
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-                  Website lead · Needs social media AI
+                  <span class="wf-node-copy">Website lead · Needs social media AI</span>
                   <span class="wf-node-status status-sent">Scored</span>
                 </div>
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-                  Discovery: Tue 3 PM confirmed
+                  <span class="wf-node-copy">Discovery: Tue 3 PM confirmed</span>
                   <span class="wf-node-status status-live">Booked</span>
                 </div>
                 <div class="wf-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-                  Proposal sent · Day 3 reminder set
+                  <span class="wf-node-copy">Proposal sent · Day 3 reminder set</span>
                   <span class="wf-node-status status-done">Active</span>
                 </div>
               </div>
@@ -1013,21 +1208,21 @@
               </div>
             </div>
             <div class="wf-visual">
-              <div class="wf-visual-label">Live Workflow</div>
+              <div class="wf-visual-label"><span class="wf-live-pulse" aria-hidden="true"></span>Live workflow</div>
               <div class="wf-chain">
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div>
-                  "Where is my order #4821?"
+                  <span class="wf-node-copy">"Where is my order #4821?"</span>
                   <span class="wf-node-status status-sent">Replied</span>
                 </div>
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M1 3h1l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-10 2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></svg></div>
-                  Cart abandoned · ₹3,200 · 2 items
+                  <span class="wf-node-copy">Cart abandoned · ₹3,200 · 2 items</span>
                   <span class="wf-node-status status-live">Recovery</span>
                 </div>
                 <div class="wf-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-                  Weekly support report generated
+                  <span class="wf-node-copy">Weekly support report generated</span>
                   <span class="wf-node-status status-done">Done</span>
                 </div>
               </div>
@@ -1083,21 +1278,21 @@
               </div>
             </div>
             <div class="wf-visual">
-              <div class="wf-visual-label">Live Workflow</div>
+              <div class="wf-visual-label"><span class="wf-live-pulse" aria-hidden="true"></span>Live workflow</div>
               <div class="wf-chain">
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></div>
-                  "Book a deep tissue on Sunday morning"
+                  <span class="wf-node-copy">"Book a deep tissue on Sunday morning"</span>
                   <span class="wf-node-status status-sent">Replied</span>
                 </div>
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-                  Sun 10 AM · Studio 2 confirmed
+                  <span class="wf-node-copy">Sun 10 AM · Studio 2 confirmed</span>
                   <span class="wf-node-status status-live">Booked</span>
                 </div>
                 <div class="wf-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 0 0 .95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 0 0-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 0 0-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 0 0-.363-1.118L2.05 10.1c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 0 0 .951-.69l1.519-4.674z"/></svg></div>
-                  Post-visit review request sent
+                  <span class="wf-node-copy">Post-visit review request sent</span>
                   <span class="wf-node-status status-done">Sent</span>
                 </div>
               </div>
@@ -1151,21 +1346,21 @@
               </div>
             </div>
             <div class="wf-visual">
-              <div class="wf-visual-label">Live Workflow</div>
+              <div class="wf-visual-label"><span class="wf-live-pulse" aria-hidden="true"></span>Live workflow</div>
               <div class="wf-chain">
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-                  "Term insurance for ₹1Cr · 35 yrs"
+                  <span class="wf-node-copy">"Term insurance for ₹1Cr · 35 yrs"</span>
                   <span class="wf-node-status status-sent">Screened</span>
                 </div>
                 <div class="wf-node active-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-                  Doc checklist sent · 3 reminders active
+                  <span class="wf-node-copy">Doc checklist sent · 3 reminders active</span>
                   <span class="wf-node-status status-live">Active</span>
                 </div>
                 <div class="wf-node">
                   <div class="wf-node-dot"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13"/></svg></div>
-                  Advisor call Thu 11 AM · profile ready
+                  <span class="wf-node-copy">Advisor call Thu 11 AM · profile ready</span>
                   <span class="wf-node-status status-done">Booked</span>
                 </div>
               </div>
@@ -1228,6 +1423,6 @@
     </footer>
 
     <script src="script.js" defer></script>
-    <script src="js/about-workflow.js" defer></script>
+    <script src="js/about-workflow.js?v=wf5" defer></script>
   </body>
 </html>
