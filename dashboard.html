@@ -6,12 +6,25 @@
     <meta name="robots" content="noindex, nofollow" />
     <title>Neo Client OS — Dashboard</title>
     <meta name="description" content="Neo Integrations client dashboard — your real estate sales command center." />
-    <meta name="theme-color" content="#08080b" />
+    <meta name="theme-color" content="#09090b" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="dashboard.css?v=contact1" />
+    <link rel="stylesheet" href="dashboard.css?v=os22" />
+    <link rel="stylesheet" href="dashboard-os.css?v=os22" />
+    <script>
+      // Runs before first paint so a saved light theme never flashes dark.
+      (function () {
+        try {
+          var saved = localStorage.getItem('neo-theme');
+          var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
   </head>
   <body class="dashboard-body">
 
@@ -29,6 +42,7 @@
         </div>
 
         <nav class="sidebar-nav" id="sidebar-nav">
+          <div class="nav-pill" id="nav-pill" aria-hidden="true"></div>
           <div class="sidebar-section-label">Operations</div>
 
           <button class="sidebar-nav-item active" data-section="overview" id="nav-overview">
@@ -115,15 +129,35 @@
           <span class="topbar-title" id="topbar-title">Overview</span>
         </div>
         <div class="topbar-right">
+          <div class="topbar-actions">
+            <button class="os-btn os-btn-ghost" id="os-share-btn" type="button">
+              <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+              <span class="os-btn-label">Share</span>
+            </button>
+            <button class="os-btn os-btn-primary" id="os-create-btn" type="button">
+              <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span class="os-btn-label">New</span>
+            </button>
+          </div>
           <button class="topbar-search" id="topbar-search">
             <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             <span class="topbar-search-text">Search leads…</span>
             <span class="topbar-search-kbd">⌘K</span>
           </button>
-          <button class="topbar-icon-btn" id="notif-btn" title="Notifications">
-            <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-            <span class="topbar-notif-dot"></span>
+          <button class="topbar-icon-btn theme-toggle" id="theme-toggle" type="button" title="Switch theme" aria-label="Switch colour theme" aria-pressed="false">
+            <svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><line x1="12" y1="1.6" x2="12" y2="4"/><line x1="12" y1="20" x2="12" y2="22.4"/><line x1="4.22" y1="4.22" x2="5.9" y2="5.9"/><line x1="18.1" y1="18.1" x2="19.78" y2="19.78"/><line x1="1.6" y1="12" x2="4" y2="12"/><line x1="20" y1="12" x2="22.4" y2="12"/><line x1="4.22" y1="19.78" x2="5.9" y2="18.1"/><line x1="18.1" y1="5.9" x2="19.78" y2="4.22"/></svg>
+            <svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.6A8.6 8.6 0 0 1 9.4 3.5a8.6 8.6 0 1 0 11.1 11.1Z"/></svg>
           </button>
+          <div class="topbar-notif-wrap">
+            <button class="topbar-icon-btn" id="notif-btn" title="Notifications" aria-haspopup="true" aria-expanded="false">
+              <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              <span class="topbar-notif-dot"></span>
+            </button>
+            <div class="os-notif" id="os-notif" role="menu">
+              <div class="os-notif-head">Notifications <span style="color:var(--dash-text-3);font-weight:500;font-size:11px;">Live</span></div>
+              <div id="os-notif-list"></div>
+            </div>
+          </div>
           <button class="topbar-avatar-btn" id="topbar-avatar" title="Account">CA</button>
         </div>
       </header>
@@ -145,6 +179,9 @@
           <div class="drawer-lead-name" id="drawer-lead-name">Lead Name</div>
           <div class="drawer-lead-meta" id="drawer-lead-meta"></div>
         </div>
+        <button class="os-btn os-btn-ghost drawer-share" id="drawer-share" type="button" title="Share lead">
+          <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        </button>
         <button class="drawer-close" id="drawer-close">
           <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
@@ -158,8 +195,95 @@
       <div class="drawer-body" id="drawer-body"></div>
     </div>
 
+    <div class="os-overlay" id="os-overlay"></div>
+    <aside class="os-sheet" id="os-share-sheet" aria-hidden="true">
+      <div class="os-sheet-head">
+        <h2 id="os-share-title">Share this view</h2>
+        <button class="os-btn os-btn-ghost" type="button" data-os-close aria-label="Close">×</button>
+      </div>
+      <div class="os-sheet-body">
+        <p class="os-sheet-note" id="os-share-note">Copy a live link or export the current operations snapshot. Recipients with dashboard access can open the same view.</p>
+        <div class="os-share-row">
+          <input id="os-share-link" readonly aria-label="Shareable link" />
+          <button class="os-btn os-btn-primary" type="button" id="os-copy-link">Copy</button>
+        </div>
+        <div class="os-export-list">
+          <button class="os-btn os-btn-block" type="button" id="os-export-csv">Export leads CSV</button>
+          <button class="os-btn os-btn-block" type="button" id="os-export-overview">Export overview snapshot</button>
+        </div>
+      </div>
+    </aside>
+    <aside class="os-sheet" id="os-create-sheet" aria-hidden="true">
+      <div class="os-sheet-head">
+        <h2>Create new</h2>
+        <button class="os-btn os-btn-ghost" type="button" data-os-close aria-label="Close">×</button>
+      </div>
+      <div class="os-sheet-body">
+        <div class="os-seg" role="tablist">
+          <button type="button" class="is-on" data-create-type="lead">Lead</button>
+          <button type="button" data-create-type="followup">Follow-up</button>
+          <button type="button" data-create-type="visit">Site visit</button>
+        </div>
+
+        <form id="os-create-lead" class="os-create-pane is-on">
+          <div class="os-field"><label for="os-name">Full name</label><input id="os-name" name="name" required maxlength="80" autocomplete="name" /></div>
+          <div class="os-field"><label for="os-phone">Phone</label><input id="os-phone" name="phone" required maxlength="20" autocomplete="tel" /></div>
+          <div class="os-field"><label for="os-email">Email</label><input id="os-email" name="email" type="email" required autocomplete="email" /></div>
+          <div class="os-field">
+            <label for="os-source">Source</label>
+            <select id="os-source" name="source">
+              <option>WhatsApp</option><option>Instagram</option><option>Facebook</option><option>Website</option><option>Email</option><option selected>Manual</option>
+            </select>
+          </div>
+          <div class="os-field"><label for="os-notes">Note</label><textarea id="os-notes" name="notes" rows="3" maxlength="400" placeholder="Budget, location, urgency…"></textarea></div>
+          <button class="os-btn os-btn-primary os-btn-block" type="submit">Add lead</button>
+        </form>
+
+        <form id="os-create-followup" class="os-create-pane">
+          <div class="os-field">
+            <label for="os-fu-lead">Lead</label>
+            <select id="os-fu-lead" name="lead"></select>
+          </div>
+          <div class="os-field">
+            <label for="os-fu-day">Sequence day</label>
+            <input id="os-fu-day" name="day" type="number" min="1" max="14" value="12" />
+          </div>
+          <div class="os-field"><label for="os-fu-note">Note</label><textarea id="os-fu-note" name="note" rows="3" maxlength="240" placeholder="Why this follow-up matters…"></textarea></div>
+          <button class="os-btn os-btn-primary os-btn-block" type="submit">Create follow-up</button>
+        </form>
+
+        <form id="os-create-visit" class="os-create-pane">
+          <div class="os-field">
+            <label for="os-v-lead">Lead</label>
+            <select id="os-v-lead" name="lead"></select>
+          </div>
+          <div class="os-field"><label for="os-v-prop">Property</label><input id="os-v-prop" name="property" required maxlength="80" placeholder="3 BHK, Hitech City" /></div>
+          <div class="os-field"><label for="os-v-time">Time</label><input id="os-v-time" name="time" required placeholder="4:30 PM" /></div>
+          <div class="os-field">
+            <label for="os-v-status">Status</label>
+            <select id="os-v-status" name="status">
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+            </select>
+          </div>
+          <button class="os-btn os-btn-primary os-btn-block" type="submit">Schedule visit</button>
+        </form>
+      </div>
+    </aside>
+
+    <div class="os-cmd-overlay" id="os-cmd-overlay"></div>
+    <div class="os-cmd" id="os-cmd" role="dialog" aria-label="Search">
+      <div class="os-cmd-search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="os-cmd-input" type="search" placeholder="Search leads, jump to a view…" autocomplete="off" />
+      </div>
+      <div class="os-cmd-list" id="os-cmd-list"></div>
+      <div class="os-cmd-hint">↑↓ to move · Enter to open · Esc to close</div>
+    </div>
+    <div class="os-toast" id="os-toast" role="status"></div>
+
     <!-- ═══ SCRIPTS ═══ -->
     <script src="dashboard-data.js"></script>
-    <script src="dashboard-app.js"></script>
+    <script src="dashboard-app.js?v=os22"></script>
   </body>
 </html>
